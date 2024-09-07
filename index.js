@@ -1,18 +1,17 @@
-const express = require('express');
-const bodyParser = require('body-parser');
-const modulos = require('./routers/router');
-const login = require('./routers/routerLogin')
-const cors = require('cors');
-const connectDB = require('./DataBase/db'); 
+import express from 'express';
+import bodyParser from 'body-parser';
+import modulos from './routers/router.js';
+import login from './routers/routerLogin.js';
+import cors from 'cors';
+import connectDB from './DataBase/db.js';
 const app = express();
 
 const port = process.env.PORT || 3000;
 
-
 app.use(bodyParser.json());
 app.use(cors());
 app.use('/modulo', modulos);
-app.use('/login', login );
+app.use('/login', login);
 
 connectDB();
 

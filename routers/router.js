@@ -1,6 +1,7 @@
-const express = require('express');
+import express from 'express';
+import Modulo from '../models/model.js'
+
 const router = express.Router();
-const Modulo = require('../models/model'); 
 
 router.get('/', async (req, res) => {
     try {
@@ -30,8 +31,8 @@ router.post('/', async (req, res) => {
         imagen: req.body.imagen,
         titulo: req.body.titulo,
         temas: req.body.temas,
-        etiquetas: req.body.etiquetas,  
-        nivel: req.body.nivel           
+        etiquetas: req.body.etiquetas,
+        nivel: req.body.nivel
     });
 
     try {
@@ -129,4 +130,4 @@ router.delete('/:id', async (req, res) => {
     }
 });
 
-module.exports = router;
+export default router;

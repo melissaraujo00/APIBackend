@@ -1,11 +1,12 @@
-const { Router } = require('express');
-const Login = require('../models/modelLogin.js');
-const jwt = require('jsonwebtoken');
-const authMiddleware = require('../middleware/authMiddleware.js');
-const { check, validationResult } = require('express-validator');
-const rateLimit = require('express-rate-limit');
+import { Router } from 'express';
+import Login from '../models/modelLogin.js';
+import jwt from 'jsonwebtoken';
+import authMiddleware from '../middleware/authMiddleware.js';
+import { check, validationResult } from 'express-validator';
+import rateLimit from 'express-rate-limit';
+import dotenv from 'dotenv';
 
-require('dotenv').config();
+dotenv.config();
 
 const router = Router();
 
@@ -40,7 +41,7 @@ router.post('/register', [
 ], async (req, res) => {
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
-        return res.status(400).json({ errors: errors.array() });
+        return res.status(422).json({ errors: errors.array() });
     }
 
     const { user, email, password, roles = ['user'] } = req.body; // Asigna "user" si no hay roles
@@ -116,8 +117,8 @@ router.delete('/usuario/:id', authMiddleware, async (req, res) => {
 });
 
 const loginLimiter = rateLimit({
-    windowMs: 30 * 60 * 1000, 
-    max: 5, 
+    windowMs: 30 * 60 * 1000,
+    max: 5,
     message: 'Too many login attempts from this IP, please try again later.'
 });
 
@@ -146,4 +147,4 @@ router.post('/signin', loginLimiter, async (req, res) => {
     );
 });
 
-module.exports = router;
+export default router;

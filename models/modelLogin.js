@@ -1,5 +1,7 @@
-const mongoose = require('mongoose');
-const bcrypt = require('bcrypt');
+import mongoose from 'mongoose';
+import bcrypt from 'bcrypt';
+
+const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
 
 const loginSchema = new mongoose.Schema({
     user: {
@@ -13,7 +15,13 @@ const loginSchema = new mongoose.Schema({
     },
     password: {
         type: String,
-        required: true
+        required: true,
+        validate: {
+            validator: function(password) {
+                return passwordRegex.test(password);
+            },
+            message: "La contraseña debe contener al menos 8 caracteres, incluyendo un número, una letra mayúscula, una letra minúscula y un caracter especial"
+        }
     },
     roles: {
         type: [String], // Array de strings para representar roles
@@ -36,4 +44,4 @@ loginSchema.statics.comparePassword = async function(password, receivedPassword)
 // Creación del modelo
 const Login = mongoose.model('login', loginSchema);
 
-module.exports = Login;
+export default Login;
