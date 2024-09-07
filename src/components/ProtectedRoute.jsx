@@ -1,22 +1,53 @@
 // src/components/ProtectedRoute.jsx
+// import { useEffect, useState } from "react";
 import { Navigate } from "react-router-dom";
+import { useAuth } from "../context/AuthContext";
 
-const ProtectedRoute = ({ user, role, requiredRole, children }) => {
-    console.log('user', user)
-  
+const ProtectedRoute = ({ children, requiredRole }) => {
+  const { userId, userName, userRole, loading } = useAuth();
+  console.log('requiredRole:', requiredRole)
+  console.log('userRole:', userRole)
+  // const [loading, setLoading] = useState(true);
+  // const [isAuthorized, setIsAuthorized] = useState(false);
 
-  if (!user) {
-    // Si no hay usuario, redirigir al login
-    return <Navigate to="/login" />;
+  // useEffect(() => {
+  //   const verifyAuth = async () => {
+  //     const { userId, userName, userRole } = await checkAuth(); // Verificar autenticación
+
+  //     // Si hay usuario, verificar el rol
+  //     if (userId) {
+  //       if (requiredRole) {
+  //         console.log("requiredRole:", requiredRole);
+  //         console.log("userRole:", userRole);
+  //         // Si se especifica un rol, verificar si el rol coincide
+  //         if (userRole == requiredRole) {
+  //           setIsAuthorized(true);
+  //         } else {
+  //           setIsAuthorized(false);
+  //         }
+  //       } else {
+  //         // Si no se requiere un rol, permitir acceso
+  //         setIsAuthorized(true);
+  //       }
+  //     } else {
+  //       setIsAuthorized(false); // No autenticado
+  //     }
+
+  //     setLoading(false); // Finalizar el proceso de carga
+  //   };
+
+  //   verifyAuth();
+  // }, [requiredRole, checkAuth]);
+
+  if (loading) {
+    return <div>Cargando...</div>; // Mientras se valida el token
   }
 
-  if (requiredRole && role !== requiredRole) {
-    // Si el usuario no tiene el rol requerido, mostrar error o redirigir
-    return <Navigate to="/NotFoundPage" />;
+  if (requiredRole && userRole < requiredRole) {
+    return <Navigate to="/notFount" />; // Redirige si no tiene el rol adecuado
   }
 
-  // Si todo está bien, renderizar el contenido
-  return children;
+  return children; // Renderizar el contenido si está autorizado
 };
 
 export { ProtectedRoute };

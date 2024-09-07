@@ -1,7 +1,7 @@
 import axios from "axios";
 import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
-import { useAuth } from "../../hooks/useAuth";
+import { useAuth } from "../../context/AuthContext";
 
 function AdminPage() {
   const [UserName, setUserName] = useState("");
@@ -9,27 +9,29 @@ function AdminPage() {
   const [UserRole, setUserRole] = useState("");
   const [message, setMessage] = useState("");
 
-  const { userId, loading } = useAuth();
+  // const { checkAuth } = useAuth();
 
+  // useEffect(() => {
+  //   const fetchProtectedData = async () => {
+  //     try {
+  //       const { userId, userName, userRole } = await checkAuth();
+  //       // const res = await axios.get(
+  //       //   `http://localhost:3000/login/usuario/${userId}`,
+  //       //   {
+  //       //     withCredentials: true,
+  //       //   }
+  //       // );
+  //       // console.log(res.data);
 
-  useEffect(() => {
-    const fetchProtectedData = async () => {
-      try {
-        const res = await axios.get(`http://localhost:3000/login/usuario/${userId}`, {
-          withCredentials: true,
-        });
-        console.log(res.data);
-
-
-        setUserName(res.data.user);
-        setUserEmail(res.data.email);
-        setUserRole(res.data.roles[0]);
-      } catch (error) {
-        setMessage(`Acceso denegado\n ${error}`);
-      }
-    };
-    fetchProtectedData();
-  }, []);
+  //       setUserName(userName);
+  //       setUserEmail(userId);
+  //       setUserRole(userRole);
+  //     } catch (error) {
+  //       setMessage(`Acceso denegado\n ${error}`);
+  //     }
+  //   };
+  //   fetchProtectedData();
+  // }, []);
 
   return (
     <div className=" flex flex-col ">

@@ -15,7 +15,6 @@ import Footer from "../../components/Footer/Footer";
 
 export default function UserDashboard() {
   const [activeTab, setActiveTab] = useState("inProgress");
-  
 
   const user = {
     name: "Alex Johnson",
