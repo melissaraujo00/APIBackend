@@ -6,34 +6,7 @@ import Footer from "../../components/Footer/Footer";
 export default function NotFoundPage() {
   return (
     <div className="min-h-screen bg-gray-100 font-sans flex flex-col">
-      {/* <header className="bg-white shadow-sm sticky top-0 z-10">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4 flex items-center justify-between">
-          <Link to="/" className="text-2xl font-bold text-indigo-600">
-            FutureCode
-          </Link>
-          <nav className="hidden md:flex space-x-8">
-            <Link
-              to="/courses"
-              className="text-gray-600 hover:text-indigo-600 transition duration-300"
-            >
-              Courses
-            </Link>
-            <Link
-              to="/ai-personalization"
-              className="text-gray-600 hover:text-indigo-600 transition duration-300"
-            >
-              AI Personalization
-            </Link>
-            <Link
-              to="/resources"
-              className="text-gray-600 hover:text-indigo-600 transition duration-300"
-            >
-              Resources
-            </Link>
-          </nav>
-        </div>
-      </header> */}
-        <Header/>
+      <Header />
       <main className="flex-grow flex items-center justify-center px-4 sm:px-6 lg:px-8">
         <div className="max-w-md w-full text-center my-48">
           <AlertTriangle className="mx-auto h-16 w-16 text-indigo-600" />

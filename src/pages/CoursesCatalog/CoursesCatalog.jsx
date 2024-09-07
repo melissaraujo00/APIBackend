@@ -71,43 +71,7 @@ export default function CoursesCatalog() {
 
   return (
     <div className="min-h-screen bg-gray-100 font-sans">
-      {/* <header className="bg-white shadow-sm sticky top-0 z-10">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4 flex items-center justify-between">
-          <Link href="/" className="text-2xl font-bold text-indigo-600">
-            FutureCode
-          </Link>
-          <nav className="hidden md:flex space-x-8">
-            <Link
-              href="#"
-              className="text-gray-600 hover:text-indigo-600 transition duration-300"
-            >
-              Home
-            </Link>
-            <Link href="#" className="text-indigo-600 font-semibold">
-              Courses
-            </Link>
-            <Link
-              href="#"
-              className="text-gray-600 hover:text-indigo-600 transition duration-300"
-            >
-              AI Personalization
-            </Link>
-            <Link
-              href="#"
-              className="text-gray-600 hover:text-indigo-600 transition duration-300"
-            >
-              About
-            </Link>
-          </nav>
-          <Link
-            href="/dashboard"
-            className="bg-indigo-600 text-white px-6 py-2 rounded-full font-semibold hover:bg-indigo-700 transition duration-300 hidden md:block"
-          >
-            My Dashboard
-          </Link>
-        </div>
-      </header> */}
-      <Header/>
+      <Header />
       <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-24">
         <h1 className="text-4xl font-bold text-gray-900 mb-8">
           Explore Our Courses
@@ -200,7 +164,7 @@ export default function CoursesCatalog() {
         </div>
       </main>
 
-      <Footer/>
+      <Footer />
       {/* <footer className="bg-gray-800 text-white py-8">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex flex-wrap justify-between items-center">

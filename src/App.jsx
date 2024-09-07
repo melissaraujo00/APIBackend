@@ -22,20 +22,10 @@ import { AuthProvider } from "./context/AuthContext";
 import { ProtectedRoute } from "./components/ProtectedRoute";
 
 function App() {
-  // const { user, role, loading } = useAuth();
-
-  // Evitar renderizar hasta que el estado de autenticación esté disponible
-  // if (loading) {
-  //   return null; // No renderizar nada hasta que el usuario esté autenticado o no
-  // }
-
   return (
     <AuthProvider>
       <Router>
         <div>
-          {/* Header será visible en todas las páginas */}
-          {/* <Header /> */}
-
           <Routes>
             {/* Definimos las rutas correspondientes a cada página */}
             <Route path="/" element={<HomePage />} />

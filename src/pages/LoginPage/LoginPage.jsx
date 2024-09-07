@@ -15,7 +15,7 @@ export default function LoginPage() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     if (!email || !password) {
-      alert("Por favor, complete todos los campos"); // Validación simple
+      alert("Por favor, complete todos los campos"); 
       return;
     }
     let userData = {

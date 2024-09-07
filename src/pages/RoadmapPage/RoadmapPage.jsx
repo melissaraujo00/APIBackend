@@ -123,34 +123,6 @@ export default function PersonalizedRoadmapPage() {
 
   return (
     <div className="min-h-screen bg-gray-100 font-sans">
-      {/* <header className="bg-white shadow-sm sticky top-0 z-10">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4 flex items-center justify-between">
-          <Link href="/" className="text-2xl font-bold text-indigo-600">
-            FutureCode
-          </Link>
-          <nav className="hidden md:flex space-x-8">
-            <Link
-              href="/dashboard"
-              className="text-gray-600 hover:text-indigo-600 transition duration-300"
-            >
-              Dashboard
-            </Link>
-            <Link
-              href="/courses"
-              className="text-gray-600 hover:text-indigo-600 transition duration-300"
-            >
-              Courses
-            </Link>
-            <Link
-              href="/profile"
-              className="text-gray-600 hover:text-indigo-600 transition duration-300"
-            >
-              Profile
-            </Link>
-          </nav>
-        </div>
-      </header> */}
-
       <Header />
 
       <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-28">
@@ -255,21 +227,6 @@ export default function PersonalizedRoadmapPage() {
       </main>
 
       <Footer />
-      {/* <footer className="bg-gray-800 text-white py-8 mt-12">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex flex-wrap justify-between items-center">
-            <div className="w-full md:w-auto text-center md:text-left mb-4 md:mb-0">
-              <h3 className="text-2xl font-bold">FutureCode</h3>
-              <p className="mt-2 text-sm text-gray-400">
-                Empowering learners with AI-personalized roadmaps
-              </p>
-            </div>
-            <div className="w-full md:w-auto text-center md:text-right">
-              <p>&copy; 2024 FutureCode. All rights reserved.</p>
-            </div>
-          </div>
-        </div>
-      </footer> */}
     </div>
   );
 }

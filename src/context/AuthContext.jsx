@@ -1,8 +1,6 @@
-// src/hooks/useAuth.js
 import axios from "axios";
 import { createContext, useContext, useEffect, useState } from "react";
 
-// Crear el contexto para autenticación
 const AuthContext = createContext();
 
 export function AuthProvider({ children }) {

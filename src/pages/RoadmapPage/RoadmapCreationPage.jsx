@@ -37,35 +37,8 @@ export default function RoadmapCreationPage() {
 
   return (
     <div className="min-h-screen bg-gray-100 font-sans">
-      {/* <header className="bg-white shadow-sm sticky top-0 z-10">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4 flex items-center justify-between">
-          <Link href="/" className="text-2xl font-bold text-indigo-600">
-            FutureCode
-          </Link>
-          <nav className="hidden md:flex space-x-8">
-            <Link
-              href="/dashboard"
-              className="text-gray-600 hover:text-indigo-600 transition duration-300"
-            >
-              Dashboard
-            </Link>
-            <Link
-              href="/courses"
-              className="text-gray-600 hover:text-indigo-600 transition duration-300"
-            >
-              Courses
-            </Link>
-            <Link
-              href="/profile"
-              className="text-gray-600 hover:text-indigo-600 transition duration-300"
-            >
-              Profile
-            </Link>
-          </nav>
-        </div>
-      </header> */}
       <Header />
-      
+
       <main className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 py-28 ">
         <div className="bg-white rounded-xl shadow-md overflow-hidden">
           <div className="p-8">

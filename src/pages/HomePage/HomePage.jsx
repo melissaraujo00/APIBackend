@@ -2,11 +2,9 @@ import React from "react";
 import {
   ArrowRight,
   CheckCircle,
-  Star,
   Code,
   Users,
   Zap,
-  ChevronDown,
   Brain,
   Sparkles,
 } from "lucide-react";

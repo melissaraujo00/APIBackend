@@ -9,30 +9,6 @@ function AdminPage() {
   const [UserRole, setUserRole] = useState("");
   const [message, setMessage] = useState("");
 
-  // const { checkAuth } = useAuth();
-
-  // useEffect(() => {
-  //   const fetchProtectedData = async () => {
-  //     try {
-  //       const { userId, userName, userRole } = await checkAuth();
-  //       // const res = await axios.get(
-  //       //   `http://localhost:3000/login/usuario/${userId}`,
-  //       //   {
-  //       //     withCredentials: true,
-  //       //   }
-  //       // );
-  //       // console.log(res.data);
-
-  //       setUserName(userName);
-  //       setUserEmail(userId);
-  //       setUserRole(userRole);
-  //     } catch (error) {
-  //       setMessage(`Acceso denegado\n ${error}`);
-  //     }
-  //   };
-  //   fetchProtectedData();
-  // }, []);
-
   return (
     <div className=" flex flex-col ">
       <div className="flex flex-col">

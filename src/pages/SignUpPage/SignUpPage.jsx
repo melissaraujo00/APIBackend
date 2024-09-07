@@ -28,7 +28,6 @@ export default function SignUpPage() {
       alert("Por favor, complete todos los campos"); // Validación simple
       return;
     }
-
     try {
       let userData = {
         user: name,
