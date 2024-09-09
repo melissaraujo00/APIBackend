@@ -18,7 +18,7 @@ import UserDashboard from "./pages/UserDashboard/UserDashboard";
 // import Header from './components/Header/Header';
 import NotFoundPage from "./pages/NotFoundPage/NotFoundPage";
 import AdminPage from "./pages/adminPage/AdminPage";
-import { AuthProvider } from "./context/AuthContext";
+import { AuthProvider } from "./auth/AuthContext";
 import { ProtectedRoute } from "./components/ProtectedRoute";
 
 function App() {

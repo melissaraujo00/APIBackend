@@ -59,7 +59,7 @@ function Footer() {
           </div>
         </div>
         <div className="border-t border-gray-800 mt-8 pt-8 text-center">
-          <p>&copy; 2024 AILearnPro. Todos los derechos reservados. </p>
+          <p>&copy; 2024 FutureCode. Todos los derechos reservados. </p>
         </div>
       </div>
     </footer>
