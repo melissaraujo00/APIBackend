@@ -1,9 +1,10 @@
-import express from 'express';
-import Modulo from '../models/model.js'
+import Modulo from "../models/model.js";
 
-const router = express.Router();
-
-router.get('/', async (req, res) => {
+/**
+ * @description get all modules
+ * @route GET /api/modulos
+ */
+export const listadoModulos = async (req, res) => {
     try {
         // Extraer parámetros de consulta
         const { etiquetas, nivel } = req.query;
@@ -24,9 +25,14 @@ router.get('/', async (req, res) => {
     } catch (err) {
         res.status(500).json({ message: err.message });
     }
-});
+}
 
-router.post('/', async (req, res) => {
+/**
+ * @description store module
+ * @route POST /api/modulos
+ */
+export const guardarModulo = async (req, res) => {
+
     const modulo = new Modulo({
         imagen: req.body.imagen,
         titulo: req.body.titulo,
@@ -41,9 +47,15 @@ router.post('/', async (req, res) => {
     } catch (err) {
         res.status(400).json({ message: err.message });
     }
-});
+}
 
-router.get('/:id', async (req, res) => {
+/**
+ * @description get single module
+ * @route GET /api/modulos/:id
+ * @param {string} id
+ */
+export const obtenerModulo = async (req, res) => {
+
     try {
         const modulo = await Modulo.findById(req.params.id);
         if (modulo == null) {
@@ -53,10 +65,14 @@ router.get('/:id', async (req, res) => {
     } catch (err) {
         res.status(500).json({ message: err.message });
     }
-});
+}
 
-
-router.put('/:id', async (req, res) => {
+/**
+ * @description update module
+ * @route PUT /api/modulos/:id
+ * @param {string} id
+ */
+export const editarModulo = async (req, res) => {
     try {
         const modulo = await Modulo.findById(req.params.id);
         if (modulo == null) {
@@ -83,9 +99,34 @@ router.put('/:id', async (req, res) => {
     } catch (err) {
         res.status(400).json({ message: err.message });
     }
-});
+}
 
-router.put('/:moduloId/temas/:temaId', async (req, res) => {
+/**
+ * @description delete module
+ * @route DELETE /api/modulos/:id
+ * @param {string} id
+ */
+export const eliminarModulo = async (req, res) => {
+
+    try {
+        const deleteModulo = await Modulo.findByIdAndDelete(req.params.id);
+        if (deleteModulo == null) {
+            return res.status(404).json({ message: 'Módulo no encontrado' });
+        }
+        res.status(200).json({ message: 'Módulo eliminado con éxito' });
+    } catch (error) {
+        res.status(500).json({ message: error.message });
+    }
+}
+
+/**
+ * @description update topics by module
+ * @route PUT /api/modulos/:moduloId/temas/:temaId
+ * @param {string} moduloId
+ * @param {string} temaId
+ */
+export const actualizarTemasDelModulo = async (req, res) => {
+
     try {
         const { moduloId, temaId } = req.params;
         const actualizaciones = req.body;
@@ -115,19 +156,4 @@ router.put('/:moduloId/temas/:temaId', async (req, res) => {
     } catch (err) {
         res.status(400).json({ message: err.message });
     }
-});
-
-
-router.delete('/:id', async (req, res) => {
-    try {
-        const deleteModulo = await Modulo.findByIdAndDelete(req.params.id);
-        if (deleteModulo == null) {
-            return res.status(404).json({ message: 'Módulo no encontrado' });
-        }
-        res.status(200).json({ message: 'Módulo eliminado con éxito' });
-    } catch (error) {
-        res.status(500).json({ message: error.message });
-    }
-});
-
-export default router;
+}
