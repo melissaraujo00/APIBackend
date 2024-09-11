@@ -66,7 +66,7 @@ export default function SignUpPage() {
   return (
     <div className="min-h-screen bg-gray-100 flex flex-col justify-center py-12 sm:px-6 lg:px-8">
       <div className="sm:mx-auto sm:w-full sm:max-w-md">
-        <Link href="/" className="flex justify-center">
+        <Link to="/" className="flex justify-center">
           <span className="sr-only">FutureCode</span>
           <svg
             className="h-12 w-auto text-indigo-600"

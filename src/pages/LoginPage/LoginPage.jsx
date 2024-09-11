@@ -1,8 +1,7 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import axios from "axios";
 import { Eye, EyeOff, Lock, Mail } from "lucide-react";
 import { useNavigate, Link } from "react-router-dom";
-// import { useAuth } from "../../auth/AuthContext";
 import { useAuth } from "../../auth/useAuth";
 import { loginUser } from "../../auth/authService";
 
@@ -10,8 +9,9 @@ export default function LoginPage() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
+  const [userDashboard, setuserDashboard] = useState("");
 
-  const { checkAuthentication } = useAuth(); // Llama a la función para obtener los datos del usuario
+  const { checkAuthentication } = useAuth();
   const navigate = useNavigate();
 
   const handleSubmit = async (e) => {
@@ -20,24 +20,13 @@ export default function LoginPage() {
       alert("Por favor, complete todos los campos");
       return;
     }
-    // let userData = {
-    //   email: email,
-    //   password: password,
-    // };
-
     try {
-      // const response = await axios.post(
-      //   "http://localhost:3000/login/signin",
-      //   userData,
-      //   { withCredentials: true } // Asegura que las cookies se envíen
-      // );
       const response = await loginUser(email, password);
 
       if (response.status === 200) {
-        console.log("Login exitoso");
-
+        // console.log("Login exitoso");
         await checkAuthentication();
-        navigate("/dashboard"); // Redirigir a la página protegida
+        // navigate("/");
       } else {
         alert("Algo salió mal, intente de nuevo");
       }

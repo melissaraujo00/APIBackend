@@ -1,4 +1,3 @@
-import { useState } from "react";
 import {
   Search,
   Filter,
@@ -9,12 +8,37 @@ import {
   Zap,
   ChevronDown,
 } from "lucide-react";
+import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import Header from "../../components/Header/Header";
 import Footer from "../../components/Footer/Footer";
+import { GetAllModules } from "../../components/Api/Api";
 
 export default function CoursesCatalog() {
   const [selectedCategory, setSelectedCategory] = useState("All");
+  const [ModulesData, setModulesData] = useState([{}]);
+
+  // async function ModulesData() {
+  //   const data = await GetAllModules();
+  //   console.log("data", data);
+  // }
+  // ModulesData();
+  // //  console.log('response', response)
+
+  useEffect(() => {
+    const GetData = async () => {
+      try {
+        const response = await GetAllModules();
+
+        if (response.status == 200) {
+          setModulesData(response.data);
+        } else {
+          console.log("Error");
+        }
+      } catch (error) {}
+    };
+    GetData();
+  }, []);
 
   const categories = [
     "All",
@@ -110,6 +134,13 @@ export default function CoursesCatalog() {
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+          {/* {ModulesData.map((item, key) => {
+            return (
+              <>
+                <h2></h2>
+              </>
+            );
+          })} */}
           {filteredCourses.map((course) => (
             <div
               key={course.id}
@@ -157,6 +188,57 @@ export default function CoursesCatalog() {
                       </span>
                     </div>
                   )}
+                </div>
+              </div>
+            </div>
+          ))}
+          {ModulesData.map((item, key) => (
+            <div
+              key={key}
+              className="bg-white rounded-xl shadow-md overflow-hidden hover:shadow-lg transition-shadow"
+            >
+              <div className="p-6">
+                <h2 className="text-xl font-semibold text-gray-800 mb-2">
+                  {item.titulo}
+                </h2>
+                <p className="text-gray-600 mb-4">{item.titulo}</p>
+                <div className="flex items-center justify-between mb-4">
+                  <span className="text-sm font-medium text-indigo-600">
+                    {}
+                  </span>
+                  <span className="text-sm font-medium text-gray-500">
+                    {}
+                  </span>
+                </div>
+                <div className="flex items-center space-x-4 text-sm text-gray-500 mb-4">
+                  <div className="flex items-center">
+                    <Clock className="w-4 h-4 mr-1" />
+                    <span>{}</span>
+                  </div>
+                  <div className="flex items-center">
+                    <Star className="w-4 h-4 mr-1 text-yellow-400" />
+                    <span>{}</span>
+                  </div>
+                  <div className="flex items-center">
+                    <Users className="w-4 h-4 mr-1" />
+                    <span>{}</span>
+                  </div>
+                </div>
+                <div className="flex items-center justify-between">
+                  <Link
+                    href={`/course/${item._id}`}
+                    className="bg-indigo-600 text-white px-4 py-2 rounded-full font-semibold hover:bg-indigo-700 transition duration-300"
+                  >
+                    View Course
+                  </Link>
+                  {/* {course.isAIPersonalized && (
+                    <div className="flex items-center text-green-600">
+                      <Zap className="w-5 h-5 mr-1" />
+                      <span className="text-sm font-medium">
+                        AI Personalized
+                      </span>
+                    </div>
+                  )} */}
                 </div>
               </div>
             </div>

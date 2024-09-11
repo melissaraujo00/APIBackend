@@ -1,4 +1,3 @@
-// src/auth/authService.js
 import axios from "axios";
 
 // Verificar el estado de autenticación
@@ -9,7 +8,7 @@ export const checkAuth = async () => {
     });
     return response; // Devuelve los datos del usuario si está autenticado
   } catch (error) {
-    console.error("Error al verificar la autenticación", error);
+    // console.error("Error al verificar la autenticación\n", error.response.status);
     return null; // Si hay un error, devolvemos null para indicar que no está autenticado
   }
 };
@@ -24,6 +23,7 @@ export const logoutUser = async () => {
         withCredentials: true, // Asegura que las cookies se envíen
       }
     );
+
     return response; // Devuelve true si el logout fue exitoso
   } catch (error) {
     console.error("Error al hacer logout", error);

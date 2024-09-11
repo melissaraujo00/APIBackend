@@ -8,7 +8,7 @@ function Footer() {
           <div>
             <h3 className="text-2xl font-bold mb-4">FutureCode</h3>
             <p className="text-gray-400">
-              Revolucionando el aprendizaje de JavaScript con IA y contenido de
+              Revolucionando el aprendizaje con IA y contenido de
               calidad. 
             </p>
           </div>
@@ -40,18 +40,18 @@ function Footer() {
                 </a>
               </li>
               <li>
-                <a
+                {/* <a
                   to="#"
                   className="text-gray-400 hover:text-white transition duration-300"
                 >
                   Recursos
-                </a>
+                </a> */}
               </li>
             </ul>
           </div>
           <div>
             <h4 className="text-lg font-semibold mb-4">Contáctanos</h4>
-            <p className="text-gray-400">info@ailearnpro.com</p>
+            <p className="text-gray-400">info@FutureCode.com</p>
             <p className="text-gray-400">+1 (555) 123-4567</p>
             <div className="flex space-x-4 mt-4">
               {/* Add social media icons here */}

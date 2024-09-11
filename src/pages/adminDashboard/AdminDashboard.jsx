@@ -74,11 +74,11 @@ import {
   Edit,
   Download,
   LayoutDashboard,
-  LibraryBig
+  LibraryBig,
 } from "lucide-react";
 import Header from "../../components/Header/Header";
 
-function DashboardContent({ stats, recentActivities, topCourses }) {
+function DashboardContent({ stats, recentActivities, routesList }) {
   return (
     <>
       <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-4 mb-8">
@@ -157,7 +157,33 @@ function DashboardContent({ stats, recentActivities, topCourses }) {
           </div>
         </div>
       </div>
-
+      <div className="mt-8 bg-white shadow rounded-lg">
+        <div className="px-4 py-5 sm:px-6">
+          <h2 className="text-lg font-medium text-gray-900 mb-4">
+            Site routes
+          </h2>
+          <div className="overflow-x-auto">
+            <table className="min-w-full divide-y divide-gray-200">
+              <thead className="bg-gray-50">
+                <tr>
+                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                    Site routes
+                  </th>
+                </tr>
+              </thead>
+              <tbody className="bg-white divide-y divide-gray-200">
+                {routesList.map((ruta, index) => (
+                  <tr key={index}>
+                    <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">
+                      <Link to={ruta.ruta}>{ruta.ruta}</Link>
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
       {/* <div className="mt-8 bg-white shadow rounded-lg">
         <div className="px-4 py-5 sm:px-6">
           <h2 className="text-lg font-medium text-gray-900 mb-4">
@@ -303,7 +329,7 @@ function UsersContent() {
   );
 }
 
-function CoursesContent() { 
+function CoursesContent() {
   const courses = [
     {
       id: 1,
@@ -506,7 +532,7 @@ export default function AdminPage() {
   const stats = [
     { name: "Usuarios Totales", value: "32", icon: Users },
     { name: "Cursos Totales", value: "48", icon: BookOpen },
-    { name: "RoadMaps IA", value: "53", icon: BookOpen },
+    { name: "RoadMaps IA", value: "5", icon: BookOpen },
     // { name: "Tasa de Finalización", value: "76%", icon: ChevronDown },
   ];
 
@@ -514,32 +540,42 @@ export default function AdminPage() {
     {
       user: "Jhon doe",
       action: "Lorem ipsum dolor sit",
-      course: "Lorem ipsum dolor sit amet"
+      course: "Lorem ipsum dolor sit amet",
     },
     {
       user: "Jhon doe",
       action: "Lorem ipsum dolor sit",
-      course: "Lorem ipsum dolor sit amet"
+      course: "Lorem ipsum dolor sit amet",
     },
     {
       user: "Jhon doe",
       action: "Lorem ipsum dolor sit",
-      course: "Lorem ipsum dolor sit amet"
+      course: "Lorem ipsum dolor sit amet",
     },
     {
       user: "Jhon doeS",
       action: "Lorem ipsum dolor sit",
-      course: "Lorem ipsum dolor sit amet"
+      course: "Lorem ipsum dolor sit amet",
     },
     {
       user: "Jhon doe",
       action: "Lorem ipsum dolor sit",
-      course: "Lorem ipsum dolor sit amet"
+      course: "Lorem ipsum dolor sit amet",
     },
-    
   ];
 
-  
+  const routesList = [
+    { ruta: "/" },
+    { ruta: "/admin" },
+    { ruta: "/login" },
+    { ruta: "/signup" },
+    { ruta: "/dashboard" },
+    { ruta: "/courses" },
+    { ruta: "/roadmap" },
+    { ruta: "/RoadmapCreator" },
+    { ruta: "/NotFoundPage" },
+  ];
+
   const topCourses = [
     { name: "JavaScript Avanzado", students: 1234, rating: 4.8 },
     { name: "React para Principiantes", students: 987, rating: 4.7 },
@@ -579,7 +615,7 @@ export default function AdminPage() {
                       : "text-gray-700 hover:bg-gray-100"
                   }`}
                 >
-                  <LayoutDashboard className="w-5 h-5 mr-2"/>
+                  <LayoutDashboard className="w-5 h-5 mr-2" />
                   Dashboard
                 </button>
               </li>
@@ -588,11 +624,11 @@ export default function AdminPage() {
                   onClick={() => setActiveTab("users")}
                   className={`w-full text-left px-4 py-2 rounded-md flex items-center ${
                     activeTab === "users"
-                    ? "bg-indigo-100 text-indigo-700"
-                    : "text-gray-700 hover:bg-gray-100"
+                      ? "bg-indigo-100 text-indigo-700"
+                      : "text-gray-700 hover:bg-gray-100"
                   }`}
                 >
-                  <Users className="w-5 h-5 mr-2"/>
+                  <Users className="w-5 h-5 mr-2" />
                   Usuarios
                 </button>
               </li>
@@ -601,11 +637,11 @@ export default function AdminPage() {
                   onClick={() => setActiveTab("courses")}
                   className={`w-full text-left px-4 py-2 rounded-md flex items-center ${
                     activeTab === "courses"
-                    ? "bg-indigo-100 text-indigo-700"
-                    : "text-gray-700 hover:bg-gray-100"
+                      ? "bg-indigo-100 text-indigo-700"
+                      : "text-gray-700 hover:bg-gray-100"
                   }`}
                 >
-                  <LibraryBig className="w-5 h-5 mr-2"/>
+                  <LibraryBig className="w-5 h-5 mr-2" />
                   Cursos
                 </button>
               </li>
@@ -634,7 +670,8 @@ export default function AdminPage() {
             <DashboardContent
               stats={stats}
               recentActivities={recentActivities}
-              topCourses={topCourses}
+              // topCourses={topCourses}
+              routesList={routesList}
             />
           )}
           {activeTab === "users" && <UsersContent />}

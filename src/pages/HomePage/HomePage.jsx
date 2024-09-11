@@ -16,8 +16,7 @@ import Footer from "../../components/Footer/Footer";
 export default function HomePage() {
   return (
     <div className="min-h-screen bg-gradient-to-b from-indigo-100 to-white font-sans">
-
-    <Header/>
+      <Header />
 
       <main>
         <section className="pt-32 pb-20 px-4 sm:px-6 lg:px-8">
@@ -45,21 +44,15 @@ export default function HomePage() {
         <section className="py-20 bg-white">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <h2 className="text-3xl font-bold text-center text-gray-900 mb-12">
-              ¿Por qué elegir AILearnPro?
+              ¿Por qué elegir FutureCode?
             </h2>
-            <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
+            <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8 mx-auto">
               {[
                 {
                   icon: Brain,
                   title: "IA Personalizada",
                   description:
                     "Cursos adaptados a tu estilo de aprendizaje y nivel de conocimiento.",
-                },
-                {
-                  icon: Users,
-                  title: "Comunidad Activa",
-                  description:
-                    "Únete a una comunidad vibrante de desarrolladores para aprender y crecer juntos.",
                 },
                 {
                   icon: Zap,
@@ -97,13 +90,13 @@ export default function HomePage() {
             <div className="grid md:grid-cols-2 gap-8">
               <div className="bg-white p-6 rounded-xl shadow-sm">
                 <h3 className="text-2xl font-semibold text-indigo-600 mb-4 flex items-center">
-                  <Brain className="w-6 h-6 mr-2" /> Cursos Personalizados con
+                  <Brain className="w-6 h-6 mr-2" /> Contenido Personalizado con
                   IA
                 </h3>
                 <ul className="space-y-2">
                   {[
                     "Adaptación dinámica al ritmo de aprendizaje",
-                    "Recomendaciones de contenido basadas en tu progreso",
+                    // "Recomendaciones de contenido basadas en tu progreso",
                     "Ejercicios generados por IA para reforzar conceptos",
                     "Feedback personalizado en tiempo real",
                   ].map((item, index) => (
@@ -116,15 +109,15 @@ export default function HomePage() {
               </div>
               <div className="bg-white p-6 rounded-xl shadow-sm">
                 <h3 className="text-2xl font-semibold text-indigo-600 mb-4 flex items-center">
-                  <Code className="w-6 h-6 mr-2" /> Cursos Estándar de Alta
+                  <Code className="w-6 h-6 mr-2" /> Contenido Estándar de Alta
                   Calidad
                 </h3>
                 <ul className="space-y-2">
                   {[
                     "Contenido estructurado y probado",
-                    "Proyectos prácticos del mundo real",
+                    // "Proyectos prácticos del mundo real",
                     "Acceso a recursos adicionales curados",
-                    "Certificaciones reconocidas por la industria",
+                    // "Certificaciones reconocidas por la industria",
                   ].map((item, index) => (
                     <li key={index} className="flex items-start">
                       <CheckCircle className="text-green-500 mr-2 mt-1 flex-shrink-0" />
@@ -136,11 +129,9 @@ export default function HomePage() {
             </div>
           </div>
         </section>
-
       </main>
-      
-      <Footer/>
-      
+
+      <Footer />
     </div>
   );
 }

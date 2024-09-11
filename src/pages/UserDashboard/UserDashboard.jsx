@@ -12,43 +12,39 @@ import {
 import { Link } from "react-router-dom";
 import Header from "../../components/Header/Header";
 import Footer from "../../components/Footer/Footer";
+import { useAuth } from "../../auth/useAuth";
 
 export default function UserDashboard() {
-  const [activeTab, setActiveTab] = useState("inProgress");
+  const { userName } = useAuth();
+  const [activeTab, setActiveTab] = useState(1);
 
   const user = {
     name: "Alex Johnson",
-    email: "alex@example.com",
-    progress: 65,
   };
 
-  const courses = {
-    inProgress: [
-      {
-        id: 1,
-        title: "Advanced JavaScript Concepts",
-        progress: 60,
-        lastAccessed: "2 days ago",
-        isAIPersonalized: true,
-      },
-      {
-        id: 2,
-        title: "React Native for Beginners",
-        progress: 30,
-        lastAccessed: "1 week ago",
-        isAIPersonalized: true,
-      },
-    ],
-    completed: [
-      {
-        id: 3,
-        title: "Python Fundamentals",
-        completedDate: "2023-11-15",
-        certificate: true,
-        isAIPersonalized: false,
-      },
-    ],
-  };
+  const courses = [
+    {
+      id: 1,
+      title: "Advanced JavaScript Concepts",
+      progress: 60,
+      lastAccessed: "2 days ago",
+      isAIPersonalized: true,
+    },
+    {
+      id: 2,
+      title: "React Native for Beginners",
+      progress: 30,
+      lastAccessed: "1 week ago",
+      isAIPersonalized: true,
+    },
+    {
+      id: 3,
+      title: "Python Fundamentals",
+      completedDate: "2023-11-15",
+      certificate: true,
+      isAIPersonalized: false,
+    },
+  ];
 
   const recommendations = [
     {
@@ -67,51 +63,14 @@ export default function UserDashboard() {
 
   return (
     <div className="min-h-screen bg-gray-100 font-sans">
-      {/* <header className="bg-white shadow-sm sticky top-0 z-10">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4 flex items-center justify-between">
-          <Link href="/" className="text-2xl font-bold text-indigo-600">
-            FutureCode
-          </Link>
-          <nav className="hidden md:flex space-x-8">
-            <Link
-              href="/courses"
-              className="text-gray-600 hover:text-indigo-600 transition duration-300"
-            >
-              Courses
-            </Link>
-            <Link
-              href="/ai-personalization"
-              className="text-gray-600 hover:text-indigo-600 transition duration-300"
-            >
-              AI Personalization
-            </Link>
-            <Link
-              href="/profile"
-              className="text-gray-600 hover:text-indigo-600 transition duration-300"
-            >
-              Profile
-            </Link>
-          </nav>
-          <div className="flex items-center space-x-4">
-            <span className="text-gray-600">{user.name}</span>
-            <img
-              src={`https://ui-avatars.com/api/?name=${user.name}&background=random`}
-              alt={user.name}
-              className="w-10 h-10 rounded-full"
-            />
-          </div>
-        </div>
-      </header> */}
-
       <Header />
-
       <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-24">
         <h1 className="text-3xl font-bold text-gray-900 mb-8">
-          Welcome back, {user.name}!
+          Welcome back, {userName}!
         </h1>
 
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-12">
-          <div className="bg-white rounded-xl shadow-md p-6">
+          {/* <div className="bg-white rounded-xl shadow-md p-6">
             <div className="flex items-center justify-between mb-4">
               <h2 className="text-xl font-semibold text-gray-800">
                 Overall Progress
@@ -129,9 +88,9 @@ export default function UserDashboard() {
             <p className="text-gray-600 text-sm">
               {user.progress}% of your enrolled courses completed
             </p>
-          </div>
+          </div> */}
 
-          <div className="bg-white rounded-xl shadow-md p-6">
+          {/* <div className="bg-white rounded-xl shadow-md p-6">
             <div className="flex items-center justify-between mb-4">
               <h2 className="text-xl font-semibold text-gray-800">
                 Learning Streak
@@ -142,17 +101,17 @@ export default function UserDashboard() {
             <p className="text-gray-600 text-sm">
               Keep it up! You're on a roll!
             </p>
-          </div>
+          </div> */}
 
           <div className="bg-white rounded-xl shadow-md p-6">
             <div className="flex items-center justify-between mb-4">
               <h2 className="text-xl font-semibold text-gray-800">
-                Certificates Earned
+                Roadmaps Creados
               </h2>
-              <Award className="w-6 h-6 text-indigo-600" />
+              <Zap className="w-6 h-6 text-yellow-400" />
             </div>
             <p className="text-3xl font-bold text-indigo-600 mb-2">1</p>
-            <p className="text-gray-600 text-sm">Keep learning to earn more!</p>
+            <p className="text-gray-600 text-sm">Keep learning!</p>
           </div>
         </div>
 
@@ -160,79 +119,37 @@ export default function UserDashboard() {
           <div className="flex border-b">
             <button
               className={`flex-1 text-center py-4 ${
-                activeTab === "inProgress"
+                activeTab === 1
                   ? "text-indigo-600 border-b-2 border-indigo-600 font-semibold"
                   : "text-gray-600"
               }`}
-              onClick={() => setActiveTab("inProgress")}
+              onClick={() => setActiveTab(1)}
             >
-              In Progress
+              Mis Roadmaps IA
             </button>
             <button
               className={`flex-1 text-center py-4 ${
-                activeTab === "completed"
+                activeTab === 2
                   ? "text-indigo-600 border-b-2 border-indigo-600 font-semibold"
                   : "text-gray-600"
               }`}
-              onClick={() => setActiveTab("completed")}
+              onClick={() => setActiveTab(2)}
             >
-              Completed
+              Mis cursos
             </button>
           </div>
           <div className="p-6">
-            {activeTab === "inProgress" && (
+            {activeTab === 1 && (
               <div className="space-y-6">
-                {courses.inProgress.map((course) => (
-                  <div
-                    key={course.id}
-                    className="flex items-center justify-between"
-                  >
-                    <div className="flex items-center space-x-4">
-                      <div className="bg-indigo-100 rounded-full p-3">
-                        <Book className="w-6 h-6 text-indigo-600" />
-                      </div>
-                      <div>
-                        <h3 className="text-lg font-semibold text-gray-800">
-                          {course.title}
-                        </h3>
-                        <p className="text-sm text-gray-500">
-                          Last accessed {course.lastAccessed}
-                        </p>
-                      </div>
-                    </div>
-                    <div className="flex items-center space-x-4">
-                      <div className="text-right">
-                        <p className="text-sm font-medium text-gray-600">
-                          {course.progress}% complete
-                        </p>
-                        <div className="w-32 bg-gray-200 rounded-full h-2 mt-1">
-                          <div
-                            className="bg-indigo-600 rounded-full h-2"
-                            style={{ width: `${course.progress}%` }}
-                          ></div>
-                        </div>
-                      </div>
-                      <Link
-                        href={`/course/${course.id}`}
-                        className="bg-indigo-600 text-white p-2 rounded-full hover:bg-indigo-700 transition duration-300"
-                      >
-                        <Play className="w-4 h-4" />
-                      </Link>
-                    </div>
-                  </div>
-                ))}
-              </div>
-            )}
-            {activeTab === "completed" && (
-              <div className="space-y-6">
-                {courses.completed.map((course) => (
+                {courses.map((course) => (
                   <div
                     key={course.id}
                     className="flex items-center justify-between"
                   >
                     <div className="flex items-center space-x-4">
                       <div className="bg-green-100 rounded-full p-3">
-                        <CheckCircle className="w-6 h-6 text-green-600" />
+                        <Zap className="w-5 h-5 text-green-600 mr-1" />
+                        {/* <CheckCircle className="w-6 h-6 text-green-600" /> */}
                       </div>
                       <div>
                         <h3 className="text-lg font-semibold text-gray-800">
@@ -243,14 +160,42 @@ export default function UserDashboard() {
                         </p>
                       </div>
                     </div>
-                    {course.certificate && (
-                      <Link
-                        href={`/certificate/${course.id}`}
-                        className="bg-indigo-600 text-white px-4 py-2 rounded-full hover:bg-indigo-700 transition duration-300"
-                      >
-                        View Certificate
-                      </Link>
-                    )}
+                    <Link
+                      href={`/certificate/${course.id}`}
+                      className="bg-indigo-600 text-white px-4 py-2 rounded-full hover:bg-indigo-700 transition duration-300"
+                    >
+                      Ver RoadMap
+                    </Link>
+                  </div>
+                ))}
+              </div>
+            )}
+            {activeTab === 2 && (
+              <div className="space-y-6">
+                {recommendations.map((course) => (
+                  <div
+                    key={course.id}
+                    className="flex items-center justify-between"
+                  >
+                    <div className="flex items-center space-x-4">
+                      <div className="bg-green-100 rounded-full p-3">
+                        <Book className="w-6 h-6 text-blue-600" />
+                      </div>
+                      <div>
+                        <h3 className="text-lg font-semibold text-gray-800">
+                          {course.title}
+                        </h3>
+                        <p className="text-sm text-gray-500">
+                          Completed on {course.completedDate}
+                        </p>
+                      </div>
+                    </div>
+                    <Link
+                      href={`/certificate/${course.id}`}
+                      className="bg-indigo-600 text-white px-4 py-2 rounded-full hover:bg-indigo-700 transition duration-300"
+                    >
+                      Ver curso
+                    </Link>
                   </div>
                 ))}
               </div>
@@ -258,7 +203,7 @@ export default function UserDashboard() {
           </div>
         </div>
 
-        <div className="bg-white rounded-xl shadow-md overflow-hidden">
+        {/* <div className="bg-white rounded-xl shadow-md overflow-hidden">
           <div className="p-6">
             <h2 className="text-2xl font-semibold text-gray-800 mb-4">
               Recommended for You
@@ -280,7 +225,7 @@ export default function UserDashboard() {
                   <div className="flex items-center space-x-4">
                     {course.isAIPersonalized && (
                       <div className="flex items-center text-green-600">
-                        <Zap className="w-5 h-5 mr-1" />
+                        <Zap className="w-5 h-5 text-green-600 mr-1" />
                         <span className="text-sm font-medium">
                           AI Personalized
                         </span>
@@ -297,7 +242,7 @@ export default function UserDashboard() {
               ))}
             </div>
           </div>
-        </div>
+        </div> */}
       </main>
       <Footer />
     </div>

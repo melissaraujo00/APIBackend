@@ -17,7 +17,7 @@ import SignUpPage from "./pages/SignUpPage/SignUpPage";
 import UserDashboard from "./pages/UserDashboard/UserDashboard";
 // import Header from './components/Header/Header';
 import NotFoundPage from "./pages/NotFoundPage/NotFoundPage";
-import AdminPage from "./pages/adminPage/AdminPage";
+import AdminDashboard from "./pages/adminDashboard/AdminDashboard";
 import { AuthProvider } from "./auth/AuthContext";
 import { ProtectedRoute } from "./components/ProtectedRoute";
 
@@ -29,13 +29,27 @@ function App() {
           <Routes>
             {/* Definimos las rutas correspondientes a cada página */}
             <Route path="/" element={<HomePage />} />
-            <Route path="/login" element={<LoginPage />} />
-            <Route path="/signup" element={<SignUpPage />} />
+            <Route
+              path="/login"
+              element={
+                <ProtectedRoute allowedRoles={[null]}>
+                  <LoginPage />
+                </ProtectedRoute>
+              }
+            />
+            <Route
+              path="/signup"
+              element={
+                <ProtectedRoute allowedRoles={[null]}>
+                  <SignUpPage />
+                </ProtectedRoute>
+              }
+            />
             <Route path="/courses" element={<CoursesCatalog />} />
             <Route
               path="/dashboard"
               element={
-                <ProtectedRoute requiredRole={1}>
+                <ProtectedRoute allowedRoles={["user"]}>
                   <UserDashboard />
                 </ProtectedRoute>
               }
@@ -43,7 +57,7 @@ function App() {
             <Route
               path="/roadmap"
               element={
-                <ProtectedRoute requiredRole={1}>
+                <ProtectedRoute allowedRoles={["user", "profesor"]}>
                   <RoadmapPage />
                 </ProtectedRoute>
               }
@@ -51,7 +65,7 @@ function App() {
             <Route
               path="/RoadmapCreator"
               element={
-                <ProtectedRoute requiredRole={1}>
+                <ProtectedRoute allowedRoles={["user", "profesor"]}>
                   <RoadmapCreationPage />
                 </ProtectedRoute>
               }
@@ -63,8 +77,8 @@ function App() {
             <Route
               path="/admin"
               element={
-                <ProtectedRoute requiredRole={3}>
-                  <AdminPage />
+                <ProtectedRoute allowedRoles={["admin"]}>
+                  <AdminDashboard />
                 </ProtectedRoute>
               }
             />

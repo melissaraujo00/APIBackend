@@ -20,29 +20,31 @@ export function AuthProvider({ children }) {
           setUserId(authData.data.user.id);
           setUserName(authData.data.user.username);
           setUserEmail(authData.data.user.useremail);
-          switch (authData.data.user.role[0]) {
-            case "user":
-              setUserRole(1);
-              break;
+          setUserRole(authData.data.user.role[0]);
+          // switch (authData.data.user.role[0]) {
+          //   case "user":
+          //     setUserRole(1);
+          //     break;
 
-            case "profesor":
-              setUserRole(2);
-              break;
+          //   case "profesor":
+          //     setUserRole(2);
+          //     break;
 
-            case "admin":
-              setUserRole(3);
-              break;
-            default:
-              setUserRole(1);
-          }
-
+          //   case "admin":
+          //     setUserRole(3);
+          //     break;
+          //   default:
+          //     setUserRole(1);
+          // }
           break;
         case 401:
-          alert("Acceso denegado");
+          console.log("401: ", "Acceso denegado");
+          //   alert("Acceso denegado");
           break;
 
         case 404:
-          alert("Usuario no registrado");
+          console.log("404: ", "Usuario no registrado");
+          // alert("Usuario no registrado");
           break;
       }
     } else {
@@ -51,9 +53,10 @@ export function AuthProvider({ children }) {
       setUserName(null);
       setUserEmail(null);
       setUserRole(null);
-      // console.error("Token inválido o expirado:");
+      console.error("Token inválido o expirado:");
     }
     setLoading(false); // Termina la carga
+    return 200
   };
 
   // Función para hacer logout
