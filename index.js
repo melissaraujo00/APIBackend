@@ -4,8 +4,10 @@ import modulos from './routers/modulos.js';
 import cookieParser from 'cookie-parser';
 import login from './routers/routerLogin.js';
 import cors from 'cors';
+import generateContent from './gemini-integration/gemini.js';
 import connectDB from './DataBase/db.js';
 const app = express();
+
 
 const port = process.env.PORT || 3000;
 app.use(cookieParser());
@@ -16,6 +18,7 @@ app.use(bodyParser.json());
 app.use(cors());
 app.use('/api/modulos', modulos);
 app.use('/login', login);
+app.get("/gemini", generateContent);
 
 connectDB();
 
