@@ -15,7 +15,6 @@ const moduloSchema = new mongoose.Schema({
     imagen: String,
     titulo: String,
     temas: [temaSchema],
-    etiquetas: [String],
     nivel: { type: String, enum: ['principiante', 'intermedio', 'avanzado'] }
 });
 

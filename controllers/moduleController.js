@@ -7,14 +7,10 @@ import Modulo from "../models/model.js";
 export const listadoModulos = async (req, res) => {
     try {
         // Extraer parámetros de consulta
-        const { etiquetas, nivel } = req.query;
+        const {nivel} = req.query;
 
         // Construir el filtro dinámico
         let filtro = {};
-
-        if (etiquetas) {
-            filtro.etiquetas = { $in: etiquetas.split(',') }; // Busca módulos que contengan alguna de las etiquetas
-        }
 
         if (nivel) {
             filtro.nivel = nivel; // Filtra por nivel de conocimiento
@@ -37,7 +33,6 @@ export const guardarModulo = async (req, res) => {
         imagen: req.body.imagen,
         titulo: req.body.titulo,
         temas: req.body.temas,
-        etiquetas: req.body.etiquetas,
         nivel: req.body.nivel
     });
 
@@ -86,9 +81,6 @@ export const editarModulo = async (req, res) => {
         }
         if (req.body.temas != null) {
             modulo.temas = req.body.temas;
-        }
-        if (req.body.etiquetas != null) {
-            modulo.etiquetas = req.body.etiquetas;
         }
         if (req.body.nivel != null) {
             modulo.nivel = req.body.nivel;

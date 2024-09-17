@@ -1,6 +1,7 @@
 import { Router } from 'express';
 import Login from '../models/modelLogin.js';
 import jwt from 'jsonwebtoken';
+import cookieParser from 'cookie-parser';
 import authMiddleware from '../middleware/authMiddleware.js';
 import { validationResult } from 'express-validator';
 import rateLimit from 'express-rate-limit';
@@ -10,6 +11,7 @@ import validateLogin from '../validations/userValidation.js';
 dotenv.config();
 
 const router = Router();
+cookieParser();
 
 router.get('/usuario', authMiddleware, async (req, res) => {
     try {
@@ -60,7 +62,7 @@ router.post('/register', validateLogin, async (req, res) => {
         });
 
         res.status(200).json({ msg: 'User registered successfully' });
-
+        
     } catch (err) {
         res.status(400).json({ message: err.message });
     }
@@ -121,28 +123,41 @@ const loginLimiter = rateLimit({
 });
 
 router.post('/signin', loginLimiter, async (req, res) => {
-    const userFound = await Login.findOne({ email: req.body.email });
-    if (!userFound) return res.status(400).json({ message: "User not found" });
+    try {
+        const userFound = await Login.findOne({ email: req.body.email });
+        if (!userFound) return res.status(400).json({ message: "User not found" });
 
-    const matchPassword = await Login.comparePassword(req.body.password, userFound.password);
-    if (!matchPassword) return res.status(401).json({ token: null, message: 'Invalid password' });
+        const matchPassword = await Login.comparePassword(req.body.password, userFound.password);
+        if (!matchPassword) return res.status(401).json({ token: null, message: 'Invalid password' });
 
-    const payload = {
-        user: {
-            id_user: userFound._id,
-            roles: userFound.roles
-        }
-    };
+        const payload = {
+            user: {
+                id_user: userFound._id,
+                roles: userFound.roles
+            }
+        };
 
-    jwt.sign(
-        payload,
-        process.env.JWT_SECRET,
-        { expiresIn: 3600 },
-        (err, token) => {
-            if (err) throw err;
-            res.json({ token });
-        }
-    );
+    
+        jwt.sign(
+            payload,
+            process.env.JWT_SECRET,
+            { expiresIn: 3600 },
+            (err, token) => {
+              if (err) throw err;
+          
+              // Establecer una cookie con el token JWT
+              res.cookie('token', token, {
+                httpOnly: true,
+                secure: process.env.NODE_ENV === 'production',
+                maxAge: 3600 * 1000 // 1 hora
+              });
+          
+              res.json({ message: 'Signed in successfully' });
+            }
+          );          
+    } catch (err) {
+        res.status(500).json({ message: 'Server error' });
+    }
 });
 
 export default router;

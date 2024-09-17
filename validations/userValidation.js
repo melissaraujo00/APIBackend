@@ -1,4 +1,4 @@
-import { check } from 'express-validator';
+import { check, body } from 'express-validator';
 
 const validateLogin = [
 
@@ -6,27 +6,40 @@ const validateLogin = [
         .notEmpty()
         .withMessage('El nombre de usuario no debe estar vacío')
         .isLength({ min: 5, max: 255 })
-        .withMessage('El nombre de usuario debe contener entre 5 y 255 carateres'),
+        .withMessage('El nombre de usuario debe contener entre 5 y 255 caracteres'),
 
     check('email')
         .isEmail()
         .withMessage('Debe ser una dirección de email válida')
         .isLength({ min: 5, max: 255 })
-        .withMessage('El email debe contener entre 5 y 255 carateres'),
+        .withMessage('El email debe contener entre 5 y 255 caracteres'),
 
-    check('password')
+    body('password')
         .isString()
         .withMessage('La contraseña debe ser un string')
-        .isLength({ min: 8 })
-        .withMessage('La contraseña debe contener mínimo 8 caracteres')
-        .matches(/[A-Z]/)
-        .withMessage('La contraseña debe contener al menos una letra mayúscula')
-        .matches(/[a-z]/)
-        .withMessage('La contraseña debe contener al menos una letra minúscula')
-        .matches(/\d/)
-        .withMessage('La contraseña debe contener al menos un dígito')
-        .matches(/[!@#$%^&*(),.?":{}|<>]/)
-        .withMessage('La contraseña debe contener al menos un caracter especial')
+        .custom(value => {
+            const errors = [];
+            if (value.length < 8) {
+                errors.push('mínimo 8 caracteres');
+            }
+            if (!/[A-Z]/.test(value)) {
+                errors.push('una letra mayúscula');
+            }
+            if (!/[a-z]/.test(value)) {
+                errors.push('una letra minúscula');
+            }
+            if (!/\d/.test(value)) {
+                errors.push('un dígito');
+            }
+            if (!/[!@#$%^&*(),.?":{}|<>]/.test(value)) {
+                errors.push('un carácter especial');
+            }
+
+            if (errors.length > 0) {
+                throw new Error(`La contraseña debe contener ${errors.join(', ')}.`);
+            }
+            return true;
+        })
 ];
 
 export default validateLogin;
