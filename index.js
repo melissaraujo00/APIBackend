@@ -20,6 +20,7 @@ app.use("/api/modulos", modulos);
 app.use("/login", login);
 app.get("/gemini", generateContent);
 
+
 connectDB();
 
 app.listen(port, () => {
