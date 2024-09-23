@@ -162,7 +162,7 @@ const generateContent = async (req, res) => {
     const responseText = await result.response.text();
 
     // Devuelve la respuesta
-    res.json(JSON.parse(responseText));
+    res.status(200).json(JSON.parse(responseText));
   } catch (error) {
     console.error(error);
     res.status(500).json({ error: "Error al generar contenido" });
