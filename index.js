@@ -18,7 +18,7 @@ app.use(bodyParser.json());
 app.use(cors());
 app.use("/api/modulos", modulos);
 app.use("/login", login);
-app.get("/gemini", generateContent);
+app.post("/gemini", generateContent);
 
 connectDB();
 
