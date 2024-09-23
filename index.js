@@ -15,17 +15,13 @@ app.use(express.json());
 
 
 app.use(bodyParser.json());
-app.use();
+app.use(cors());
 app.use("/api/modulos", modulos);
 app.use("/login", login);
 app.get("/gemini", generateContent);
-
 
 connectDB();
 
 app.listen(port, () => {
   console.log(`Servidor corriendo en http://localhost:${port}`);
 });
-
-
-

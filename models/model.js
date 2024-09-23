@@ -1,6 +1,7 @@
 import mongoose from 'mongoose';
 
 const urlVideoSchema = new mongoose.Schema({
+    descripcion: String,
     url: String
 });
 
