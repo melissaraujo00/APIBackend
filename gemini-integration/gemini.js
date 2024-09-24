@@ -39,9 +39,14 @@ const schema = {
         required: ["name", "lessons"],
       },
     },
+    assignedTo: {  // Añadiendo el campo assignedTo para relacionar el roadmap con el usuario
+      type: SchemaType.STRING, 
+      description: "ID del usuario al que se asigna el roadmap",
+    },
   },
   required: ["roadmap"],
 };
+
 
 // JSON FORMAT
 // {

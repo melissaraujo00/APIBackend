@@ -235,3 +235,33 @@ export const eliminarUsuario = [ authMiddleware, async (req, res) => {
         res.status(500).json({ message: 'Error al eliminar el usuario' });
     }
 }];
+
+/** 
+* @description asing roadmap
+* @route POST /login/asignarRoadmap
+*/
+
+export const asignarRoadmap = [authMiddleware, async (req, res) => {
+    try {
+        const userId = req.user._id;
+    
+        // Crear un nuevo roadmap a partir del cuerpo de la solicitud
+        const newRoadmap = new Roadmap({
+          roadmap: req.body.roadmap,
+          assignedTo: userId // Asignar automáticamente al usuario autenticado
+        });
+    
+        // Guardar el roadmap en la base de datos
+        await newRoadmap.save();
+    
+        // Actualizar el usuario para agregar el roadmap a su cuenta
+        await Login.updateOne(
+          { _id: userId },
+          { $push: { roadmaps: newRoadmap._id } }  // Agregar el roadmap a la lista de roadmaps del usuario
+        );
+    
+        res.status(201).json({ message: 'Roadmap creado y asignado correctamente', roadmap: newRoadmap });
+      } catch (error) {
+        res.status(500).json({ message: 'Error al crear el roadmap', error });
+      }
+}];

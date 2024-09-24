@@ -20,7 +20,8 @@ const loginSchema = new mongoose.Schema({
         type: [String], 
         enum: ['user', 'admin', 'profesor'], 
         default: 'user'
-    }
+    },
+    roadmaps: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Roadmap' }]
 });
 
 
