@@ -1,5 +1,5 @@
 import express from 'express';
-import { listaUsuarios, usuarioId, resgistrarUsuario, inicioSesion, cierreSesion, mantenerPerfil, actulizarUsuario, eliminarUsuario } from '../controllers/moduleControllerLogin.js';
+import { listaUsuarios, usuarioId, resgistrarUsuario, inicioSesion, cierreSesion, mantenerPerfil, actulizarUsuario, eliminarUsuario, asignarRoadmap } from '../controllers/moduleControllerLogin.js';
 
 const router = express.Router();
 
@@ -26,5 +26,8 @@ router.put('/usuario/:id', actulizarUsuario);
 
 //delete user
 router.delete('/usuario/:id', eliminarUsuario);
+
+//Post asig roadmap
+router.post('/asignarRoadmap', asignarRoadmap)
 
 export default router;

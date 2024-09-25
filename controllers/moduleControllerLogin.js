@@ -7,6 +7,7 @@ import rateLimit from 'express-rate-limit';
 import dotenv from 'dotenv';
 import validateLogin from '../validations/userValidation.js';
 import mongoose from 'mongoose'; 
+import Roadmap from '../models/modelRoadmap.js';
 
 cookieParser();
 dotenv.config();
@@ -243,25 +244,29 @@ export const eliminarUsuario = [ authMiddleware, async (req, res) => {
 
 export const asignarRoadmap = [authMiddleware, async (req, res) => {
     try {
-        const userId = req.user._id;
-    
-        // Crear un nuevo roadmap a partir del cuerpo de la solicitud
+        const userId = req.user.id_user; 
+        
+        // Verifica si se ha proporcionado roadmap en la solicitud
+        const { roadmap } = req.body; 
+        if (!roadmap) {
+            return res.status(400).json({ message: 'Roadmap data is required' });
+        }
+
+        // Crea un nuevo roadmap
         const newRoadmap = new Roadmap({
-          roadmap: req.body.roadmap,
-          assignedTo: userId // Asignar automáticamente al usuario autenticado
+            roadmap: roadmap, // Aquí asignamos el roadmap directamente
+            assignedTo: userId, // Asignamos el roadmap al usuario actual
         });
-    
-        // Guardar el roadmap en la base de datos
-        await newRoadmap.save();
-    
-        // Actualizar el usuario para agregar el roadmap a su cuenta
-        await Login.updateOne(
-          { _id: userId },
-          { $push: { roadmaps: newRoadmap._id } }  // Agregar el roadmap a la lista de roadmaps del usuario
-        );
-    
-        res.status(201).json({ message: 'Roadmap creado y asignado correctamente', roadmap: newRoadmap });
-      } catch (error) {
-        res.status(500).json({ message: 'Error al crear el roadmap', error });
-      }
+
+        await newRoadmap.save(); // Guarda el nuevo roadmap
+
+        // Actualiza al usuario autenticado para asignarle el roadmap
+        const user = await Login.findByIdAndUpdate(userId, { $push: { roadmaps: newRoadmap._id } }, { new: true });
+
+        res.status(200).json({ message: 'Roadmap asignado correctamente', user, roadmap: newRoadmap });
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({ message: 'Error al asignar el roadmap' });
+    }
 }];
+

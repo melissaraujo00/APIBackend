@@ -1,5 +1,5 @@
 import express from 'express';
-import { listadoModulos, guardarModulo, obtenerModulo, editarModulo, eliminarModulo, actualizarTemasDelModulo, asignarRoadmap } from '../controllers/moduleController.js';
+import { listadoModulos, guardarModulo, obtenerModulo, editarModulo, eliminarModulo, actualizarTemasDelModulo } from '../controllers/moduleController.js';
 
 const router = express.Router();
 
@@ -21,7 +21,6 @@ router.put('/:moduloId/temas/:temaId', actualizarTemasDelModulo);
 //Delete modulo
 router.delete('/:id', eliminarModulo);
 
-//Post asig roadmap
-router.post('/asignarRoadmap', asignarRoadmap)
+
 
 export default router;

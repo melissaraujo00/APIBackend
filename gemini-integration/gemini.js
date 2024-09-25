@@ -39,65 +39,11 @@ const schema = {
         required: ["name", "lessons"],
       },
     },
-    assignedTo: {  // Añadiendo el campo assignedTo para relacionar el roadmap con el usuario
-      type: SchemaType.STRING, 
-      description: "ID del usuario al que se asigna el roadmap",
-    },
   },
   required: ["roadmap"],
 };
 
 
-// JSON FORMAT
-// {
-//   "roadmap": [
-//       {
-//           "lessons": [
-//               {
-//                   "description": "Introducción a JavaScript, su historia y aplicaciones en la web.",
-//                   "name": "Introducción a JavaScript",
-//                   "videoUrl": "https://www.youtube.com/watch?v=2SetvwBV-SU"
-//               },
-//               {
-//                   "description": "Aprendiendo sobre variables, tipos de datos, operadores y estructuras de control.",
-//                   "name": "Fundamentos de JavaScript",
-//                   "videoUrl": "https://www.youtube.com/watch?v=BS5RX27VaAQ"
-//               }
-//           ],
-//           "name": "Fundamentos de JavaScript"
-//       },
-//       {
-//           "lessons": [
-//               {
-//                   "description": "Manejar la asincronía con callbacks, para tareas que tardan en completarse.",
-//                   "name": "Callbacks en JavaScript",
-//                   "videoUrl": "https://www.youtube.com/watch?v=TYG2_iUr8XY"
-//               },
-//               {
-//                   "description": "Las promesas simplifican la asincronía, manejando los estados de operaciones.",
-//                   "name": "Promesas en JavaScript",
-//                   "videoUrl": "https://www.youtube.com/watch?v=ppzrpTjwEC8"
-//               }
-//           ],
-//           "name": "Asincronía en JavaScript"
-//       },
-//       {
-//           "lessons": [
-//               {
-//                   "description": "Aprendiendo sobre el DOM (Document Object Model), la estructura de una página web.",
-//                   "name": "Introducción al DOM",
-//                   "videoUrl": "https://www.youtube.com/watch?v=dF7lp_qBfV0"
-//               },
-//               {
-//                   "description": "Trabajando con eventos para dar interactividad a tus sitios web.",
-//                   "name": "Eventos en JavaScript",
-//                   "videoUrl": "https://www.youtube.com/watch?v=IQchmLGDXgU"
-//               }
-//           ],
-//           "name": "Manipulación del DOM"
-//       }
-//   ]
-// }
 
 const genAI = new GoogleGenerativeAI(process.env.API_KEY);
 const model = genAI.getGenerativeModel({

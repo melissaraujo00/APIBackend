@@ -8,11 +8,9 @@ import generateContent from "./gemini-integration/gemini.js";
 import connectDB from "./DataBase/db.js";
 const app = express();
 
-
 const port = process.env.PORT || 3000;
 app.use(cookieParser());
 app.use(express.json());
-
 
 app.use(bodyParser.json());
 app.use(cors());
