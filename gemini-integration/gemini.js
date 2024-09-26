@@ -73,7 +73,7 @@ const generateContent = async (req, res) => {
 
   2. *Estructura de la Ruta de Aprendizaje:*z
     - Utiliza UNICA Y EXCLUSIVAMENTE la información del archivo JSON (${JSON.stringify(modulesData)}) que contiene múltiples módulos y lecciones. Los módulos están diseñados para abarcar diferentes aspectos del desarrollo de software.
-    - Crea un mínimo de 4 módulos, cada uno con al menos 3 lecciones detalladas. Sin embargo, si el análisis del usuario indica una mayor necesidad de formación, puedes añadir más módulos y lecciones.
+    - Crea un mínimo de 4 módulos, cada uno con al menos 3 lecciones detalladas. Sin embargo, si el análisis del usuario indica una mayor necesidad de formación, puedes añadir MÁS MÓDULO y MAS LECCIONES.
     - Cada lección debe incluir:
       - Un título claro y conciso.
       - Una descripción detallada que explique el contenido y los objetivos de aprendizaje de la lección.
