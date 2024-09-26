@@ -76,7 +76,7 @@ const generateContent = async (req, res) => {
     - Crea un mínimo de 4 módulos, cada uno con al menos 3 lecciones detalladas. Sin embargo, si el análisis del usuario indica una mayor necesidad de formación, puedes añadir MÁS MÓDULO y MAS LECCIONES.
     - Cada lección debe incluir:
       - Un título claro y conciso.
-      - Una descripción detallada que explique el contenido y los objetivos de aprendizaje de la lección.
+      - Una descripción detallada y extensa que explique el contenido y los objetivos de aprendizaje de la lección.
       - **VIDEO**: Integra los links de los videos de YouTube proporcionados en el JSON que ya contiene las lecciones.
 
   3. *Adaptación Personalizada:*
