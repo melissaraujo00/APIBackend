@@ -60,31 +60,35 @@ const generateContent = async (req, res) => {
 
   const { userQuestionnaire } = req.body;
 
-  const promt = `
-    Actúa como un experto en diseño de currículos educativos de programación, especializado en Full Stack Web Development. Tu objetivo es crear un plan de estudios personalizado.
+  const prompt = `
+  Actúa como un experto en diseño de currículos educativos de programación, especializado en desarrollo de software con énfasis en JavaScript. Tienes 20 años de experiencia ayudando a personas de diferentes niveles de habilidad a dominar la programación, desde principiantes hasta expertos. 
 
-    Usa el JSON ${JSON.stringify(
-      modulesData
-    )} y el cuestionario ${JSON.stringify(
-    userQuestionnaire
-  )} para diseñar una ruta de aprendizaje. Sigue estos pasos:
+  Tu tarea es diseñar un plan de estudios personalizado, o Roadmap, utilizando los datos proporcionados en un archivo JSON de módulos de aprendizaje y las respuestas de un cuestionario personalizado que el usuario completó previamente. El objetivo es guiar al usuario a través de una ruta de aprendizaje optimizada y ajustada a sus necesidades, habilidades y metas profesionales. 
 
-    Análisis del usuario:
-      Evalúa las respuestas del cuestionario para identificar el nivel de habilidad, preferencias de aprendizaje y objetivos profesionales del usuario.
+  Aquí están los pasos detallados para completar la tarea:
 
-    Estructura de la ruta de aprendizaje:
-    	BASADO UNICAMENTE EN LA INFORMACION PROPORNCIONADA
-      Crea como minimo 3 módulos, por Ej. .
-      Cada módulo debe tener mínimo 2 lecciones.
-      Las lecciones deben incluir:
-        Título y descripción breve (ej. “HTML5 Essentials: Aprende los fundamentos del HTML5 y su estructura semántica”).
-        vIDEO: usa los links de los videos de youtube que contiene el json que se te mostro anteriormente.
+  1. *Análisis del Usuario:*
+    - Examina las respuestas del cuestionario (${JSON.stringify(userQuestionnaire)}) para determinar el nivel de habilidad del usuario, sus objetivos profesionales, y sus preferencias de aprendizaje.
+    - Identifica las áreas donde el usuario necesita mejorar, áreas en las que muestra dominio y sus metas a corto y largo plazo en el desarrollo de software.
 
-    Adaptación personalizada: 
-    Ajusta los contenidos al nivel del usuario, asegurando que los conceptos sean claros y accesibles para su nivel de experiencia.
+  2. *Estructura de la Ruta de Aprendizaje:*z
+    - Utiliza UNICA Y EXCLUSIVAMENTE la información del archivo JSON (${JSON.stringify(modulesData)}) que contiene múltiples módulos y lecciones. Los módulos están diseñados para abarcar diferentes aspectos del desarrollo de software.
+    - Crea un mínimo de 4 módulos, cada uno con al menos 3 lecciones detalladas. Sin embargo, si el análisis del usuario indica una mayor necesidad de formación, puedes añadir más módulos y lecciones.
+    - Cada lección debe incluir:
+      - Un título claro y conciso.
+      - Una descripción detallada que explique el contenido y los objetivos de aprendizaje de la lección.
+      - **VIDEO**: Integra los links de los videos de YouTube proporcionados en el JSON que ya contiene las lecciones.
 
-    Toma una respiración profunda y trabaja en este problema paso a paso.
-  `;
+  3. *Adaptación Personalizada:*
+    - Ajusta el contenido de cada módulo y lección en función del nivel de habilidad del usuario. Asegúrate de que los conceptos avanzados se expliquen de manera accesible para quienes tienen menos experiencia, pero al mismo tiempo mantén la profundidad necesaria para los usuarios más avanzados.
+    - Si el cuestionario muestra que el usuario tiene áreas de conocimiento más débiles (como conceptos mal interpretados), añade lecciones adicionales que refuercen esas áreas. Si el usuario muestra un alto dominio en ciertos temas, puedes omitir lecciones básicas en esas áreas o sugerir material complementario.
+
+  4. *Revisión Final y Ajustes:*
+    - Revisa el Roadmap completo y asegúrate de que cubra todos los aspectos relevantes del desarrollo de software según las necesidades del usuario.
+    - Asegúrate de que el ritmo de los módulos sea adecuado para el nivel del usuario. Esto incluye introducir gradualmente conceptos más complejos y ofrecer recomendaciones de ejercicios prácticos donde sea necesario.
+
+  Finalmente, toma una respiración profunda y trabaja en este problema paso a paso.
+`;
 
   try {
     const chat = model.startChat({
@@ -93,7 +97,7 @@ const generateContent = async (req, res) => {
           role: "user",
           parts: [
             {
-              text: promt,
+              text: prompt,
             },
           ],
         },

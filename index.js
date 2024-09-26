@@ -13,7 +13,10 @@ app.use(cookieParser());
 app.use(express.json());
 
 app.use(bodyParser.json());
-app.use(cors());
+app.use(cors({
+  origin: "http://localhost:5173", // Permite solicitudes desde este origen
+  credentials: true, // Si estás utilizando cookies, incluye esto
+}));
 app.use("/api/modulos", modulos);
 app.use("/login", login);
 app.post("/gemini", generateContent);
