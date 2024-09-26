@@ -3,7 +3,7 @@ import axios from "axios";
 // Verificar el estado de autenticación
 export const checkAuth = async () => {
   try {
-    const response = await axios.get("http://localhost:3000/login/status", {
+    const response = await axios.get("http://localhost:3000/login/profile", {
       withCredentials: true, // Asegura que las cookies de autenticación se envíen
     });
     return response; // Devuelve los datos del usuario si está autenticado

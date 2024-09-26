@@ -17,25 +17,10 @@ export function AuthProvider({ children }) {
     if (authData) {
       switch (authData.status) {
         case 200:
-          setUserId(authData.data.user.id);
-          setUserName(authData.data.user.username);
-          setUserEmail(authData.data.user.useremail);
-          setUserRole(authData.data.user.role[0]);
-          // switch (authData.data.user.role[0]) {
-          //   case "user":
-          //     setUserRole(1);
-          //     break;
-
-          //   case "profesor":
-          //     setUserRole(2);
-          //     break;
-
-          //   case "admin":
-          //     setUserRole(3);
-          //     break;
-          //   default:
-          //     setUserRole(1);
-          // }
+          setUserId(authData.data._id);
+          setUserName(authData.data.user);
+          setUserEmail(authData.data.email);
+          setUserRole(authData.data.roles[0]);
           break;
         case 401:
           console.log("401: ", "Acceso denegado");

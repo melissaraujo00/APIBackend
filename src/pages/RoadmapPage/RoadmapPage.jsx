@@ -1,232 +1,245 @@
-// import { useState } from "react";
+import React, { useState } from "react";
 import {
-  Book,
-  Clock,
-  CheckCircle,
-  ArrowRight,
-  Brain,
-  Zap,
-  ChevronRight,
-  Target,
+  ChevronDown,
+  ChevronUp,
   Code,
-  Database,
   Globe,
+  Server,
+  Layers,
 } from "lucide-react";
-// import { Link } from "react-router-dom";
 import Header from "../../components/Header/Header";
 import Footer from "../../components/Footer/Footer";
 
-export default function PersonalizedRoadmapPage() {
-  // const [activeModule, setActiveModule] = useState(0);
+const selectColor = () => {
+  const numRandon = Math.floor(Math.random() * 4);
 
-  const user = {
-    name: "Alex Johnson",
-    goal: "Full Stack Web Developer",
-  };
-
-  const roadmap = {
-    title: "Your Personalized Full Stack Web Development Roadmap",
-    description:
-      "This AI-generated roadmap is tailored to your learning style, current skills, and career goals.",
-    estimatedTime: "6 months",
-    modules: [
-      {
-        title: "Foundations of Web Development",
-        icon: <Code className="w-6 h-6 text-indigo-600" />,
-        color: "bg-indigo-100",
-        topics: [
-          {
-            title: "HTML5 Essentials",
-            duration: "2 weeks",
-            status: "completed",
-          },
-          {
-            title: "CSS3 and Responsive Design",
-            duration: "3 weeks",
-            status: "in-progress",
-          },
-          {
-            title: "JavaScript Fundamentals",
-            duration: "4 weeks",
-            status: "not-started",
-          },
-        ],
-      },
-      {
-        title: "Front-end Frameworks",
-        icon: <Globe className="w-6 h-6 text-blue-600" />,
+  switch (numRandon) {
+    case 0:
+      return {
+        icon: Code,
         color: "bg-blue-100",
-        topics: [
-          {
-            title: "React.js Basics",
-            duration: "3 weeks",
-            status: "not-started",
-          },
-          {
-            title: "State Management with Redux",
-            duration: "2 weeks",
-            status: "not-started",
-          },
-          {
-            title: "Building Responsive UIs",
-            duration: "2 weeks",
-            status: "not-started",
-          },
-        ],
-      },
-      {
-        title: "Back-end Development",
-        icon: <Database className="w-6 h-6 text-green-600" />,
+        textColor: "text-blue-600",
+      };
+    case 1:
+      return {
+        icon: Code,
+        color: "bg-blue-100",
+        textColor: "text-blue-600",
+      };
+
+    case 2:
+      return {
+        icon: Globe,
+        color: "bg-purple-100",
+        textColor: "text-purple-600",
+      };
+
+    case 3:
+      return {
+        icon: Server,
         color: "bg-green-100",
-        topics: [
-          {
-            title: "Node.js and Express.js",
-            duration: "3 weeks",
-            status: "not-started",
-          },
-          {
-            title: "RESTful API Design",
-            duration: "2 weeks",
-            status: "not-started",
-          },
-          {
-            title: "Database Management with MongoDB",
-            duration: "3 weeks",
-            status: "not-started",
-          },
-        ],
+        textColor: "text-green-600",
+      };
+
+    case 4:
+      return {
+        icon: Layers,
+        color: "bg-red-100",
+        textColor: "text-red-600",
+      };
+  }
+};
+
+const roadmapData = [
+  {
+    name: "Foundations of Web Development",
+    lessons: [
+      {
+        name: "HTML5 Essentials",
+        description: "Learn the basics of HTML5 and semantic markup.",
+        videoUrl: "https://example.com/html5-video",
       },
       {
-        title: "Full Stack Integration",
-        icon: <Target className="w-6 h-6 text-red-600" />,
-        color: "bg-red-100",
-        topics: [
-          {
-            title: "Full Stack Project: E-commerce Platform",
-            duration: "4 weeks",
-            status: "not-started",
-          },
-          {
-            title: "Deployment and DevOps Basics",
-            duration: "2 weeks",
-            status: "not-started",
-          },
-          {
-            title: "Performance Optimization",
-            duration: "2 weeks",
-            status: "not-started",
-          },
-        ],
+        name: "CSS3 and Responsive Design",
+        duration: "3 weeks",
+        description: "Master CSS3 and create responsive layouts.",
+        videoUrl: "https://example.com/css3-video",
+      },
+      {
+        name: "JavaScript Fundamentals",
+        duration: "4 weeks",
+        description:
+          "Understand core JavaScript concepts and DOM manipulation.",
+        videoUrl: "https://example.com/javascript-video",
       },
     ],
-  };
+  },
+  {
+    name: "Front-end Frameworks",
+    lessons: [
+      {
+        name: "React.js Basics",
+        duration: "3 weeks",
+        description:
+          "Learn the fundamentals of React and component-based architecture.",
+        videoUrl: "https://example.com/react-video",
+      },
+      {
+        name: "State Management with Redux",
+        description: "Master global state management using Redux.",
+        videoUrl: "https://example.com/redux-video",
+      },
+      {
+        name: "Building Responsive UIs",
+        description:
+          "Create beautiful and responsive user interfaces with modern CSS frameworks.",
+        videoUrl: "https://example.com/responsive-ui-video",
+      },
+    ],
+  },
+  {
+    name: "Back-end Development",
+    lessons: [
+      {
+        name: "Node.js and Express.js",
+        duration: "3 weeks",
+        description: "Build server-side applications with Node.js and Express.",
+        videoUrl: "https://example.com/nodejs-video",
+      },
+      {
+        name: "RESTful API Design",
+        description: "Design and implement RESTful APIs for your applications.",
+        videoUrl: "https://example.com/rest-api-video",
+      },
+      {
+        name: "Database Management with MongoDB",
+        duration: "3 weeks",
+        description: "Learn to work with NoSQL databases using MongoDB.",
+        videoUrl: "https://example.com/mongodb-video",
+      },
+    ],
+  },
+  {
+    name: "Full Stack Integration",
+    lessons: [
+      {
+        name: "Full Stack Project: E-commerce Platform",
+        duration: "4 weeks",
+        description:
+          "Build a complete e-commerce platform integrating all learned technologies.",
+        videoUrl: "https://example.com/fullstack-project-video",
+      },
+      {
+        name: "Deployment and DevOps Basics",
+        description:
+          "Learn to deploy your applications and understand basic DevOps principles.",
+        videoUrl: "https://example.com/devops-video",
+      },
+      {
+        name: "Performance Optimization",
+        description:
+          "Optimize your full stack application for better performance.",
+        videoUrl: "https://example.com/optimization-video",
+      },
+    ],
+  },
+];
+
+const LessonItem = ({ lesson, colorsData }) => {
+  const [isOpen, setIsOpen] = useState(false);
+  const colorData = selectColor();
 
   return (
-    <div className="min-h-screen bg-gray-100 font-sans">
+    <div className="mb-4">
+      <button
+        onClick={() => setIsOpen(!isOpen)}
+        className="flex items-center justify-between w-full text-left rounded-md transition-colors duration-200 ease-in-out hover:bg-slate-300 p-1"
+      >
+        <div className="flex items-center">
+          <colorData.icon className={`w-6 h-6 ${colorsData.textColor} mr-2`} />
+          <span className="font-medium">{lesson.name}</span>
+        </div>
+        <div className="flex items-center">
+          {isOpen ? <ChevronUp size={20} /> : <ChevronDown size={20} />}
+        </div>
+      </button>
+      {isOpen && (
+        <div className="mt-2 ml-7 pl-3 border-l-2 border-gray-200">
+          <p className="text-sm text-gray-600 mb-2">{lesson.description}</p>
+          {/* <a
+            href={lesson.videoUrl}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="text-sm text-blue-600 hover:underline"
+          >
+            Watch Video Lesson
+          </a> */}
+          <iframe
+            className="w-4/12 aspect-video"
+            src={`https://www.youtube.com/embed/CF_lbDaSo48`}
+            title="YouTube video player"
+            frameBorder="0"
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+            referrerPolicy="strict-origin-when-cross-origin"
+            allowFullScreen
+          ></iframe>
+        </div>
+      )}
+    </div>
+  );
+};
+
+const PersonalizedRoadmap = () => {
+  return (
+    <div>
       <Header />
 
-      <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-28">
-        <div className="bg-white rounded-xl shadow-md overflow-hidden">
-          <div className="p-8">
-            <div className="flex items-center justify-between mb-6">
-              <h1 className="text-3xl font-bold text-gray-900">
-                {roadmap.title}
-              </h1>
-              <Brain className="w-8 h-8 text-indigo-600" />
-            </div>
-            <p className="text-xl text-gray-600 mb-8">{roadmap.description}</p>
-
-            <div className="grid md:grid-cols-3 gap-8">
-              <div className="md:col-span-2">
-                <h2 className="text-2xl font-semibold text-gray-800 mb-6">
-                  Your Learning Path
-                </h2>
-                <div className="relative">
-                  {roadmap.modules.map((module, index) => (
-                    <div key={index} className="mb-8">
-                      <div className="flex items-center mb-4">
-                        <div
-                          className={`w-12 h-12 rounded-full ${module.color} flex items-center justify-center mr-4`}
-                        >
-                          {module.icon}
-                        </div>
-                        <h3 className="text-lg font-medium text-gray-800">
-                          {module.title}
-                        </h3>
-                      </div>
-                      <div className="ml-6 pl-6 border-l-2 border-gray-200">
-                        {module.topics.map((topic, topicIndex) => (
-                          <div key={topicIndex} className="mb-4 relative">
-                            <div className="absolute -left-8 top-1 w-4 h-4 rounded-full bg-white border-2 border-gray-200"></div>
-                            <div className="flex items-center justify-between">
-                              <span className="flex items-center text-sm">
-                                {topic.status === "completed" && (
-                                  <CheckCircle className="w-4 h-4 text-green-500 mr-2" />
-                                )}
-                                {topic.status === "in-progress" && (
-                                  <Zap className="w-4 h-4 text-yellow-500 mr-2" />
-                                )}
-                                {topic.status === "not-started" && (
-                                  <Clock className="w-4 h-4 text-gray-400 mr-2" />
-                                )}
-                                {topic.title}
-                              </span>
-                              <span className="text-xs text-gray-500">
-                                {topic.duration}
-                              </span>
-                            </div>
-                          </div>
-                        ))}
-                      </div>
-                    </div>
-                  ))}
+      <div className="pt-24">
+        <div className="max-w-4xl mx-auto p-6 bg-white shadow-lg rounded-lg mb-8">
+          <h1 className="text-3xl font-bold mb-2">
+            Your Personalized Full Stack Web Development Roadmap
+          </h1>
+          <p className="text-gray-600 mb-8">
+            This AI-generated roadmap is tailored to your learning style,
+            current skills, and career goals.
+          </p>
+          <h2 className="text-2xl font-semibold mb-6">Your Learning Path</h2>
+          <div className="space-y-6">
+            {roadmapData.map((section, index) => {
+              const colorsData = selectColor();
+              return (
+                <div
+                  key={index}
+                  className={`${colorsData.color} rounded-lg p-4`}
+                >
+                  <div className="flex items-center mb-4">
+                    <colorsData.icon
+                      className={`w-6 h-6 ${colorsData.textColor} mr-2`}
+                    />
+                    <h3
+                      className={`text-xl font-semibold ${colorsData.textColor}`}
+                    >
+                      {section.name}
+                    </h3>
+                  </div>
+                  <div className="space-y-2">
+                    {section.lessons.map((lesson, lessonIndex) => (
+                      <LessonItem
+                        key={lessonIndex}
+                        lesson={lesson}
+                        colorsData={colorsData}
+                      />
+                    ))}
+                  </div>
                 </div>
-              </div>
-
-              <div>
-                <div className="bg-gray-50 p-6 rounded-lg shadow-sm mb-6">
-                  <h2 className="text-xl font-semibold text-gray-800 mb-4">
-                    Roadmap Overview
-                  </h2>
-                  <ul className="space-y-3">
-                    <li className="flex items-center text-gray-600">
-                      <Clock className="w-5 h-5 mr-2 text-indigo-600" />
-                      <span>Estimated time: {roadmap.estimatedTime}</span>
-                    </li>
-                    <li className="flex items-center text-gray-600">
-                      <Book className="w-5 h-5 mr-2 text-indigo-600" />
-                      <span>Total modules: {roadmap.modules.length}</span>
-                    </li>
-                    <li className="flex items-center text-gray-600">
-                      <Brain className="w-5 h-5 mr-2 text-indigo-600" />
-                      <span>AI-personalized for: {user.name}</span>
-                    </li>
-                    <li className="flex items-center text-gray-600">
-                      <ArrowRight className="w-5 h-5 mr-2 text-indigo-600" />
-                      <span>Goal: {user.goal}</span>
-                    </li>
-                  </ul>
-                </div>
-
-                <div className="bg-indigo-600 p-6 rounded-lg shadow-sm text-white">
-                  <h2 className="text-xl font-semibold mb-4">
-                    Need Assistance?
-                  </h2>
-                  <p className="mb-4">
-                    Our AI tutor is here to help you with any questions or
-                    challenges you face during your learning journey.
-                  </p>
-                  <button className="bg-white text-indigo-600 px-4 py-2 rounded-full font-semibold hover:bg-indigo-100 transition duration-300">
-                    Chat with AI Tutor
-                  </button>
-                </div>
-              </div>
-            </div>
+              );
+            })}
           </div>
         </div>
-      </main>
-
+      </div>
       <Footer />
     </div>
   );
-}
+};
+
+export default PersonalizedRoadmap;

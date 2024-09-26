@@ -1,366 +1,588 @@
-import { useState } from "react";
+import React, { useState } from "react";
 import {
-  Send,
-  ArrowLeft,
-  Loader,
-  Download,
-  Book,
-  Clock,
-  CheckCircle,
-  ArrowRight,
-  Brain,
-  Zap,
   ChevronRight,
-  Target,
+  ChevronLeft,
   Code,
-  Database,
   Globe,
-  Save,
+  Book,
+  Zap,
+  CheckCircle,
+  ChevronDown,
+  ChevronUp,
+  Server,
+  Layers,
 } from "lucide-react";
 import { Link } from "react-router-dom";
+import ReactMarkdown from "react-markdown";
+import { LoadingScreen } from "../../components/LoadingScreen";
+import { ErrorMessage } from "../../components/ErrorMessage";
 import Header from "../../components/Header/Header";
 import Footer from "../../components/Footer/Footer";
-import { useAuth } from "../../auth/useAuth";
+import { MakeRoadmap, SaveRoadmap } from "../../components/Api/GeminiRoutes";
+import { Bounce, Slide, ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
-export default function RoadmapCreationPage() {
-  const [prompt, setPrompt] = useState("");
-  const [isGenerating, setIsGenerating] = useState(false);
-  const [generatedRoadmap, setGeneratedRoadmap] = useState(null);
-  const { userId, userName, userEmail, userRole, loading } = useAuth();
+const selectColor = () => {
+  const numRandon = Math.floor(Math.random() * 4);
 
-  const roadmap = {
-    title: "Your Personalized Full Stack Web Development Roadmap",
-    description:
-      "This AI-generated roadmap is tailored to your learning style, current skills, and career goals.",
-    estimatedTime: "6 months",
-    modules: [
-      {
-        title: "Foundations of Web Development",
-        icon: <Code className="w-6 h-6 text-indigo-600" />,
-        color: "bg-indigo-100",
-        topics: [
-          {
-            title: "HTML5 Essentials",
-            duration: "2 weeks",
-            status: "completed",
-          },
-          {
-            title: "CSS3 and Responsive Design",
-            duration: "3 weeks",
-            status: "in-progress",
-          },
-          {
-            title: "JavaScript Fundamentals",
-            duration: "4 weeks",
-            status: "not-started",
-          },
-        ],
-      },
-      {
-        title: "Front-end Frameworks",
-        icon: <Globe className="w-6 h-6 text-blue-600" />,
+  switch (numRandon) {
+    case 0:
+      return {
+        icon: Code,
         color: "bg-blue-100",
-        topics: [
-          {
-            title: "React.js Basics",
-            duration: "3 weeks",
-            status: "not-started",
-          },
-          {
-            title: "State Management with Redux",
-            duration: "2 weeks",
-            status: "not-started",
-          },
-          {
-            title: "Building Responsive UIs",
-            duration: "2 weeks",
-            status: "not-started",
-          },
-        ],
-      },
-      {
-        title: "Back-end Development",
-        icon: <Database className="w-6 h-6 text-green-600" />,
+        textColor: "text-blue-600",
+      };
+    case 1:
+      return {
+        icon: Code,
+        color: "bg-blue-100",
+        textColor: "text-blue-600",
+      };
+
+    case 2:
+      return {
+        icon: Globe,
+        color: "bg-purple-100",
+        textColor: "text-purple-600",
+      };
+
+    case 3:
+      return {
+        icon: Server,
         color: "bg-green-100",
-        topics: [
-          {
-            title: "Node.js and Express.js",
-            duration: "3 weeks",
-            status: "not-started",
-          },
-          {
-            title: "RESTful API Design",
-            duration: "2 weeks",
-            status: "not-started",
-          },
-          {
-            title: "Database Management with MongoDB",
-            duration: "3 weeks",
-            status: "not-started",
-          },
-        ],
-      },
-      {
-        title: "Full Stack Integration",
-        icon: <Target className="w-6 h-6 text-red-600" />,
+        textColor: "text-green-600",
+      };
+
+    case 4:
+      return {
+        icon: Layers,
         color: "bg-red-100",
-        topics: [
-          {
-            title: "Full Stack Project: E-commerce Platform",
-            duration: "4 weeks",
-            status: "not-started",
-          },
-          {
-            title: "Deployment and DevOps Basics",
-            duration: "2 weeks",
-            status: "not-started",
-          },
-          {
-            title: "Performance Optimization",
-            duration: "2 weeks",
-            status: "not-started",
-          },
-        ],
-      },
+        textColor: "text-red-600",
+      };
+  }
+};
+
+const questions = [
+  {
+    id: "b1",
+    text: "¿Qué es JavaScript y para qué se utiliza?",
+    level: "Básico",
+    options: [
+      "Es un lenguaje de programación utilizado para dar interactividad a las páginas web.",
+      "Es una herramienta para gestionar bases de datos.",
+      "Es un lenguaje de programación que se usa principalmente para backend.",
+      "Es un software que sirve para diseñar imágenes.",
+      "No lo sé",
     ],
+  },
+  {
+    id: "b2",
+    text: "¿Cuál es la diferencia entre let, const y var?",
+    level: "Básico",
+    options: [
+      "let y const tienen alcance de bloque, var tiene alcance global o de función.",
+      "const es una variable que no se puede cambiar, mientras que let y var sí.",
+      "let es para variables locales y const para globales.",
+      "const sirve solo para constantes, let y var para variables globales.",
+      "No lo sé",
+    ],
+  },
+  {
+    id: "b3",
+    text: "¿Qué es una función en JavaScript y cómo se declara?",
+    level: "Básico",
+    options: [
+      "Es un bloque de código que realiza una tarea específica, se declara con la palabra 'function'.",
+      "Es una variable que almacena un conjunto de datos.",
+      "Es una instrucción para ejecutar loops en JavaScript.",
+      "Se declara usando la palabra clave 'const'.",
+      "No lo sé",
+    ],
+  },
+  {
+    id: "b4",
+    text: "¿Qué es un array en JavaScript y cómo se utiliza?",
+    level: "Básico",
+    options: [
+      "Es una estructura de datos que almacena múltiples valores en una sola variable.",
+      "Es una función especial de JavaScript para ejecutar tareas repetitivas.",
+      "Es un tipo de dato que contiene solo números enteros.",
+      "Es un bucle que se utiliza para repetir una operación varias veces.",
+      "No lo sé",
+    ],
+  },
+  {
+    id: "b5",
+    text: "¿Tipos de bucles condicionales en JavaScript?",
+    level: "Básico",
+    options: [
+      "for, while, do-while.",
+      "if, else, switch.",
+      "forEach, map, filter.",
+      "for, foreach, switch.",
+      "No lo sé",
+    ],
+  },
+  {
+    id: "i1",
+    text: "¿Qué es el DOM (Document Object Model) y cómo se manipula con JavaScript?",
+    level: "Intermedio",
+    options: [
+      "Es una representación en árbol de una página web que se puede manipular con JavaScript.",
+      "Es una API que permite gestionar archivos del servidor.",
+      "Es el motor que ejecuta JavaScript en el navegador.",
+      "Es una interfaz para crear gráficos en JavaScript.",
+      "No lo sé",
+    ],
+  },
+  {
+    id: "i2",
+    text: "¿Qué son los eventos en JavaScript y cómo funcionan?",
+    level: "Intermedio",
+    options: [
+      "Son acciones que ocurren en la página web, como un clic, y pueden ser detectadas por JavaScript.",
+      "Son métodos especiales que se ejecutan de forma automática.",
+      "Son condiciones lógicas que activan funciones.",
+      "Son comandos que ejecutan un bloque de código al final de la página.",
+      "No lo sé",
+    ],
+  },
+  {
+    id: "i3",
+    text: "¿Qué es una promesa en JavaScript y para qué se utiliza?",
+    level: "Intermedio",
+    options: [
+      "Es un objeto que representa la eventual finalización de una operación asíncrona.",
+      "Es un bloque de código que se ejecuta en un tiempo futuro.",
+      "Es un método que permite manejar eventos de usuarios.",
+      "Es una estructura de datos que almacena valores futuros.",
+      "No lo sé",
+    ],
+  },
+  {
+    id: "i4",
+    text: "¿Cuál es la diferencia entre una función síncrona y asíncrona?",
+    level: "Intermedio",
+    options: [
+      "Una función síncrona se ejecuta secuencialmente, mientras que una asíncrona no bloquea el hilo principal.",
+      "Una función síncrona es más rápida que una asíncrona.",
+      "Una función asíncrona se ejecuta automáticamente, mientras que la síncrona necesita ser llamada.",
+      "No hay diferencias técnicas entre ambas.",
+      "No lo sé",
+    ],
+  },
+  {
+    id: "i5",
+    text: "¿Qué es un objeto en JavaScript y cómo se crean propiedades o métodos en él?",
+    level: "Intermedio",
+    options: [
+      "Un objeto es una colección de propiedades y métodos, definidos dentro de llaves.",
+      "Es una variable que almacena múltiples tipos de datos.",
+      "Es un método que ejecuta funciones automáticas.",
+      "Es un bucle que se utiliza para crear nuevas instancias de variables.",
+      "No lo sé",
+    ],
+  },
+  {
+    id: "a1",
+    text: '¿Cómo maneja JavaScript la concurrencia y qué es el "Event Loop"?',
+    level: "Avanzado",
+    options: [
+      "El Event Loop permite que JavaScript maneje operaciones asíncronas sin bloquear el hilo principal.",
+      "Es una función que mantiene en pausa el código hasta que se complete una operación.",
+      "Es un ciclo que repite acciones indefinidamente.",
+      "Es una estructura de control que permite ejecutar funciones en paralelo.",
+      "No lo sé",
+    ],
+  },
+  {
+    id: "a2",
+    text: '¿Qué es el concepto de "hoisting" en JavaScript?',
+    level: "Avanzado",
+    options: [
+      "Es el comportamiento que mueve las declaraciones de variables y funciones al inicio de su contexto de ejecución.",
+      "Es una técnica para mejorar la velocidad del código.",
+      "Es una forma de detener la ejecución del código en un momento específico.",
+      "Es una característica para gestionar ciclos en bucles.",
+      "No lo sé",
+    ],
+  },
+  {
+    id: "a3",
+    text: '¿Qué es un "closure" y en qué situaciones es útil?',
+    level: "Avanzado",
+    options: [
+      "Es una función que recuerda su contexto léxico incluso fuera de él.",
+      "Es un tipo especial de función que no acepta parámetros.",
+      "Es una variable que puede cambiar su valor en tiempo de ejecución.",
+      "Es una estructura de datos que almacena funciones.",
+      "No lo sé",
+    ],
+  },
+  {
+    id: "a4",
+    text: "¿Cómo se implementa la herencia en JavaScript y qué es el prototipo?",
+    level: "Avanzado",
+    options: [
+      "JavaScript usa herencia prototipal, permitiendo a los objetos heredar de otros objetos.",
+      "Herencia se implementa usando 'class' y 'super'.",
+      "Los objetos heredan propiedades usando el constructor de la clase padre.",
+      "Herencia se implementa utilizando un bucle que copia propiedades.",
+      "No lo sé",
+    ],
+  },
+  {
+    id: "a5",
+    text: "¿Cómo funcionan async/await y cómo facilitan el manejo de promesas?",
+    level: "Avanzado",
+    options: [
+      "Permiten manejar código asíncrono de manera secuencial y legible.",
+      "Son palabras clave que permiten detener la ejecución del código hasta que se resuelva una promesa.",
+      "async detiene el código hasta que await completa la operación.",
+      "Son métodos que se usan para manejar ciclos de eventos.",
+      "No lo sé",
+    ],
+  },
+];
+
+const LessonItem = ({ lesson, colorsData }) => {
+  const [isOpen, setIsOpen] = useState(false);
+  const colorData = selectColor();
+
+  return (
+    <div className="mb-4">
+      <button
+        onClick={() => setIsOpen(!isOpen)}
+        className="flex items-center justify-between w-full text-left rounded-md transition-colors duration-200 ease-in-out hover:bg-slate-300 p-1"
+      >
+        <div className="flex items-center">
+          <colorData.icon className={`w-6 h-6 ${colorsData.textColor} mr-2`} />
+          <span className="font-medium">{lesson.name}</span>
+        </div>
+        <div className="flex items-center">
+          {isOpen ? <ChevronUp size={20} /> : <ChevronDown size={20} />}
+        </div>
+      </button>
+      {isOpen && (
+        <div className="mt-2 ml-7 pl-3 border-l-2 border-gray-200">
+          {/* <p className="text-sm text-gray-600 mb-2">{lesson.description}</p> */}
+          <p className="text-sm text-gray-600 mb-2">
+            <ReactMarkdown>{lesson.description}</ReactMarkdown>
+          </p>
+          <iframe
+            className="w-6/12 aspect-video"
+            // src={`https://www.youtube.com/embed/CF_lbDaSo48`}
+            src={`https://www.youtube.com/embed/${
+              lesson.videoUrl.split("=")[1]
+            }`}
+            title="YouTube video player"
+            frameBorder="0"
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+            referrerPolicy="strict-origin-when-cross-origin"
+            allowFullScreen
+          ></iframe>
+        </div>
+      )}
+    </div>
+  );
+};
+
+const RoadmapMenu = ({ roadmapData = [], regenerateRoadmap }) => {
+  const savingRoadmap = async () => {
+    const toastId = toast.loading("Guardando ruta de aprendizaje...");
+    try {
+      console.log({ roadmap: roadmapData });
+      const savingResponse = await SaveRoadmap({ roadmap: roadmapData });
+
+      if (savingResponse.status == 200) {
+        //Roadmap guardado exitosamente
+        toast.update(toastId, {
+          render: "Ruta de aprendizaje guardada exitosamente",
+          type: "success",
+          isLoading: false,
+          icon: "🟢",
+          autoClose: 3500,
+          pauseOnHover: false,
+        });
+      } else {
+        //Error desconocido
+        toast.update(toastId, {
+          render: "Error desconocido",
+          type: "error",
+          isLoading: false,
+          icon: "🔴",
+          autoClose: 3500,
+          pauseOnHover: false,
+        });
+      }
+      console.log("savingResponse:", savingResponse);
+    } catch (error) {
+      console.log("Error catch", error);
+
+      if (error.response) {
+        //Mostrar el error que ocurrio
+        toast.update(toastId, {
+          render: error.response.data.message,
+          type: "error",
+          isLoading: false,
+          icon: "🔴",
+          autoClose: 4000,
+          pauseOnHover: false,
+        });
+      } else {
+        //Si no hay conexion a al server
+        toast.update(toastId, {
+          render: "Error en el servidor",
+          type: "error",
+          isLoading: false,
+          icon: "🔴",
+          autoClose: 4000,
+          pauseOnHover: false,
+        });
+      }
+    }
   };
 
-  const user = {
-    name: "Alex Johnson",
-    goal: "Full Stack Web Developer",
-  };
-
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    setIsGenerating(true);
-    // Here you would typically send the prompt to your AI service and get the response
-    // For this example, we'll simulate a delay and then set a mock roadmap
-    setTimeout(() => {
-      setGeneratedRoadmap({
-        title: "Full Stack Web Development Roadmap",
-        description:
-          "A comprehensive learning path for becoming a full stack web developer.",
-        steps: [
-          { title: "HTML & CSS Fundamentals", duration: "" },
-          { title: "JavaScript Essentials", duration: "" },
-          { title: "Front-end Frameworks (React)", duration: "" },
-          {
-            title: "Back-end Development (Node.js & Express)",
-            duration: "",
-          },
-          { title: "Database Management (SQL & NoSQL)", duration: "" },
-          { title: "DevOps & Deployment", duration: "" },
-        ],
-      });
-      setIsGenerating(false);
-    }, 3000);
+  const RegeneratedRoadmap = async () => {
+    regenerateRoadmap();
+    // console.log(regenerateRoadmap)
   };
 
   return (
-    <div className="min-h-screen bg-gray-100 font-sans">
-      <Header />
-
-      <main className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 py-28 ">
-        <div className="bg-white rounded-xl shadow-md overflow-hidden">
-          <div className="p-8">
-            <div className="flex items-center justify-between mb-6">
-              <h1 className="text-3xl font-bold text-gray-900">
-                AI Roadmap Creation
-              </h1>
-              <Brain className="w-8 h-8 text-indigo-600" />
-            </div>
-            <p className="text-gray-600 mb-6">
-              Describe your learning goals, and our AI will generate a
-              personalized learning roadmap for you.
+    <div className="pt-24">
+      <ToastContainer
+        position="top-center"
+        autoClose={5000}
+        hideProgressBar={false}
+        newestOnTop={false}
+        closeOnClick
+        rtl={false}
+        pauseOnFocusLoss={false}
+        draggable
+        pauseOnHover={false}
+        theme="light"
+        transition={Slide}
+      />
+      <div className="mx-auto p-6 bg-white shadow-lg rounded-lg mb-8">
+        <h1 className="text-3xl font-bold mb-4">
+          Your Personalized Full Stack Web Development Roadmap
+        </h1>
+        <div className="flex mb-4">
+          <div className="w-full">
+            <p className="text-gray-600 mb-4 ">
+              This AI-generated roadmap is tailored to your learning style,
+              current skills, and career goals.
             </p>
-            <form
-              onSubmit={(e) => {
-                handleSubmit(e);
-              }}
-              className="space-y-6"
+            <h2 className="text-2xl font-semibold mb-6">Your Learning Path</h2>
+          </div>
+          <div className="flex flex-col w-4/12 justify-center ">
+            <button
+              onClick={() => savingRoadmap()}
+              className="flex items-center justify-center px-4 py-2 text-base font-medium rounded-md text-white bg-green-600 hover:bg-green-700 mb-2 transition-all"
             >
-              <div>
-                <label
-                  htmlFor="prompt"
-                  className="block text-sm font-medium text-gray-700"
-                >
-                  Your Learning Goal
-                </label>
-                <textarea
-                  id="prompt"
-                  rows={4}
-                  value={prompt}
-                  onChange={(e) => setPrompt(e.target.value)}
-                  className="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
-                  placeholder="e.g. I want to become a full stack web developer in 6 months, focusing on JavaScript technologies."
-                  required
-                />
-              </div>
-              <div className="flex justify-between">
-                <Link
-                  to={userRole == 3 ? "/admin" : "/dashboard"}
-                  className="inline-flex items-center px-4 py-2 border border-gray-300 shadow-sm text-sm font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
-                >
-                  <ArrowLeft className="h-5 w-5 mr-2" />
-                  Back to Dashboard
-                </Link>
-                <button
-                  type="submit"
-                  disabled={isGenerating}
-                  className="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
-                >
-                  {isGenerating ? (
-                    <>
-                      <Loader className="h-5 w-5 mr-2 animate-spin" />
-                      Generating...
-                    </>
-                  ) : (
-                    <>
-                      <Send className="h-5 w-5 mr-2" />
-                      Generate Roadmap
-                    </>
-                  )}
-                </button>
-              </div>
-            </form>
+              Guardar ruta de aprendizaje
+            </button>
+            <button
+              onClick={() => RegeneratedRoadmap()}
+              className="flex items-center justify-center px-4 py-2 text-base font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 transition-all"
+            >
+              Volver a generar
+            </button>
+          </div>
+        </div>
 
-            {generatedRoadmap && (
-              <div className="mt-8 border-t pt-8">
-                <div className="flex items-center justify-between mb-6">
-                  <h2 className="text-2xl font-bold text-gray-900">
-                    {roadmap.title}
-                  </h2>
-                  <Brain className="w-8 h-8 text-indigo-600" />
-                </div>
-                <p className="text-gray-600 mb-6">{roadmap.description}</p>
-
-                <div className="">
-                  <div className="md:col-span-2">
-                    <div className="mt-6">
-                      <button
-                        type="button"
-                        className="inline-flex items-center py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-green-600 hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500  pl-3 w-1/3 mb-3"
-                      >
-                        <Save className="h-5 w-5 mr-2" />
-                        Save Roadmap
-                      </button>
-                    </div>
-
-                    <h2 className="text-2xl font-semibold text-gray-800 mb-6">
-                      Your Learning Path
-                    </h2>
-                    <div className="relative">
-                      {roadmap.modules.map((module, index) => (
-                        <div key={index} className=" border-t pt-3">
-                          <div className="flex items-center mb-4">
-                            <div
-                              className={`w-12 h-12 rounded-full ${module.color} flex items-center justify-center mr-4`}
-                            >
-                              {module.icon}
-                            </div>
-                            <h3 className="text-lg font-medium text-gray-800">
-                              {module.title}
-                            </h3>
-                          </div>
-                          <div className="ml-6 pl-6 border-l-2 border-gray-200">
-                            {module.topics.map((topic, topicIndex) => (
-                              <div key={topicIndex} className="mb-4 relative">
-                                <div className="absolute -left-8 top-1 w-4 h-4 rounded-full bg-white border-2 border-gray-200"></div>
-                                <div className="flex items-center justify-between">
-                                  <span className="flex  text-sm flex-col">
-                                    <div className=" flex items-center ">
-                                      {topic.status === "completed" && (
-                                        <CheckCircle className="w-4 h-4 text-green-500 mr-2" />
-                                      )}
-                                      {topic.status === "in-progress" && (
-                                        <Zap className="w-4 h-4 text-yellow-500 mr-2" />
-                                      )}
-                                      {topic.status === "not-started" && (
-                                        <Clock className="w-4 h-4 text-gray-400 mr-2" />
-                                      )}
-                                      {topic.title}
-                                    </div>
-                                    <iframe
-                                      className="iframe-youtube drop-shadow"
-                                      src={`https://www.youtube.com/embed/`}
-                                      title="YouTube video player"
-                                      frameBorder="0"
-                                      allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-                                      referrerPolicy="strict-origin-when-cross-origin"
-                                      allowFullScreen
-                                    ></iframe>
-                                  </span>
-                                  <span className="text-xs text-gray-500">
-                                    {topic.duration}
-                                  </span>
-                                </div>
-                              </div>
-                            ))}
-                          </div>
-                        </div>
-                      ))}
-                    </div>
-                  </div>
-                </div>
-              </div>
-            )}
-
-            {/* {generatedRoadmap && (
-              <div className="mt-8 border-t pt-8">
-                <h2 className="text-2xl font-bold text-gray-900 mb-4">
-                  {generatedRoadmap.title}
-                </h2>
-                <p className="text-gray-600 mb-6">
-                  {generatedRoadmap.description}
-                </p>
-                <ul className="space-y-4">
-                  {generatedRoadmap.steps.map((step, index) => (
-                    <li key={index} className="flex items-center">
-                      <div className="flex-shrink-0 w-8 h-8 rounded-full bg-indigo-100 flex items-center justify-center mr-3">
-                        <span className="text-indigo-600 font-semibold">
-                          {index + 1}
-                        </span>
-                      </div>
-                      <div>
-                        <h3 className="text-lg font-medium text-gray-900">
-                          {step.title}
-                        </h3>
-                        <p className="text-sm text-gray-500">{step.duration}</p>
-                      </div>
-                    </li>
-                  ))}
-                </ul>
-                <div className="mt-6">
-                  <button
-                    type="button"
-                    className="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-green-600 hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500"
+        <div className="space-y-6">
+          {roadmapData.map((section, index) => {
+            const colorsData = selectColor();
+            return (
+              <div
+                key={index}
+                className={`${colorsData.color} rounded-lg p-4 `}
+              >
+                <div className="flex items-center mb-4">
+                  <colorsData.icon
+                    className={`w-6 h-6 ${colorsData.textColor} mr-2`}
+                  />
+                  <h3
+                    className={`text-xl font-semibold ${colorsData.textColor}`}
                   >
-                    <Download className="h-5 w-5 mr-2" />
-                    Download Roadmap
+                    {section.name}
+                  </h3>
+                </div>
+                <div className="space-y-2 ">
+                  {section.lessons.map((lesson, lessonIndex) => (
+                    <LessonItem
+                      key={lessonIndex}
+                      lesson={lesson}
+                      colorsData={colorsData}
+                    />
+                  ))}
+                </div>
+              </div>
+            );
+          })}
+        </div>
+      </div>
+    </div>
+  );
+};
+
+export default function AIRoadmapCreation() {
+  const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
+  const [responses, setResponses] = useState({});
+  const [roadmap, setRoadmap] = useState([]);
+  // const [isLoading, setIsLoading] = useState(false);
+  const [generationStatus, setGenerationStatus] = useState("NOT"); //NOT, LOADING, SUCCESSFUL, ERROR
+
+  const currentQuestion = questions[currentQuestionIndex];
+  const progress = ((currentQuestionIndex + 1) / questions.length) * 100;
+  const isOptionSelected = responses[currentQuestion.id] !== undefined;
+  const isLastQuestion = currentQuestionIndex === questions.length - 1;
+
+  //Guarda la opcion seleccionada
+  const handleResponseChange = (questionId, value) => {
+    const question = questions.find((q) => q.id === questionId);
+
+    setResponses((prev) => ({
+      ...prev,
+      [questionId]: {
+        question: question.text,
+        answer: question.options[value],
+        level: question.level,
+      },
+    }));
+  };
+
+  //Pasar a la siguiente pregunta o  terminar el cuestionario
+  const handleNext = () => {
+    if (currentQuestionIndex < questions.length - 1) {
+      setCurrentQuestionIndex((prev) => prev + 1);
+    } else {
+      generateRoadmap();
+    }
+  };
+
+  //Pasar a la anterior pregunta
+  const handlePrevious = () => {
+    if (currentQuestionIndex > 0) {
+      setCurrentQuestionIndex((prev) => prev - 1);
+    }
+  };
+
+  //Generar el roadmap
+  const generateRoadmap = async () => {
+    setGenerationStatus("LOADING");
+    setRoadmap([]);
+    console.log("responses", responses);
+
+    try {
+      const responseMakeRoadmap = await MakeRoadmap(responses);
+
+      if (responseMakeRoadmap.status == 200) {
+        console.log("Roadmap generado", responseMakeRoadmap.data.roadmap);
+
+        setRoadmap(responseMakeRoadmap.data.roadmap);
+        setGenerationStatus("SUCCESSFUL");
+      } else {
+        setGenerationStatus("ERROR");
+      }
+    } catch (error) {
+      setGenerationStatus("ERROR");
+      console.log("Error generate roadmap", error);
+    }
+  };
+
+  return (
+    <div className="min-h-screen bg-gray-100">
+      <Header />
+      <main className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 ">
+        {generationStatus == "NOT" ? (
+          <div className="pt-24 pb-14 ">
+            <h1 className="text-3xl font-extrabold text-gray-900 text-center mb-8 ">
+              Crea tu Roadmap de JavaScript Personalizado
+            </h1>
+            <div className="bg-white shadow overflow-hidden sm:rounded-lg">
+              <div className="px-4 py-5 sm:p-6">
+                <h2 className="text-lg font-medium text-gray-900 mb-4">
+                  Pregunta {currentQuestionIndex + 1} de {questions.length}
+                </h2>
+                <div className="mb-4 bg-gray-200 rounded-full h-2.5">
+                  <div
+                    className="bg-indigo-600 h-2.5 rounded-full transition-all duration-300 ease-in-out"
+                    style={{ width: `${progress}%` }}
+                  ></div>
+                </div>
+                <p className="text-gray-700 mb-4">{currentQuestion.text}</p>
+                <div className="space-y-2">
+                  {currentQuestion.options.map((option, index) => (
+                    <label
+                      key={index}
+                      className="flex items-center p-2 rounded-lg hover:bg-gray-50"
+                    >
+                      <input
+                        type="radio"
+                        name={currentQuestion.id}
+                        value={index}
+                        // checked={responses[currentQuestion.id] === index}
+                        checked={
+                          responses[currentQuestion.id]?.answer === option
+                        }
+                        onChange={() =>
+                          handleResponseChange(currentQuestion.id, index)
+                        }
+                        className="form-radio h-4 w-4 text-indigo-600"
+                      />
+                      <span className="ml-2 text-sm text-gray-700">
+                        {option}
+                      </span>
+                    </label>
+                  ))}
+                </div>
+                <div className="mt-6 flex justify-between">
+                  <button
+                    onClick={handlePrevious}
+                    disabled={currentQuestionIndex === 0}
+                    className="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md text-indigo-700 bg-indigo-100 hover:bg-indigo-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 disabled:opacity-50"
+                  >
+                    <ChevronLeft className="mr-2 h-5 w-5" />
+                    Anterior
+                  </button>
+                  <button
+                    onClick={handleNext}
+                    disabled={!isOptionSelected}
+                    className={`inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md text-white ${
+                      isOptionSelected
+                        ? "bg-indigo-600 hover:bg-indigo-700"
+                        : "bg-gray-400 cursor-not-allowed"
+                    } focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500`}
+                  >
+                    {isLastQuestion ? "Generar Roadmap" : "Siguiente"}
+                    <ChevronRight className="ml-2 h-5 w-5" />
                   </button>
                 </div>
               </div>
-            )} */}
+            </div>
           </div>
-        </div>
+        ) : generationStatus == "LOADING" ? (
+          <LoadingScreen
+            className="py-60"
+            textLoading={"Generando ruta de aprendizaje"}
+          />
+        ) : generationStatus == "SUCCESSFUL" ? (
+          <RoadmapMenu
+            roadmapData={roadmap}
+            regenerateRoadmap={generateRoadmap}
+          />
+        ) : (
+          <ErrorMessage
+            className="py-56"
+            message={"Error al generar la ruta de aprendizaje"}
+            execAction={generateRoadmap}
+            textButton={"Reintentar"}
+          />
+        )}
       </main>
-
       <Footer />
-      {/* <footer className="bg-gray-800 text-white py-8 mt-12">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex flex-wrap justify-between items-center">
-            <div className="w-full md:w-auto text-center md:text-left mb-4 md:mb-0">
-              <h3 className="text-2xl font-bold">FutureCode</h3>
-              <p className="mt-2 text-sm text-gray-400">
-                Empowering learners with AI-generated personalized roadmaps
-              </p>
-            </div>
-            <div className="w-full md:w-auto text-center md:text-right">
-              <p>&copy; 2024 FutureCode. All rights reserved.</p>
-            </div>
-          </div>
-        </div>
-      </footer> */}
     </div>
   );
 }

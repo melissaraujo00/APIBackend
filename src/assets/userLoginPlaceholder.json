@@ -1,0 +1,8 @@
+{
+    "email": "jeffer@gmail.com",
+    "password": "CyberPunk@2077"
+}
+
+http://localhost:3000/login/signin
+
+http://localhost:3000/login/logout

@@ -1,5 +1,7 @@
 import { useState, useEffect } from "react";
-import axios from "axios";
+import { Bounce, Slide, ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+
 import { Eye, EyeOff, Lock, Mail } from "lucide-react";
 import { useNavigate, Link } from "react-router-dom";
 import { useAuth } from "../../auth/useAuth";
@@ -20,34 +22,83 @@ export default function LoginPage() {
       alert("Por favor, complete todos los campos");
       return;
     }
-    try {
-      const response = await loginUser(email, password);
 
-      if (response.status === 200) {
-        // console.log("Login exitoso");
-        await checkAuthentication();
-        // navigate("/");
+    const toastId = toast.loading("Iniciando sesion...");
+
+    try {
+      const loginPromise = await loginUser(email, password);
+
+      if (loginPromise.status == 200) {
+        //Inicio session exitoso
+        toast.update(toastId, {
+          render: `${loginPromise.data.message}, Por favor espere`,
+          type: "success",
+          isLoading: false,
+          icon: "🟢",
+          autoClose: 3500,
+          pauseOnHover: false,
+        });
+
+        setTimeout(async () => {
+          await checkAuthentication();
+        }, 1000);
       } else {
-        alert("Algo salió mal, intente de nuevo");
+        //Error desconocido
+        toast.update(toastId, {
+          render: "Error desconocido",
+          type: "error",
+          isLoading: false,
+          icon: "🔴",
+          autoClose: 3500,
+          pauseOnHover: false,
+        });
       }
     } catch (error) {
-      // Manejamos posibles errores en el login
       if (error.response) {
-        if (error.response.status === 400) {
-          alert("Credenciales incorrectas, intente de nuevo");
-        } else if (error.response.status === 404) {
-          alert("Usuario no encontrado");
-        } else {
-          alert("Error en el servidor, intente más tarde");
-        }
+        //Mostrar el error que ocurrio
+        toast.update(toastId, {
+          render: error.response.data.message,
+          type: "error",
+          isLoading: false,
+          icon: "🔴",
+          autoClose: 4000,
+          pauseOnHover: false,
+        });
       } else {
-        alert("Error de red, intente más tarde");
+        //Si no hay conexion a al server
+        toast.update(toastId, {
+          render: (
+            <span>
+              {" "}
+              {error.message} <br /> Error en el servidor, intentelo más tarde{" "}
+            </span>
+          ),
+          type: "error",
+          isLoading: false,
+          icon: "🔴",
+          autoClose: 4000,
+          pauseOnHover: false,
+        });
       }
     }
   };
 
   return (
     <div className="min-h-screen bg-gray-100 flex flex-col justify-center py-6 sm:px-6 lg:px-8">
+      <ToastContainer
+        position="top-center"
+        autoClose={5000}
+        hideProgressBar={false}
+        newestOnTop={false}
+        closeOnClick
+        rtl={false}
+        pauseOnFocusLoss={false}
+        draggable
+        pauseOnHover={false}
+        theme="light"
+        transition={Slide}
+      />
+
       <div className="sm:mx-auto sm:w-full sm:max-w-md">
         <a href="/" className="flex justify-center">
           <span className="sr-only">FutureCode</span>
@@ -144,7 +195,7 @@ export default function LoginPage() {
               </div>
             </div>
 
-            <div className="flex items-center justify-between">
+            {/* <div className="flex items-center justify-between">
               <div className="flex items-center">
                 <input
                   id="remember-me"
@@ -168,7 +219,7 @@ export default function LoginPage() {
                   Forgot your password?
                 </a>
               </div>
-            </div>
+            </div> */}
 
             <div>
               <button
@@ -180,7 +231,7 @@ export default function LoginPage() {
             </div>
           </form>
 
-          <div className="mt-6">
+          {/* <div className="mt-6">
             <div className="relative">
               <div className="absolute inset-0 flex items-center">
                 <div className="w-full border-t border-gray-300" />
@@ -248,7 +299,7 @@ export default function LoginPage() {
                 </a>
               </div>
             </div>
-          </div>
+          </div> */}
         </div>
       </div>
     </div>

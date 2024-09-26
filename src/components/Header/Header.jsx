@@ -30,12 +30,18 @@ function Header() {
           >
             IA Personalizada
           </Link>
-          <Link
-            to="/"
+          <button
+            // to="#about"
+            onClick={() => {
+              window.scrollTo({
+                top: document.documentElement.scrollHeight,
+                behavior: "smooth",
+              });
+            }}
             className="text-gray-600 hover:text-indigo-600 transition duration-300 cursor-pointer"
           >
-            Recursos
-          </Link>
+            Sobre nosotros
+          </button>
         </nav>
 
         {userId == null ? (

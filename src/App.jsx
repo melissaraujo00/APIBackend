@@ -8,16 +8,20 @@ import React from "react";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import HomePage from "./pages/HomePage/HomePage";
 import CoursesCatalog from "./pages/CoursesCatalog/CoursesCatalog";
-// import CourseCreationPage from './pages/CourseCreationPage/CourseCreationPage';
+
 import RoadmapPage from "./pages/RoadmapPage/RoadmapPage";
 import RoadmapCreationPage from "./pages/RoadmapPage/RoadmapCreationPage";
-// import SettingsPage from './pages/SettingsPage/SettingsPage';
+
 import LoginPage from "./pages/LoginPage/LoginPage";
 import SignUpPage from "./pages/SignUpPage/SignUpPage";
-import UserDashboard from "./pages/UserDashboard/UserDashboard";
-// import Header from './components/Header/Header';
+
+import UserDashboard from "./pages/Dashboards/UserDashboard/UserDashboard";
+import AdminDashboard from "./pages/Dashboards/adminDashboard/AdminDashboard";
+import TeacherDashboard from "./pages/Dashboards/TeacherDashboard/TeacherDashboard";
+
+import Gemini from "./pages/Gemini";
+
 import NotFoundPage from "./pages/NotFoundPage/NotFoundPage";
-import AdminDashboard from "./pages/adminDashboard/AdminDashboard";
 import { AuthProvider } from "./auth/AuthContext";
 import { ProtectedRoute } from "./components/ProtectedRoute";
 
@@ -57,7 +61,7 @@ function App() {
             <Route
               path="/roadmap"
               element={
-                <ProtectedRoute allowedRoles={["user", "profesor"]}>
+                <ProtectedRoute allowedRoles={["user", "profesor", "admin"]}>
                   <RoadmapPage />
                 </ProtectedRoute>
               }
@@ -65,7 +69,7 @@ function App() {
             <Route
               path="/RoadmapCreator"
               element={
-                <ProtectedRoute allowedRoles={["user", "profesor"]}>
+                <ProtectedRoute allowedRoles={["user", "profesor", "admin"]}>
                   <RoadmapCreationPage />
                 </ProtectedRoute>
               }
@@ -79,6 +83,25 @@ function App() {
               element={
                 <ProtectedRoute allowedRoles={["admin"]}>
                   <AdminDashboard />
+                </ProtectedRoute>
+              }
+            />
+            {/*
+            IN DEVELOPMENT
+            <Route
+              path="/teacher"
+              element={
+                <ProtectedRoute allowedRoles={["profesor"]}>
+                  <TeacherDashboard />
+                </ProtectedRoute>
+              }
+            />
+            */}
+            <Route
+              path="/gemini"
+              element={
+                <ProtectedRoute allowedRoles={["user", "profesor", "admin"]}>
+                  <Gemini />
                 </ProtectedRoute>
               }
             />

@@ -1,63 +1,4 @@
-// // import axios from "axios";
-// import React, { useState, useEffect } from "react";
-// import { Link } from "react-router-dom";
-// // import { useAuth } from "../../auth/AuthContext";
-// import { useAuth } from "../../auth/useAuth";
-
-// function AdminPage() {
-//   const { userId, userName, userEmail, userRole, loading } = useAuth();
-
-//   return (
-//     <div className=" flex flex-col ">
-//       <div className="flex flex-col">
-//         <h2>User information</h2>
-//         <span>ID: {userId}</span>
-//         <span>Nombre: {userName}</span>
-//         <span>Email: {userEmail} </span>
-//         <span>Role: {userRole}</span>
-//       </div>
-
-//       {[
-//         {
-//           ruta: "/",
-//         },
-//         {
-//           ruta: "/admin",
-//         },
-//         {
-//           ruta: "/login",
-//         },
-//         {
-//           ruta: "/signup",
-//         },
-//         {
-//           ruta: "/dashboard",
-//         },
-//         {
-//           ruta: "/courses",
-//         },
-//         {
-//           ruta: "/roadmap",
-//         },
-//         {
-//           ruta: "/RoadmapCreator",
-//         },
-//       ].map((item, key) => (
-//         <Link
-//           key={key}
-//           to={item.ruta}
-//           className=" bg-zinc-400 border-4 hover:bg-zinc-600 p-2 w-52"
-//         >
-//           {item.ruta}
-//         </Link>
-//       ))}
-//     </div>
-//   );
-// }
-
-// export default AdminPage;
-
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import {
   Users,
@@ -76,7 +17,9 @@ import {
   LayoutDashboard,
   LibraryBig,
 } from "lucide-react";
-import Header from "../../components/Header/Header";
+import Header from "../../../components/Header/Header";
+import { GetAllUsers } from "../../../components/Api/UserRoutes";
+import { GetAllModules } from "../../../components/Api/ModulesRoutes";
 
 function DashboardContent({ stats, recentActivities, routesList }) {
   return (
@@ -227,8 +170,9 @@ function DashboardContent({ stats, recentActivities, routesList }) {
   );
 }
 
-function UsersContent() {
-  const users = [
+function UsersContent({ usersList }) {
+  // console.log("usersList", usersList);
+  const userss = [
     {
       id: 1,
       name: "Juan Pérez",
@@ -289,29 +233,29 @@ function UsersContent() {
               <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
                 Rol
               </th>
-              <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+              {/* <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
                 Cursos
-              </th>
+              </th> */}
               <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
                 Acciones
               </th>
             </tr>
           </thead>
           <tbody className="bg-white divide-y divide-gray-200">
-            {users.map((user) => (
-              <tr key={user.id}>
+            {usersList.map((user) => (
+              <tr key={user._id}>
                 <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">
-                  {user.name}
+                  {user.user}
                 </td>
                 <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
                   {user.email}
                 </td>
                 <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-                  {user.role}
+                  {user.roles[0]}
                 </td>
-                <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                {/* <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
                   {user.courses}
-                </td>
+                </td> */}
                 <td className="px-6 py-4 whitespace-nowrap text-sm font-medium">
                   <button className="text-indigo-600 hover:text-indigo-900 mr-2">
                     <Edit className="h-5 w-5" />
@@ -329,7 +273,27 @@ function UsersContent() {
   );
 }
 
-function CoursesContent() {
+function CoursesContent({ coursesModules }) {
+  const [coursesInfo, setCoursesInfo] = useState([]);
+
+  useEffect(() => {
+    const newCoursesInfo = [];
+
+    for (let i = 0; i < coursesModules.length; i++) {
+      const modulesCount = coursesModules[i].temas.length;
+      newCoursesInfo.push({
+        id: coursesModules[i]._id,
+        name: coursesModules[i].titulo,
+        modules: modulesCount,
+      });
+    }
+
+    // Actualiza el estado solo una vez después de construir el array
+    setCoursesInfo(newCoursesInfo);
+  }, [coursesModules]); // Dependencia para ejecutar el efecto cuando cambian los modules
+
+  // console.log("coursesInfo", coursesInfo);
+
   const courses = [
     {
       id: 1,
@@ -384,36 +348,37 @@ function CoursesContent() {
                 Nombre del Curso
               </th>
               <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                Instructor
+                Lecciones
               </th>
-              <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+              {/* <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
                 Estudiantes
               </th>
               <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
                 Calificación
               </th>
+              */}
               <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
                 Acciones
               </th>
             </tr>
           </thead>
           <tbody className="bg-white divide-y divide-gray-200">
-            {courses.map((course) => (
+            {coursesInfo.map((course) => (
               <tr key={course.id}>
                 <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">
                   {course.name}
                 </td>
                 <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-                  {course.instructor}
+                  {course.modules}
                 </td>
-                <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                {/* <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
                   {course.students}
                 </td>
                 <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
                   {course.rating}
-                </td>
-                <td className="px-6 py-4 whitespace-nowrap text-sm font-medium">
-                  <button className="text-indigo-600 hover:text-indigo-900 mr-2">
+                </td> */}
+                <td className="px-6 py-4 whitespace-nowrap text-sm font-medium ">
+                  <button className="text-indigo-600 hover:text-indigo-900 mr-5">
                     <Edit className="h-5 w-5" />
                   </button>
                   <button className="text-red-600 hover:text-red-900">
@@ -528,8 +493,47 @@ function AnalyticsContent() {
 
 export default function AdminPage() {
   const [activeTab, setActiveTab] = useState("dashboard");
+  const [users, setUsers] = useState([]);
+  const [courses, setCourses] = useState([]);
+  const [stats, setStats] = useState([]);
 
-  const stats = [
+  useEffect(() => {
+    async function GetData() {
+      const usersResponse = await GetAllUsers();
+      if (usersResponse.status == 200) {
+        setUsers(usersResponse.data);
+        const usersLength = usersResponse.data.length;
+        setStats((prev) => [
+          ...prev,
+          {
+            name: "Usuarios Totales",
+            value: usersLength,
+            icon: Users,
+          },
+        ]);
+      }
+
+      const coursesResponse = await GetAllModules();
+      if (coursesResponse.status == 200) {
+        setCourses(coursesResponse.data);
+        let modulesCount = 0;
+        for (let i = 0; i < coursesResponse.data.length; i++) {
+          modulesCount += coursesResponse.data[i].temas.length;
+        }
+        setStats((prev) => [
+          ...prev,
+          {
+            name: "Cursos Totales",
+            value: modulesCount,
+            icon: BookOpen,
+          },
+        ]);
+      }
+    }
+    GetData();
+  }, []);
+
+  const statsss = [
     { name: "Usuarios Totales", value: "32", icon: Users },
     { name: "Cursos Totales", value: "48", icon: BookOpen },
     { name: "RoadMaps IA", value: "5", icon: BookOpen },
@@ -586,21 +590,6 @@ export default function AdminPage() {
 
   return (
     <div className="min-h-screen bg-gray-100">
-      {/* <header className="bg-white shadow-sm">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4 flex items-center justify-between">
-          <Link to="/" className="text-2xl font-bold text-indigo-600">
-            AILearnPro Admin
-          </Link>
-          <div className="flex items-center space-x-4">
-            <button className="text-gray-500 hover:text-gray-700">
-              <Search className="h-6 w-6" />
-            </button>
-            <button className="text-gray-500 hover:text-gray-700">
-              <Bell className="h-6 w-6" />
-            </button>
-          </div>
-        </div>
-      </header> */}
       <Header />
       <div className="flex max-w-7xl mx-auto px-6">
         <nav className="bg-white shadow w-64 h-screen pt-20">
@@ -666,7 +655,7 @@ export default function AdminPage() {
             Panel de Administración
           </h1>
 
-          {activeTab === "dashboard" && (
+          {activeTab === "dashboard" && stats.length != 0 && (
             <DashboardContent
               stats={stats}
               recentActivities={recentActivities}
@@ -674,8 +663,10 @@ export default function AdminPage() {
               routesList={routesList}
             />
           )}
-          {activeTab === "users" && <UsersContent />}
-          {/* {activeTab === "courses" && <CoursesContent />} */}
+          {activeTab === "users" && <UsersContent usersList={users} />}
+          {activeTab === "courses" && (
+            <CoursesContent coursesModules={courses} />
+          )}
           {/* {activeTab === "analytics" && <AnalyticsContent />} */}
         </main>
       </div>
