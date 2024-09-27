@@ -67,7 +67,7 @@ export const resgistrarUsuario = [validateLogin, async (req, res ) => {
         return res.status(422).json({ errors: errors.array() });
     }
 
-    const { user, email, password, roles = ['user'] } = req.body; // Asigna "user" si no hay roles
+    const { name, lastName, user, email, password, roles = ['user'] } = req.body; // Asigna "user" si no hay roles
 
     try {
         let userExists = await Login.findOne({ email });
@@ -78,6 +78,8 @@ export const resgistrarUsuario = [validateLogin, async (req, res ) => {
         const hashedPassword = await Login.encryptPassword(password);
 
         await Login.create({
+            name,
+            lastName,
             user,
             email,
             password: hashedPassword,
@@ -192,6 +194,12 @@ export const actulizarUsuario = [authMiddleware, async (req, res) => {
         if (!usuario) {
             return res.status(404).json({ message: 'Usuario no encontrado' });
         }
+        if (req.body.name != null) {
+            usuario.name = req.body.name;
+        }
+        if (req.body.lastName != null) {
+            usuario.lastName = req.body.lastName;
+        }
 
         if (req.body.user != null) {
             usuario.user = req.body.user;
@@ -245,16 +253,17 @@ export const eliminarUsuario = [ authMiddleware, async (req, res) => {
 export const asignarRoadmap = [authMiddleware, async (req, res) => {
     try {
         const userId = req.user.id_user; 
-        
-        // Verifica si se ha proporcionado roadmap en la solicitud
-        const { roadmap } = req.body; 
-        if (!roadmap) {
-            return res.status(400).json({ message: 'Roadmap data is required' });
+
+        // Verifica si se ha proporcionado el roadmap en la solicitud
+        const { name, roadmap } = req.body; // Verificamos tanto el nombre como el roadmap
+        if (!name || !roadmap) {
+            return res.status(400).json({ message: 'Name and roadmap data are required' });
         }
 
-        // Crea un nuevo roadmap
+        // Crea un nuevo roadmap con el nombre y las lecciones
         const newRoadmap = new Roadmap({
-            roadmap: roadmap, // Aquí asignamos el roadmap directamente
+            name: name, // Asignamos el nombre del roadmap
+            roadmap: roadmap, // Asignamos las lecciones o estructura del roadmap
             assignedTo: userId, // Asignamos el roadmap al usuario actual
         });
 
@@ -269,4 +278,5 @@ export const asignarRoadmap = [authMiddleware, async (req, res) => {
         res.status(500).json({ message: 'Error al asignar el roadmap' });
     }
 }];
+
 

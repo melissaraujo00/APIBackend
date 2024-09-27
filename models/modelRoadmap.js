@@ -1,24 +1,19 @@
-/*assignedTo: {
-    type: String,
-    description: "ID del usuario al que se asigna el roadmap",
-    required : true
-  },*/
+
 import mongoose from 'mongoose';
 
 // Definición del esquema de lecciones
 const lessonSchema = new mongoose.Schema({
   description: {
-    type: String,
+    type: String
   },
   name: {
-    type: String,
+    type: String
   },
   videoUrl: {
-    type: String,
+    type: String
   }
 });
 
-// Definición del esquema de roadmap
 const nameLessonsSchema = new mongoose.Schema({
   lessons: [lessonSchema],
   name: {
@@ -27,7 +22,8 @@ const nameLessonsSchema = new mongoose.Schema({
 });
 
 const roadmapSchema = new mongoose.Schema({
-    roadmap: [nameLessonsSchema]
+  name: String,
+  roadmap: [nameLessonsSchema]
 })
 
 // Creación del modelo de roadmap
