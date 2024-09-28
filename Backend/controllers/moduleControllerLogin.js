@@ -254,22 +254,18 @@ export const asignarRoadmap = [authMiddleware, async (req, res) => {
     try {
         const userId = req.user.id_user; 
 
-        // Verifica si se ha proporcionado el roadmap en la solicitud
-        const { name, roadmap } = req.body; // Verificamos tanto el nombre como el roadmap
+        const { name, roadmap } = req.body; 
         if (!name || !roadmap) {
             return res.status(400).json({ message: 'Name and roadmap data are required' });
         }
-
-        // Crea un nuevo roadmap con el nombre y las lecciones
         const newRoadmap = new Roadmap({
-            name: name, // Asignamos el nombre del roadmap
-            roadmap: roadmap, // Asignamos las lecciones o estructura del roadmap
-            assignedTo: userId, // Asignamos el roadmap al usuario actual
+            name: name, 
+            roadmap: roadmap, 
+            assignedTo: userId, 
         });
 
-        await newRoadmap.save(); // Guarda el nuevo roadmap
+        await newRoadmap.save(); 
 
-        // Actualiza al usuario autenticado para asignarle el roadmap
         const user = await Login.findByIdAndUpdate(userId, { $push: { roadmaps: newRoadmap._id } }, { new: true });
 
         res.status(200).json({ message: 'Roadmap asignado correctamente', user, roadmap: newRoadmap });

@@ -26,7 +26,7 @@ const roadmapSchema = new mongoose.Schema({
   roadmap: [nameLessonsSchema]
 })
 
-// Creación del modelo de roadmap
+
 const Roadmap = mongoose.model('Roadmap', roadmapSchema);
 
 export default Roadmap;

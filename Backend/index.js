@@ -14,8 +14,8 @@ app.use(express.json());
 
 app.use(bodyParser.json());
 app.use(cors({
-  origin: "http://localhost:5173", // Permite solicitudes desde este origen
-  credentials: true, // Si estás utilizando cookies, incluye esto
+  origin: "http://localhost:5173", 
+  credentials: true, 
 }));
 app.use("/api/modulos", modulos);
 app.use("/login", login);
