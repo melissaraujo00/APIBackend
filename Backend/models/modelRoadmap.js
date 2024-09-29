@@ -22,7 +22,7 @@ const nameLessonsSchema = new mongoose.Schema({
 });
 
 const roadmapSchema = new mongoose.Schema({
-  name: String,
+  roadmapName: String,
   roadmap: [nameLessonsSchema]
 })
 

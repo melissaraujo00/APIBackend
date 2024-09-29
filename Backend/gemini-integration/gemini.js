@@ -9,6 +9,9 @@ const schema = {
   description: "Roadmap",
   type: SchemaType.OBJECT,
   properties: {
+    roadmapName: {
+      type: SchemaType.STRING,
+    },
     roadmap: {
       type: SchemaType.ARRAY,
       items: {
@@ -40,7 +43,7 @@ const schema = {
       },
     },
   },
-  required: ["roadmap"],
+  required: ["roadmap","roadmapName"],
 };
 
 
@@ -71,8 +74,9 @@ const generateContent = async (req, res) => {
     - Examina las respuestas del cuestionario (${JSON.stringify(userQuestionnaire)}) para determinar el nivel de habilidad del usuario, sus objetivos profesionales, y sus preferencias de aprendizaje.
     - Identifica las áreas donde el usuario necesita mejorar, áreas en las que muestra dominio y sus metas a corto y largo plazo en el desarrollo de software.
 
-  2. *Estructura de la Ruta de Aprendizaje:*z
-    - Utiliza UNICA Y EXCLUSIVAMENTE la información del archivo JSON (${JSON.stringify(modulesData)}) que contiene múltiples módulos y lecciones. Los módulos están diseñados para abarcar diferentes aspectos del desarrollo de software.
+  2. *Estructura de la Ruta de Aprendizaje (TOTALMENTE EN ESPAÑOL):*
+    - Utiliza UNICA Y EXCLUSIVAMENTE el contenido del archivo JSON (${JSON.stringify(modulesData)})  que contiene múltiples módulos y lecciones. Los módulos están diseñados para abarcar diferentes aspectos del desarrollo de software.
+    - Asigna un nombre acorde al contenido generado y descriptivo , (EVITA POR COMPLETO palabras como 'Roadmap' o similares ).
     - Crea un mínimo de 4 módulos, cada uno con al menos 3 lecciones detalladas. Sin embargo, si el análisis del usuario indica una mayor necesidad de formación, puedes añadir MÁS MÓDULO y MAS LECCIONES.
     - Cada lección debe incluir:
       - Un título claro y conciso.
@@ -85,7 +89,7 @@ const generateContent = async (req, res) => {
 
   4. *Revisión Final y Ajustes:*
     - Revisa el Roadmap completo y asegúrate de que cubra todos los aspectos relevantes del desarrollo de software según las necesidades del usuario.
-    - Asegúrate de que el ritmo de los módulos sea adecuado para el nivel del usuario. Esto incluye introducir gradualmente conceptos más complejos y ofrecer recomendaciones de ejercicios prácticos donde sea necesario.
+    - Asegúrate de que el ritmo de los módulos sea adecuado para el nivel del usuario. 
 
   Finalmente, toma una respiración profunda y trabaja en este problema paso a paso.
 `;
