@@ -105,7 +105,7 @@ const loginLimiter = rateLimit({
     message: 'Too many login attempts from this IP, please try again later.'
 });
 
-export const inicioSesion = [loginLimiter, async (req, res) => {
+export const inicioSesion = [ async (req, res) => {
     try {
         const userFound = await Login.findOne({ email: req.body.email });
         if (!userFound) return res.status(400).json({ message: "User not found" });
@@ -313,12 +313,12 @@ export const asignarRoadmap = [authMiddleware, async (req, res) => {
     try {
         const userId = req.user.id_user; 
 
-        const { name, roadmap } = req.body; 
-        if (!name || !roadmap) {
+        const { roadmapName, roadmap } = req.body; 
+        if (!roadmapName || !roadmap) {
             return res.status(400).json({ message: 'Name and roadmap data are required' });
         }
         const newRoadmap = new Roadmap({
-            name: name, 
+            roadmapName: roadmapName, 
             roadmap: roadmap, 
             assignedTo: userId, 
         });
