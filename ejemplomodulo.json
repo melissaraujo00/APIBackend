@@ -36,7 +36,7 @@
                 ]
             }
         ],
-        "nivel": ["principiante"]
+        "nivel": "principiante"
     },
     {
         "imagen": "",
@@ -95,7 +95,7 @@
                 ]
             }
         ],
-        "nivel": ["principiante"]
+        "nivel": "principiante"
     },
     {
         "imagen": "",
@@ -144,7 +144,7 @@
                 ]
             }
         ],
-        "nivel": ["Principiante"]
+        "nivel": "principiante"
     },
     {
         "imagen": "",
@@ -173,7 +173,7 @@
                 ]
             }
         ],
-        "nivel": ["intermedio"]
+        "nivel": "intermedio"
     },
     {
         "imagen": "",
@@ -218,7 +218,7 @@
                 ]
             }
         ],
-        "nivel": ["intermedio"]
+        "nivel": "intermedio"
     },
     {
         "imagen": "",
@@ -271,7 +271,7 @@
                 ]
             }
         ],
-        "nivel": ["intermedio, basico"]
+        "nivel": "intermedio"
     },
     {
         "imagen": "",
@@ -304,114 +304,114 @@
                 ]
             }
         ],
-        "nivel": ["intermedio"]
-    }, 
+        "nivel": "intermedio"
+    },
     {
-    "imagen": "",
-    "titulo": "Nuevos Tipos y Características",
-    "temas": [
-        {
-            "nombre": "Nuevos Tipos y Características",
-            "descripcion": "Cubre varias adiciones al lenguaje, como Symbols, que permiten propiedades únicas; Sets, que almacenan valores únicos; y Maps, que asocian claves y valores. También se discuten WeakSets y WeakMaps para una mejor gestión de memoria. Se introducen Iterables e Iterators para recorrer colecciones, junto con Generators que permiten pausar funciones. Además, se presentan Proxies para interceptar operaciones en objetos y las Propiedades Dinámicas de los Objetos, que facilitan la modificación de estructuras de objetos.",
-            "urlvideos": [
-                {
-                    "descripcion": "El video trata sobre los símbolos en JavaScript, un nuevo tipo de dato primitivo introducido en ECMAScript 2015. Los símbolos se utilizan para crear identificadores únicos para las propiedades de los objetos, evitando colisiones y permitiendo propiedades privadas. Se crean con la función constructora `Symbol()` y se pueden utilizar como propiedades de objetos, aunque no se enumeran en bucles `for...in`. Además, permiten crear métodos privados al asignar un símbolo a una propiedad del objeto, mejorando así la seguridad y el rendimiento del código.",
-                    "url": "https://youtu.be/XVBkTsj99so?si=uulMMH5xeq6Sh7Oe"
-                },
-                {
-                    "descripcion": "El video trata sobre los conjuntos en JavaScript, una estructura de datos introducida en ECMAScript 2015. Los conjuntos permiten almacenar valores únicos, lo que significa que no se pueden agregar duplicados. Se pueden crear utilizando el constructor `Set` o el método `Array.from()`. Además, ofrecen varios métodos para agregar, eliminar y buscar valores, así como para iterar sobre ellos. Los conjuntos son útiles para la depuración y para aplicaciones que requieren conjuntos de datos únicos.",
-                    "url": "https://youtu.be/lnzhtrZ8H34?si=n05eeSXA7XKXDFWz"
-                },
-                {
-                    "descripcion": "El video trata sobre los **mapas** en JavaScript, que son colecciones de pares clave-valor donde las claves pueden ser de cualquier tipo, no solo cadenas. Se pueden crear utilizando el constructor `Map()` o la notación de corchetes. Los mapas permiten agregar valores con el método `set()`, obtenerlos con `get()`, y eliminarlos con `delete()`. Además, se pueden iterar usando `forEach()`. Aunque son útiles para almacenar datos indexados por valores no textuales y mantener un orden específico, son más grandes y más lentos que los objetos. En general, los mapas son una herramienta valiosa en JavaScript.",
-                    "url": "https://youtu.be/e2gBknyVJo8?si=6m6-z1hOz2ujZXBF"
-                },
-                {
-                    "descripcion": "El video trata sobre WeakSets y WeakMaps, que son tipos de datos introducidos en JavaScript en 2015. A diferencia de los Sets y Maps, estos son débiles porque permiten que los objetos referenciados sean eliminados por el recolector de basura si no hay otras referencias a ellos, lo que ayuda a mejorar el rendimiento de las aplicaciones. Sin embargo, tienen limitaciones: no se pueden iterar, no permiten eliminar todos los elementos a la vez y no se puede verificar su tamaño. El video incluye ejemplos de uso y su aplicación en situaciones reales.",
-                    "url": "https://youtu.be/nfMEnCrBL-0?si=izVjtrKNkaXL57R-"
-                },
-                {
-                    "descripcion": "El video trata sobre iterables e iteradores en JavaScript. Los iterables son estructuras de datos que se pueden recorrer, como arreglos y cadenas, mientras que los iteradores son objetos que permiten acceder a los elementos de estos iterables.explica cómo crear un iterable y acceder a su iterador, así como utilizarlo para recorrer sus elementos. También menciona que los iteradores pueden usarse con cualquier tipo de dato iterable, como mapas y conjuntos. El video es claro y conciso, ideal para quienes deseen profundizar en estos conceptos.",
-                    "url": "https://youtu.be/N00DzBNPJEw?si=UP7nrts4zrBH0dWb"
-                },
-                {
-                    "descripcion": "El video trata sobre **generadores** en JavaScript, que permiten crear iteradores a partir de funciones. Estos generadores son útiles para producir secuencias de valores a lo largo del tiempo. Comienza con una introducción a los generadores y muestra cómo crear un generador simple, así como su aplicación en funciones asíncronas. Al final, ofrece consejos sobre el uso efectivo de generadores, destacando su versatilidad en la programación.",
-                    "url": "https://youtu.be/oO-D4PsaI1A?si=WDmhluTWRoRjSCUc"
-                },
-                {
-                    "descripcion": "El video trata sobre proxies en JavaScript, un mecanismo que permite crear objetos basados en un objeto literal inicial. Los proxies facilitan operaciones como la validación de tipos de datos en las propiedades del objeto. Comienza con una introducción a su uso y muestra cómo crear un proxy y emplear un manejador para validar propiedades. También se explica cómo utilizar proxies para crear objetos inmutables. Aunque son herramientas poderosas para mejorar la seguridad y robustez de los objetos, su complejidad requiere una comprensión básica antes de ser implementados en proyectos.",
-                    "url": "https://youtu.be/7njrLMJgDtQ?si=9gpf652UYpp8ZFlC"
-                },
-                {
-                    "descripcion": "El video aborda las propiedades dinámicas de los objetos en JavaScript, que permiten crear y eliminar propiedades en tiempo de ejecución. Comienza mostrando cómo crear estas propiedades utilizando la notación de corchetes y el método `Object.defineProperty()`. Se ilustra su uso en la creación de objetos complejos, como un objeto que representa una persona, donde se pueden agregar propiedades adicionales dinámicamente. También se explica cómo utilizar propiedades dinámicas para almacenar datos de forma flexible, como los resultados de una búsqueda en la web. Concluye destacando que esta característica es clave para desarrollar aplicaciones más dinámicas y flexibles.",
-                    "url": "https://youtu.be/UPuTJxodsW8?si=zqTF8gcWhImcCp1U"
-                }
-            ]
-        }
-    ],
-    "nivel": ["intermedio"]
-    }, 
+        "imagen": "",
+        "titulo": "Nuevos Tipos y Características",
+        "temas": [
+            {
+                "nombre": "Nuevos Tipos y Características",
+                "descripcion": "Cubre varias adiciones al lenguaje, como Symbols, que permiten propiedades únicas; Sets, que almacenan valores únicos; y Maps, que asocian claves y valores. También se discuten WeakSets y WeakMaps para una mejor gestión de memoria. Se introducen Iterables e Iterators para recorrer colecciones, junto con Generators que permiten pausar funciones. Además, se presentan Proxies para interceptar operaciones en objetos y las Propiedades Dinámicas de los Objetos, que facilitan la modificación de estructuras de objetos.",
+                "urlvideos": [
+                    {
+                        "descripcion": "El video trata sobre los símbolos en JavaScript, un nuevo tipo de dato primitivo introducido en ECMAScript 2015. Los símbolos se utilizan para crear identificadores únicos para las propiedades de los objetos, evitando colisiones y permitiendo propiedades privadas. Se crean con la función constructora `Symbol()` y se pueden utilizar como propiedades de objetos, aunque no se enumeran en bucles `for...in`. Además, permiten crear métodos privados al asignar un símbolo a una propiedad del objeto, mejorando así la seguridad y el rendimiento del código.",
+                        "url": "https://youtu.be/XVBkTsj99so?si=uulMMH5xeq6Sh7Oe"
+                    },
+                    {
+                        "descripcion": "El video trata sobre los conjuntos en JavaScript, una estructura de datos introducida en ECMAScript 2015. Los conjuntos permiten almacenar valores únicos, lo que significa que no se pueden agregar duplicados. Se pueden crear utilizando el constructor `Set` o el método `Array.from()`. Además, ofrecen varios métodos para agregar, eliminar y buscar valores, así como para iterar sobre ellos. Los conjuntos son útiles para la depuración y para aplicaciones que requieren conjuntos de datos únicos.",
+                        "url": "https://youtu.be/lnzhtrZ8H34?si=n05eeSXA7XKXDFWz"
+                    },
+                    {
+                        "descripcion": "El video trata sobre los **mapas** en JavaScript, que son colecciones de pares clave-valor donde las claves pueden ser de cualquier tipo, no solo cadenas. Se pueden crear utilizando el constructor `Map()` o la notación de corchetes. Los mapas permiten agregar valores con el método `set()`, obtenerlos con `get()`, y eliminarlos con `delete()`. Además, se pueden iterar usando `forEach()`. Aunque son útiles para almacenar datos indexados por valores no textuales y mantener un orden específico, son más grandes y más lentos que los objetos. En general, los mapas son una herramienta valiosa en JavaScript.",
+                        "url": "https://youtu.be/e2gBknyVJo8?si=6m6-z1hOz2ujZXBF"
+                    },
+                    {
+                        "descripcion": "El video trata sobre WeakSets y WeakMaps, que son tipos de datos introducidos en JavaScript en 2015. A diferencia de los Sets y Maps, estos son débiles porque permiten que los objetos referenciados sean eliminados por el recolector de basura si no hay otras referencias a ellos, lo que ayuda a mejorar el rendimiento de las aplicaciones. Sin embargo, tienen limitaciones: no se pueden iterar, no permiten eliminar todos los elementos a la vez y no se puede verificar su tamaño. El video incluye ejemplos de uso y su aplicación en situaciones reales.",
+                        "url": "https://youtu.be/nfMEnCrBL-0?si=izVjtrKNkaXL57R-"
+                    },
+                    {
+                        "descripcion": "El video trata sobre iterables e iteradores en JavaScript. Los iterables son estructuras de datos que se pueden recorrer, como arreglos y cadenas, mientras que los iteradores son objetos que permiten acceder a los elementos de estos iterables.explica cómo crear un iterable y acceder a su iterador, así como utilizarlo para recorrer sus elementos. También menciona que los iteradores pueden usarse con cualquier tipo de dato iterable, como mapas y conjuntos. El video es claro y conciso, ideal para quienes deseen profundizar en estos conceptos.",
+                        "url": "https://youtu.be/N00DzBNPJEw?si=UP7nrts4zrBH0dWb"
+                    },
+                    {
+                        "descripcion": "El video trata sobre **generadores** en JavaScript, que permiten crear iteradores a partir de funciones. Estos generadores son útiles para producir secuencias de valores a lo largo del tiempo. Comienza con una introducción a los generadores y muestra cómo crear un generador simple, así como su aplicación en funciones asíncronas. Al final, ofrece consejos sobre el uso efectivo de generadores, destacando su versatilidad en la programación.",
+                        "url": "https://youtu.be/oO-D4PsaI1A?si=WDmhluTWRoRjSCUc"
+                    },
+                    {
+                        "descripcion": "El video trata sobre proxies en JavaScript, un mecanismo que permite crear objetos basados en un objeto literal inicial. Los proxies facilitan operaciones como la validación de tipos de datos en las propiedades del objeto. Comienza con una introducción a su uso y muestra cómo crear un proxy y emplear un manejador para validar propiedades. También se explica cómo utilizar proxies para crear objetos inmutables. Aunque son herramientas poderosas para mejorar la seguridad y robustez de los objetos, su complejidad requiere una comprensión básica antes de ser implementados en proyectos.",
+                        "url": "https://youtu.be/7njrLMJgDtQ?si=9gpf652UYpp8ZFlC"
+                    },
+                    {
+                        "descripcion": "El video aborda las propiedades dinámicas de los objetos en JavaScript, que permiten crear y eliminar propiedades en tiempo de ejecución. Comienza mostrando cómo crear estas propiedades utilizando la notación de corchetes y el método `Object.defineProperty()`. Se ilustra su uso en la creación de objetos complejos, como un objeto que representa una persona, donde se pueden agregar propiedades adicionales dinámicamente. También se explica cómo utilizar propiedades dinámicas para almacenar datos de forma flexible, como los resultados de una búsqueda en la web. Concluye destacando que esta característica es clave para desarrollar aplicaciones más dinámicas y flexibles.",
+                        "url": "https://youtu.be/UPuTJxodsW8?si=zqTF8gcWhImcCp1U"
+                    }
+                ]
+            }
+        ],
+        "nivel": "intermedio"
+    },
     {
-    "imagen": "",
-    "titulo": "this en JavaScript",
-    "temas": [
-        {
-            "nombre": "",
-            "descripcion": "El video explora el concepto de `this` en JavaScript, que se refiere al contexto de ejecución de una función y puede variar según cómo se invoque. En el contexto global, `this` se refiere al objeto global, mientras que en funciones de objeto se refiere al objeto que contiene el método. Al usar funciones constructoras, `this` se refiere a la nueva instancia creada. Las funciones de flecha heredan el valor de `this` del contexto donde fueron definidas. Además, se discuten las funciones `call`, `apply` y `bind`, que permiten establecer explícitamente el valor de `this`..",
-            "urlvideos": [
-                {
-                    "descripcion": "El video trata sobre el uso de la palabra reservada this en JavaScript. El presentador explica que this se refiere al objeto global en el contexto de los navegadores. También explica cómo usar this para acceder a las propiedades y métodos de un objeto. Finalmente, el presentador discute las diferencias entre this y las arrow functions.",
-                    "url": "https://youtu.be/NWt6-iYJJnA?si=Tqdaes_vo331A8KX"
-                },
-                {
-                    "descripcion": "El video trata sobre los métodos `call`, `apply` y `bind` en JavaScript, que permiten enlazar el contexto de una función a un objeto específico. El método `call` invoca una función con un objeto como primer parámetro y acepta argumentos adicionales, mientras que `apply` también usa un objeto como primer parámetro, pero acepta un array de argumentos. Por otro lado, `bind` crea una nueva función que mantiene el contexto de un objeto específico. A través de ejemplos claros, el video ilustra cómo utilizar estos métodos para crear funciones versátiles que pueden adaptarse a diferentes contextos y conjuntos de parámetros.",
-                    "url": "https://youtu.be/qy6IIjlykD0?si=6Y7QjyckLDHubmk-"
-                }
-            ]
-        }
-    ],
-    "nivel": ["intermedio","Avanzado"]
-    }, 
+        "imagen": "",
+        "titulo": "this en JavaScript",
+        "temas": [
+            {
+                "nombre": "",
+                "descripcion": "El video explora el concepto de `this` en JavaScript, que se refiere al contexto de ejecución de una función y puede variar según cómo se invoque. En el contexto global, `this` se refiere al objeto global, mientras que en funciones de objeto se refiere al objeto que contiene el método. Al usar funciones constructoras, `this` se refiere a la nueva instancia creada. Las funciones de flecha heredan el valor de `this` del contexto donde fueron definidas. Además, se discuten las funciones `call`, `apply` y `bind`, que permiten establecer explícitamente el valor de `this`..",
+                "urlvideos": [
+                    {
+                        "descripcion": "El video trata sobre el uso de la palabra reservada this en JavaScript. El presentador explica que this se refiere al objeto global en el contexto de los navegadores. También explica cómo usar this para acceder a las propiedades y métodos de un objeto. Finalmente, el presentador discute las diferencias entre this y las arrow functions.",
+                        "url": "https://youtu.be/NWt6-iYJJnA?si=Tqdaes_vo331A8KX"
+                    },
+                    {
+                        "descripcion": "El video trata sobre los métodos `call`, `apply` y `bind` en JavaScript, que permiten enlazar el contexto de una función a un objeto específico. El método `call` invoca una función con un objeto como primer parámetro y acepta argumentos adicionales, mientras que `apply` también usa un objeto como primer parámetro, pero acepta un array de argumentos. Por otro lado, `bind` crea una nueva función que mantiene el contexto de un objeto específico. A través de ejemplos claros, el video ilustra cómo utilizar estos métodos para crear funciones versátiles que pueden adaptarse a diferentes contextos y conjuntos de parámetros.",
+                        "url": "https://youtu.be/qy6IIjlykD0?si=6Y7QjyckLDHubmk-"
+                    }
+                ]
+            }
+        ],
+        "nivel": "intermedio"
+    },
     {
-    "imagen": "",
-    "titulo": "JSON: JavaScript Object Notation",
-    "temas": [
-        {
-            "nombre": "JSON: JavaScript Object Notation",
-            "descripcion": "JSON (JavaScript Object Notation) es un formato de intercambio de datos ligero y de texto fácil de leer y escribir. Se utiliza para representar estructuras de datos, como objetos y arreglos, en un formato que es fácilmente accesible para los humanos y las máquinas. JSON es independiente del lenguaje, pero se basa en la sintaxis de objetos de JavaScript, lo que lo hace particularmente útil en aplicaciones web y APIs. Su estructura consiste en pares clave-valor, donde las claves son cadenas y los valores pueden ser cadenas, números, objetos, arreglos, booleanos o nulos. JSON es ampliamente utilizado para la serialización de datos, facilitando el intercambio de información entre un servidor y un cliente.",
-            "urlvideos": [
-                {
-                    "descripcion": "Este video trata sobre JSON, un formato ligero de intercambio de datos que se ha convertido en un estándar en la industria. JSON es fácil de leer y escribir tanto para humanos como para máquinas. Se utiliza para intercambiar datos entre diferentes lenguajes de programación, como PHP y Python. También se utiliza en aplicaciones web para almacenar y recuperar datos del servidor.",
-                    "url": "https://youtu.be/d1XijkyZRvM?si=w9uhu6xap4Iq7yo7"
-                }
-            ]
-        }
-    ],
-    "nivel": ["intermedio"]
-    }, 
+        "imagen": "",
+        "titulo": "JSON: JavaScript Object Notation",
+        "temas": [
+            {
+                "nombre": "JSON: JavaScript Object Notation",
+                "descripcion": "JSON (JavaScript Object Notation) es un formato de intercambio de datos ligero y de texto fácil de leer y escribir. Se utiliza para representar estructuras de datos, como objetos y arreglos, en un formato que es fácilmente accesible para los humanos y las máquinas. JSON es independiente del lenguaje, pero se basa en la sintaxis de objetos de JavaScript, lo que lo hace particularmente útil en aplicaciones web y APIs. Su estructura consiste en pares clave-valor, donde las claves son cadenas y los valores pueden ser cadenas, números, objetos, arreglos, booleanos o nulos. JSON es ampliamente utilizado para la serialización de datos, facilitando el intercambio de información entre un servidor y un cliente.",
+                "urlvideos": [
+                    {
+                        "descripcion": "Este video trata sobre JSON, un formato ligero de intercambio de datos que se ha convertido en un estándar en la industria. JSON es fácil de leer y escribir tanto para humanos como para máquinas. Se utiliza para intercambiar datos entre diferentes lenguajes de programación, como PHP y Python. También se utiliza en aplicaciones web para almacenar y recuperar datos del servidor.",
+                        "url": "https://youtu.be/d1XijkyZRvM?si=w9uhu6xap4Iq7yo7"
+                    }
+                ]
+            }
+        ],
+        "nivel": "intermedio"
+    },
     {
-    "imagen": "",
-    "titulo": "",
-    "temas": [
-        {
-            "nombre": "",
-            "descripcion": "",
-            "urlvideos": [
-                {
-                    "descripcion": "",
-                    "url": ""
-                },
-                {
-                    "descripcion": "",
-                    "url": ""
-                },
-                {
-                    "descripcion": "",
-                    "url": ""
-                }
-            ]
-        }
-    ],
-    "nivel": ["intermedio"]
+        "imagen": "",
+        "titulo": "",
+        "temas": [
+            {
+                "nombre": "",
+                "descripcion": "",
+                "urlvideos": [
+                    {
+                        "descripcion": "",
+                        "url": ""
+                    },
+                    {
+                        "descripcion": "",
+                        "url": ""
+                    },
+                    {
+                        "descripcion": "",
+                        "url": ""
+                    }
+                ]
+            }
+        ],
+        "nivel": "intermedio"
     }
 ]
