@@ -224,6 +224,38 @@ export const actulizarUsuario = [authMiddleware, async (req, res) => {
 }];
 
 /**
+ * @description Update logged-in user info
+ * @route PUT /login/update
+ * @access Private
+ */
+
+export const actualizarUsuarioLogeado = [authMiddleware, async (req, res) => {
+    try {
+        const userId = req.user.id_user;
+
+        const usuario = await Login.findById(userId);
+        if (!usuario) {
+            return res.status(404).json({ message: 'Usuario no encontrado' });
+        }
+
+        const { name, lastName, user, email, password } = req.body;
+
+        if (name) usuario.name = name;
+        if (lastName) usuario.lastName = lastName;
+        if (user) usuario.user = user;
+        if (email) usuario.email = email;
+        if (password) usuario.password = await Login.encryptPassword(password); 
+
+        await usuario.save();
+
+        res.status(200).json({ message: 'Usuario actualizado correctamente' });
+    } catch (err) {
+        console.error(err);
+        res.status(500).json({ message: 'Error al actualizar el usuario' });
+    }
+}];
+
+/**
  * @description delete user
  * @route PUT /login/usuario/:id
  */
@@ -237,6 +269,33 @@ export const eliminarUsuario = [ authMiddleware, async (req, res) => {
         }
 
         await Login.deleteOne({ _id: id });
+
+        res.status(200).json({ message: 'Usuario eliminado correctamente' });
+    } catch (err) {
+        console.error(err);
+        res.status(500).json({ message: 'Error al eliminar el usuario' });
+    }
+}];
+
+/**
+ * @description Delete logged-in user account
+ * @route DELETE /login/delete
+ * @access Private
+ */
+
+export const eliminarUsuarioLogeado = [authMiddleware, async (req, res) => {
+    try {
+        // Obtén el ID del usuario autenticado desde el token JWT
+        const userId = req.user.id_user;
+
+        // Encuentra el usuario autenticado en la base de datos
+        const usuario = await Login.findById(userId);
+        if (!usuario) {
+            return res.status(404).json({ message: 'Usuario no encontrado' });
+        }
+
+        // Eliminar al usuario
+        await Login.findByIdAndDelete(userId);
 
         res.status(200).json({ message: 'Usuario eliminado correctamente' });
     } catch (err) {
@@ -275,4 +334,64 @@ export const asignarRoadmap = [authMiddleware, async (req, res) => {
     }
 }];
 
+/**
+ * @description get all Roadmap
+ * @route GET /login/listaRoadmap
+ */
+
+export const listaRoadmap =  [authMiddleware, async (req, res) => {
+    try {
+        const roadmaps = await Roadmap.find(); 
+        res.json(roadmaps);
+    } catch (err) {
+        console.error(err);
+        res.status(500).json({ message: 'Error al obtener los Roadmap.' });
+    }
+}];
+
+/**
+ * @description get id Roadmap
+ * @route GET /login/roadmapId
+ */
+
+export const roadmapId = [authMiddleware, async (req, res) => {
+    const { id } = req.params; 
+
+    if (!mongoose.Types.ObjectId.isValid(id)) {
+        return res.status(400).json({ message: 'ID no válido' });
+    }
+    try {
+        const roadmap = await Roadmap.findById(id);
+        if (!roadmap) {
+            return res.status(404).json({ message: 'Roadmap no encontrado' });
+        }
+
+        res.json(roadmap);
+    } catch (err) {
+        console.error(err);
+        res.status(500).json({ message: 'Error al obtener el roadmap' });
+    }
+}];
+
+
+/**
+ * @description get id Roadmap
+ * @route GET /login/roadmapId
+ */
+export const roadmapUsuario = [authMiddleware, async (req, res) => {
+    try {
+        const userId = req.user.id_user;
+
+        const usuario = await Login.findById(userId).select('_id').populate('roadmaps');
+
+        if (!usuario) {
+            return res.status(404).json({ message: 'Usuario no encontrado' });
+        }
+
+        res.json(usuario);
+    } catch (err) {
+        console.error(err);
+        res.status(500).json({ message: 'Error al obtener el usuario con roadmaps' });
+    }
+}];
 
