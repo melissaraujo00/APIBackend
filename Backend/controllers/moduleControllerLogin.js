@@ -6,7 +6,7 @@ import { validationResult } from 'express-validator';
 import rateLimit from 'express-rate-limit';
 import dotenv from 'dotenv';
 import validateLogin from '../validations/userValidation.js';
-import mongoose from 'mongoose'; 
+import mongoose from 'mongoose';
 import Roadmap from '../models/modelRoadmap.js';
 
 cookieParser();
@@ -60,7 +60,7 @@ export const usuarioId = [authMiddleware, async (req, res) => {
  * @route POST /login/register
  */
 
-export const resgistrarUsuario = [validateLogin, async (req, res ) => {
+export const resgistrarUsuario = [validateLogin, async (req, res) => {
     const errors = validationResult(req);
 
     if (!errors.isEmpty()) {
@@ -87,7 +87,7 @@ export const resgistrarUsuario = [validateLogin, async (req, res ) => {
         });
 
         res.status(200).json({ msg: 'User registered successfully' });
-        
+
     } catch (err) {
         res.status(400).json({ message: err.message });
     }
@@ -105,7 +105,7 @@ const loginLimiter = rateLimit({
     message: 'Too many login attempts from this IP, please try again later.'
 });
 
-export const inicioSesion = [ async (req, res) => {
+export const inicioSesion = [async (req, res) => {
     try {
         const userFound = await Login.findOne({ email: req.body.email });
         if (!userFound) return res.status(400).json({ message: "User not found" });
@@ -120,23 +120,23 @@ export const inicioSesion = [ async (req, res) => {
             }
         };
 
-    
+
         jwt.sign(
             payload,
             process.env.JWT_SECRET,
             { expiresIn: 3600 },
             (err, token) => {
-              if (err) throw err;
-          
-              res.cookie('token', token, {
-                httpOnly: true,
-                secure: process.env.NODE_ENV === 'production',
-                maxAge: 3600 * 1000 // 1 hora
-              });
-          
-              res.json({ message: 'Signed in successfully' });
+                if (err) throw err;
+
+                res.cookie('token', token, {
+                    httpOnly: true,
+                    secure: process.env.NODE_ENV === 'production',
+                    maxAge: 3600 * 1000 // 1 hora
+                });
+
+                res.json({ message: 'Signed in successfully' });
             }
-          );          
+        );
     } catch (err) {
         res.status(500).json({ message: 'Server error' });
     }
@@ -148,7 +148,7 @@ export const inicioSesion = [ async (req, res) => {
  * @route POST /login/logout
  */
 
-export const cierreSesion = async ( req, res ) => {
+export const cierreSesion = async (req, res) => {
     try {
         res.clearCookie('token', {
             httpOnly: true,
@@ -166,7 +166,7 @@ export const cierreSesion = async ( req, res ) => {
  * @route GET /login/profile
  */
 
-export const mantenerPerfil = [ authMiddleware, async (req, res) => {
+export const mantenerPerfil = [authMiddleware, async (req, res) => {
     try {
         const userId = req.user.id_user;
 
@@ -244,7 +244,7 @@ export const actualizarUsuarioLogeado = [authMiddleware, async (req, res) => {
         if (lastName) usuario.lastName = lastName;
         if (user) usuario.user = user;
         if (email) usuario.email = email;
-        if (password) usuario.password = await Login.encryptPassword(password); 
+        if (password) usuario.password = await Login.encryptPassword(password);
 
         await usuario.save();
 
@@ -260,7 +260,7 @@ export const actualizarUsuarioLogeado = [authMiddleware, async (req, res) => {
  * @route PUT /login/usuario/:id
  */
 
-export const eliminarUsuario = [ authMiddleware, async (req, res) => {
+export const eliminarUsuario = [authMiddleware, async (req, res) => {
     const id = req.params.id;
     try {
         const usuario = await Login.findById(id);
@@ -311,19 +311,19 @@ export const eliminarUsuarioLogeado = [authMiddleware, async (req, res) => {
 
 export const asignarRoadmap = [authMiddleware, async (req, res) => {
     try {
-        const userId = req.user.id_user; 
+        const userId = req.user.id_user;
 
-        const { roadmapName, roadmap } = req.body; 
+        const { roadmapName, roadmap } = req.body;
         if (!roadmapName || !roadmap) {
             return res.status(400).json({ message: 'Name and roadmap data are required' });
         }
         const newRoadmap = new Roadmap({
-            roadmapName: roadmapName, 
-            roadmap: roadmap, 
-            assignedTo: userId, 
+            roadmapName: roadmapName,
+            roadmap: roadmap,
+            assignedTo: userId,
         });
 
-        await newRoadmap.save(); 
+        await newRoadmap.save();
 
         const user = await Login.findByIdAndUpdate(userId, { $push: { roadmaps: newRoadmap._id } }, { new: true });
 
@@ -339,10 +339,10 @@ export const asignarRoadmap = [authMiddleware, async (req, res) => {
  * @route GET /login/listaRoadmap
  */
 
-export const listaRoadmap =  [authMiddleware, async (req, res) => {
+export const listaRoadmap = [authMiddleware, async (req, res) => {
     try {
-        const roadmaps = await Roadmap.find(); 
-        res.json(roadmaps);
+        const roadmaps = await Roadmap.find();
+        res.status(200).json(roadmaps);
     } catch (err) {
         console.error(err);
         res.status(500).json({ message: 'Error al obtener los Roadmap.' });
@@ -355,7 +355,7 @@ export const listaRoadmap =  [authMiddleware, async (req, res) => {
  */
 
 export const roadmapId = [authMiddleware, async (req, res) => {
-    const { id } = req.params; 
+    const { id } = req.params;
 
     if (!mongoose.Types.ObjectId.isValid(id)) {
         return res.status(400).json({ message: 'ID no válido' });
@@ -366,7 +366,7 @@ export const roadmapId = [authMiddleware, async (req, res) => {
             return res.status(404).json({ message: 'Roadmap no encontrado' });
         }
 
-        res.json(roadmap);
+        res.status(200).json(roadmap);
     } catch (err) {
         console.error(err);
         res.status(500).json({ message: 'Error al obtener el roadmap' });
@@ -388,10 +388,9 @@ export const roadmapUsuario = [authMiddleware, async (req, res) => {
             return res.status(404).json({ message: 'Usuario no encontrado' });
         }
 
-        res.json(usuario);
+        res.status(200).json(usuario);
     } catch (err) {
         console.error(err);
         res.status(500).json({ message: 'Error al obtener el usuario con roadmaps' });
     }
 }];
-

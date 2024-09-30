@@ -52,7 +52,7 @@ const genAI = new GoogleGenerativeAI(process.env.API_KEY);
 const model = genAI.getGenerativeModel({
   model: "gemini-1.5-flash",
   generationConfig: {
-    temperature: 2,
+    temperature: 1.3,
     responseMimeType: "application/json",
     responseSchema: schema,
   },
@@ -77,7 +77,7 @@ const generateContent = async (req, res) => {
   2. *Estructura de la Ruta de Aprendizaje (TOTALMENTE EN ESPAÑOL):*
     - Utiliza UNICA Y EXCLUSIVAMENTE el contenido del archivo JSON (${JSON.stringify(modulesData)})  que contiene múltiples módulos y lecciones. Los módulos están diseñados para abarcar diferentes aspectos del desarrollo de software.
     - Asigna un nombre acorde al contenido generado y descriptivo , (EVITA POR COMPLETO palabras como 'Roadmap' o similares ).
-    - Crea un mínimo de 4 módulos, cada uno con al menos 3 lecciones detalladas. Sin embargo, si el análisis del usuario indica una mayor necesidad de formación, puedes añadir MÁS MÓDULO y MAS LECCIONES.
+    - Crea un mínimo de 6 módulos, cada uno con al menos 6 lecciones detalladas. Sin embargo, si el análisis del usuario indica una mayor necesidad de formación, puedes añadir MÁS MÓDULO y MAS LECCIONES.
     - Cada lección debe incluir:
       - Un título claro y conciso.
       - Una descripción detallada y extensa que explique el contenido y los objetivos de aprendizaje de la lección.
