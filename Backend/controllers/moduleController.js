@@ -1,4 +1,5 @@
 import Modulo from "../models/model.js";
+import authMiddleware from "../middleware/authMiddleware.js"
 
 /**
  * @description get all modules
@@ -27,13 +28,14 @@ export const listadoModulos = async (req, res) => {
  * @description store module
  * @route POST /api/modulos
  */
-export const guardarModulo = async (req, res) => {
+export const guardarModulo = [authMiddleware, async (req, res) => {
 
     const modulo = new Modulo({
         imagen: req.body.imagen,
         titulo: req.body.titulo,
         temas: req.body.temas,
-        nivel: req.body.nivel
+        nivel: req.body.nivel,
+        author: req.user.id_user
     });
 
     try {
@@ -42,7 +44,7 @@ export const guardarModulo = async (req, res) => {
     } catch (err) {
         res.status(400).json({ message: err.message });
     }
-}
+}]
 
 /**
  * @description get single module

@@ -16,7 +16,11 @@ const moduloSchema = new mongoose.Schema({
     imagen: String,
     titulo: String,
     temas: [temaSchema],
-    nivel: { type: String, enum: ['principiante', 'intermedio', 'avanzado'] }
+    nivel: { type: String, enum: ['principiante', 'intermedio', 'avanzado'] },
+    author: {
+        type: String,
+        required: true,
+    }
 });
 
 const Modulo = mongoose.model('modulos', moduloSchema);
