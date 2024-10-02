@@ -285,16 +285,13 @@ export const eliminarUsuario = [authMiddleware, async (req, res) => {
 
 export const eliminarUsuarioLogeado = [authMiddleware, async (req, res) => {
     try {
-        // Obtén el ID del usuario autenticado desde el token JWT
         const userId = req.user.id_user;
 
-        // Encuentra el usuario autenticado en la base de datos
         const usuario = await Login.findById(userId);
         if (!usuario) {
             return res.status(404).json({ message: 'Usuario no encontrado' });
         }
 
-        // Eliminar al usuario
         await Login.findByIdAndDelete(userId);
 
         res.status(200).json({ message: 'Usuario eliminado correctamente' });
@@ -392,5 +389,27 @@ export const roadmapUsuario = [authMiddleware, async (req, res) => {
     } catch (err) {
         console.error(err);
         res.status(500).json({ message: 'Error al obtener el usuario con roadmaps' });
+    }
+}];
+
+/**
+ * @description delete Roadmap
+ * @route PUT /login/Roadmap/:id
+ */
+
+export const eliminarRoadmap = [authMiddleware, async (req, res) => {
+    const { id } = req.params;
+    try {
+        const roadmap = await Roadmap.findById(id);
+        if (!roadmap) {
+            return res.status(404).json({ message: 'Roadmap no encontrado' });
+        }
+
+        await Login.deleteOne({ _id: id });
+
+        res.status(200).json({ message: 'Roadmap eliminado correctamente' });
+    } catch (err) {
+        console.error(err);
+        res.status(500).json({ message: 'Error al Roadmap el usuario' });
     }
 }];

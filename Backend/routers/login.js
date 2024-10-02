@@ -1,5 +1,5 @@
 import express from 'express';
-import { listaUsuarios, usuarioId, resgistrarUsuario, inicioSesion, cierreSesion, mantenerPerfil, actulizarUsuario, eliminarUsuario, asignarRoadmap, listaRoadmap, roadmapId, roadmapUsuario,actualizarUsuarioLogeado, eliminarUsuarioLogeado} from '../controllers/moduleControllerLogin.js';
+import { listaUsuarios, usuarioId, resgistrarUsuario, inicioSesion, cierreSesion, mantenerPerfil, actulizarUsuario, eliminarUsuario, asignarRoadmap, listaRoadmap, roadmapId, roadmapUsuario,actualizarUsuarioLogeado, eliminarUsuarioLogeado, eliminarRoadmap} from '../controllers/moduleControllerLogin.js';
 
 const router = express.Router();
 
@@ -44,5 +44,8 @@ router.get('/roadmapId/:id', roadmapId)
 
 //get  roadmap user id
 router.get('/roadmapUsuario', roadmapUsuario)
+
+//delete roadmap id
+router.delete('/Roadmap/:id', eliminarRoadmap)
 
 export default router;
