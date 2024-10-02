@@ -60,7 +60,6 @@ function Footer() {
             <p className="text-gray-400">info@FutureCode.com</p>
             <p className="text-gray-400">+1 (555) 123-4567</p>
             <div className="flex space-x-4 mt-4">
-              {/* Add social media icons here */}
             </div>
           </div>
         </div>

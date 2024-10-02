@@ -1,30 +1,5 @@
 import { useState, useEffect } from "react";
-
-import {
-  Code,
-  Globe,
-  Server,
-  Layers,
-  Zap,
-  Database,
-  Cloud,
-  Lock,
-  Users,
-  Cog,
-  Briefcase,
-  Book,
-  Cpu,
-  Smartphone,
-  Wifi,
-  Headphones,
-  Camera,
-  Pen,
-  Palette,
-  Compass,
-  Anchor,
-  Aperture,
-  Archive,
-} from "lucide-react";
+import { Zap } from "lucide-react";
 import { Link } from "react-router-dom";
 import Header from "../../../components/Header/Header";
 import Footer from "../../../components/Footer/Footer";
@@ -46,7 +21,6 @@ export default function UserDashboard() {
         const response = await getUserRoadmaps();
 
         if (response.status == 200) {
-          // console.log("response.data", response.data.roadmaps);
           setUserRoadmaps(response.data.roadmaps);
           setIsLoading("SUCCESSFUL");
         }

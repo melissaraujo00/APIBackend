@@ -1,27 +1,20 @@
 import React, { useState } from "react";
-
 import {
   ChevronDownIcon,
   CheckIcon,
   Book,
   LinkIcon,
-  Clock,
-  Tag,
-  List,
   Plus,
   Trash2,
   Save,
-  ArrowLeft,
   Video,
   ChevronDown,
   ChevronUp,
-  Check,
-  EthernetPort,
 } from "lucide-react";
 import Footer from "../../components/Footer/Footer";
 import Header from "../../components/Header/Header";
-import { Link, useNavigate } from "react-router-dom";
-import { Bounce, Slide, ToastContainer, toast } from "react-toastify";
+import { useNavigate } from "react-router-dom";
+import { Slide, ToastContainer, toast } from "react-toastify";
 import { SaveModule } from "../../components/Api/ModulesRoutes";
 import { useAuth } from "../../auth/useAuth";
 
@@ -185,7 +178,6 @@ function CreateNewCoursePage() {
     if (validate === true) {
       toast.dismiss();
       const toastId = toast.loading("Publicando...");
-      // console.log("course", course);
 
       try {
         const responseModule = await SaveModule(course);
@@ -464,7 +456,6 @@ function CreateNewCoursePage() {
                     }}
                     className="flex"
                   >
-                    {/* <ArrowLeft className="h-4 w-4 mr-2" /> */}
                     Cancelar
                   </button>
                 </button>

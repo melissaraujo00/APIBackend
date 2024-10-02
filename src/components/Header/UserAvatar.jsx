@@ -1,14 +1,6 @@
 import React, { useState, useRef, useEffect } from "react";
-import {
-  ChevronDown,
-  User,
-  Settings,
-  DollarSign,
-  LogOut,
-  CircleUserRound,
-} from "lucide-react";
+import { ChevronDown, User, LogOut } from "lucide-react";
 import { Link, useNavigate } from "react-router-dom";
-// import { useAuth } from "../../auth/AuthContext";
 import { useAuth } from "../../auth/useAuth";
 import { logoutUser } from "../../auth/authService";
 
@@ -16,14 +8,7 @@ export default function UserAvatar() {
   const [isOpen, setIsOpen] = useState(false);
   const [userDashboard, setuserDashboard] = useState("");
   const dropdownRef = useRef(null);
-  const {
-    userId,
-    userName,
-    userEmail,
-    userRole,
-    loading,
-    checkAuthentication,
-  } = useAuth();
+  const { userName, userEmail, userRole, checkAuthentication } = useAuth();
   const navigate = useNavigate();
 
   async function LogOutAction() {
@@ -65,7 +50,6 @@ export default function UserAvatar() {
     };
   }, []);
 
-
   return (
     <div ref={dropdownRef}>
       <button
@@ -74,12 +58,6 @@ export default function UserAvatar() {
         type="button"
       >
         <span className="sr-only">Abrir menu de usuario</span>
-        {/* <CircleUserRound
-          className="w-14 h-14 me-2 rounded-full"
-          color="#707070"
-          strokeWidth={1}
-          alt="foto de usuario"
-        /> */}
         <img
           className="w-8 h-8 me-2 rounded-full"
           src="https://avatar.iran.liara.run/public"

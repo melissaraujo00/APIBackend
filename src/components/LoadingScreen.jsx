@@ -1,6 +1,6 @@
 import React from "react";
 
-export const LoadingScreen = ({className, textLoading }) => {
+export const LoadingScreen = ({ className, textLoading }) => {
   return (
     <div className={`inset-0 flex items-center justify-center ${className}`}>
       <div className="bg-white rounded-lg  p-10 max-w-lg w-full mx-4 ">
@@ -11,12 +11,6 @@ export const LoadingScreen = ({className, textLoading }) => {
           </div>
           <h2 className="text-2xl font-bold text-gray-800 mb-2">Cargando...</h2>
           <p className="text-center text-gray-600">{textLoading}</p>
-          {/* <div className="w-full bg-gray-200 rounded-full h-2.5 mt-6">
-            <div
-              className="bg-indigo-500 h-2.5 rounded-full animate-pulse"
-              style={{ width: "70%" }}
-            ></div>
-          </div> */}
         </div>
       </div>
     </div>

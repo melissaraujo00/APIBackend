@@ -1,12 +1,10 @@
-import { React, useState } from "react";
+import { React } from "react";
 import { Link } from "react-router-dom";
 import UserAvatar from "./UserAvatar";
 import { useAuth } from "../../auth/useAuth";
 
 function Header() {
-  const [loginButton, setLoginButton] = useState(true);
-  const { userId, userName, userEmail, userRole, loading } = useAuth();
-
+  const { userId } = useAuth();
 
   return (
     <header className="bg-white bg-opacity-90 backdrop-filter backdrop-blur-lg fixed w-full z-10 shadow-sm">
@@ -28,7 +26,6 @@ function Header() {
             IA Personalizada
           </Link>
           <button
-            // to="#about"
             onClick={() => {
               window.scrollTo({
                 top: document.documentElement.scrollHeight,

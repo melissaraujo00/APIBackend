@@ -1,15 +1,4 @@
-import {
-  Search,
-  Filter,
-  Book,
-  Clock,
-  Star,
-  Users,
-  Zap,
-  ChevronDown,
-  Notebook,
-  ChevronRight,
-} from "lucide-react";
+import { Notebook, ChevronRight } from "lucide-react";
 import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import Header from "../../components/Header/Header";
@@ -18,9 +7,7 @@ import { GetAllModules } from "../../components/Api/ModulesRoutes";
 import { LoadingScreen } from "../../components/LoadingScreen";
 
 export default function CoursesCatalog() {
-  const [selectedCategory, setSelectedCategory] = useState("All");
   const [ModulesData, setModulesData] = useState([]);
-  // console.log("ModulesData", ModulesData);
 
   useEffect(() => {
     const GetData = async () => {

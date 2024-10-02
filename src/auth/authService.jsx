@@ -1,34 +1,37 @@
 import axios from "axios";
 const apiURL = import.meta.env.VITE_API_URL;
 
-// Verificar el estado de autenticación
+// Verificar el estado de autenticación de usuario
 export const checkAuth = async () => {
   try {
     const response = await axios.get(apiURL + "/login/profile", {
-      withCredentials: true, // Asegura que las cookies de autenticación se envíen
+      withCredentials: true,
     });
     return response; // Devuelve los datos del usuario si está autenticado
   } catch (error) {
-    // console.error("Error al verificar la autenticación\n", error.response.status);
-    return null; // Si hay un error, devolvemos null para indicar que no está autenticado
+    return null;
   }
 };
 
-// Realizar el logout
+// Realizar el cierre de sesion
 export const logoutUser = async () => {
   try {
-    const response = await axios.post(apiURL + "/login/logout", {},{
-      withCredentials: true, // Asegura que las cookies se envíen
-    });
+    const response = await axios.post(
+      apiURL + "/login/logout",
+      {},
+      {
+        withCredentials: true, // Asegura que las cookies se envíen
+      }
+    );
 
     return response; // Devuelve true si el logout fue exitoso
   } catch (error) {
     console.error("Error al hacer logout", error);
-    return false; // Devuelve false si hubo un error en el logout
+    return false;
   }
 };
 
-// Realizar el login
+// Realizar el inicio de sesion
 export const loginUser = async (email, password) => {
   try {
     const userData = {
@@ -44,15 +47,12 @@ export const loginUser = async (email, password) => {
   }
 };
 
+// Realizar el registro de usuaroi
 export const signUpUser = async (userData) => {
   try {
-    const response = await axios.post(
-      apiURL + "/login/register",
-      userData,
-      {
-        withCredentials: true,
-      } // Asegura que las cookies se envíen
-    );
+    const response = await axios.post(apiURL + "/login/register", userData, {
+      withCredentials: true,
+    });
 
     return response;
   } catch (error) {

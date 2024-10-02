@@ -78,17 +78,6 @@ function App() {
                 </ProtectedRoute>
               }
             />
-            {/* IN DEVELOPMENT */}
-            <Route
-              path="/dashboard"
-              element={
-                <ProtectedRoute allowedRoles={["profesor", "admin"]}>
-                  
-
-
-                </ProtectedRoute>
-              }
-            />
             <Route
               path="/teacher"
               element={

@@ -21,7 +21,9 @@ export default function UsersContent({ usersList }) {
           body={
             <>
               <p className="text-lg">id: {userDeleting._id}</p>
-              <p className="text-ls">Nombre: {userDeleting.name} {userDeleting.lastName}</p>
+              <p className="text-ls">
+                Nombre: {userDeleting.name} {userDeleting.lastName}
+              </p>
               <p className="text-ls">Email: {userDeleting.email} </p>
               <p className="text-ls">Rol: {userDeleting.roles} </p>
             </>
@@ -76,7 +78,10 @@ export default function UsersContent({ usersList }) {
                   {/* <button className="text-indigo-600 hover:text-indigo-900 mr-2">
                     <Edit className="h-5 w-5" />
                   </button> */}
-                  <button onClick={()=>deleteUser(user)} className="text-red-600 hover:text-red-900">
+                  <button
+                    onClick={() => deleteUser(user)}
+                    className="text-red-600 hover:text-red-900"
+                  >
                     <Trash2 className="h-5 w-5" />
                   </button>
                 </td>

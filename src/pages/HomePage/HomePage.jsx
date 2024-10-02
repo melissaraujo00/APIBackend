@@ -3,13 +3,11 @@ import {
   ArrowRight,
   CheckCircle,
   Code,
-  Users,
   Zap,
   Brain,
   Sparkles,
 } from "lucide-react";
 import { Link } from "react-router-dom";
-
 import Header from "../../components/Header/Header";
 import Footer from "../../components/Footer/Footer";
 import { useAuth } from "../../auth/useAuth";
@@ -121,9 +119,7 @@ export default function HomePage() {
                 <ul className="space-y-2">
                   {[
                     "Contenido estructurado y probado",
-                    // "Proyectos prácticos del mundo real",
                     "Acceso a recursos adicionales curados",
-                    // "Certificaciones reconocidas por la industria",
                   ].map((item, index) => (
                     <li key={index} className="flex items-start">
                       <CheckCircle className="text-green-500 mr-2 mt-1 flex-shrink-0" />

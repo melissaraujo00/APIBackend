@@ -1,5 +1,4 @@
-import axios from "axios";
-import { createContext, useContext, useEffect, useState } from "react";
+import { createContext, useEffect, useState } from "react";
 import { checkAuth, logoutUser } from "./authService"; // Importamos desde el servicio
 
 const AuthContext = createContext();
@@ -24,12 +23,10 @@ export function AuthProvider({ children }) {
           break;
         case 401:
           console.log("401: ", "Acceso denegado");
-          //   alert("Acceso denegado");
           break;
 
         case 404:
           console.log("404: ", "Usuario no registrado");
-          // alert("Usuario no registrado");
           break;
       }
     } else {
@@ -41,7 +38,7 @@ export function AuthProvider({ children }) {
       console.error("Token inválido o expirado:");
     }
     setLoading(false); // Termina la carga
-    return 200
+    return 200;
   };
 
   // Función para hacer logout
@@ -82,8 +79,4 @@ export function AuthProvider({ children }) {
   );
 }
 
-// Hook personalizado para usar el contexto
-// export function useAuth() {
-//   return useContext(AuthContext);
-// }
 export { AuthContext };
