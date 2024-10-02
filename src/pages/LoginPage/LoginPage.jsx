@@ -110,10 +110,10 @@ export default function LoginPage() {
           </svg>
         </a>
         <h2 className="mt-4 text-center text-3xl font-extrabold text-gray-900">
-        Inicia sesión en tu cuenta
+          Inicia sesión en tu cuenta
         </h2>
         <p className="mt-2 text-center text-sm text-gray-600">
-          O {" "}
+          O{" "}
           <Link
             to="/signup"
             className="font-medium text-indigo-600 hover:text-indigo-500"
@@ -194,7 +194,6 @@ export default function LoginPage() {
               </div>
             </div>
 
-           
             <div>
               <button
                 type="submit"

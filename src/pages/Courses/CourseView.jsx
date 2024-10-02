@@ -165,61 +165,6 @@ export default function CourseView() {
   const { id } = useParams();
   const navigate = useNavigate();
 
-  // const courseData = {
-  //   _id: "66face3882be8d164652d905",
-  //   imagen: "",
-  //   titulo: "Introducción a JavaScript",
-  //   temas: [
-  //     {
-  //       nombre: "Introducción",
-  //       descripcion:
-  //         "Es el lenguaje que le da vida a las páginas web. Permite crear páginas interactivas y dinámicas, desde simples animaciones hasta aplicaciones web completas. Imagina botones que responden a tus clics, menús desplegables y juegos que puedes jugar directamente en tu navegador. Todo esto es posible gracias a JavaScript. Es como el mago detrás de las cortinas, haciendo que las páginas web sean más divertidas y útiles.",
-  //       urlvideos: [
-  //         {
-  //           descripcion:
-  //             "En este video, se inicia un curso sobre JavaScript, proporcionando una introducción a su historia y características fundamentales. Se exploran los orígenes del lenguaje, su evolución a lo largo del tiempo y las cualidades que lo convierten en una herramienta esencial para el desarrollo web. Esta primera lección sienta las bases para entender el funcionamiento y las aplicaciones de JavaScript en proyectos futuros.",
-  //           url: "https://youtu.be/2SetvwBV-SU?list=PLvq-jIkSeTUZ6QgYYO3MwG9EMqC-KoLXA",
-  //           _id: "66face3882be8d164652d907",
-  //         },
-  //         {
-  //           descripcion:
-  //             "En esta primera entrega del curso básico de JavaScript, se introduce el lenguaje, explicando su esencia y la lógica que lo sustenta para la programación. Se analizan los conceptos fundamentales que permiten a los programadores comprender cómo interactuar con JavaScript de manera efectiva, sentando las bases para un aprendizaje más profundo en el desarrollo web.",
-  //           url: "https://youtu.be/ye21CYdhm1s",
-  //           _id: "66face3882be8d164652d908",
-  //         },
-  //       ],
-  //       _id: "66face3882be8d164652d906",
-  //     },
-  //     {
-  //       nombre: "Características y Gramática",
-  //       descripcion:
-  //         "JavaScript se caracteriza por ser un lenguaje de programación dinámico y flexible, lo que permite a los desarrolladores escribir código sin especificar el tipo de datos de antemano. Su gramática incluye conceptos fundamentales como variables, tipos de datos, operadores y estructuras de control, que son esenciales para estructurar y ejecutar programas. Además, JavaScript es interpretado por los navegadores, lo que facilita la prueba y ejecución en tiempo real. Estos aspectos lo convierten en una herramienta poderosa para crear aplicaciones interactivas y dinámicas en la web.",
-  //       urlvideos: [
-  //         {
-  //           descripcion:
-  //             "En este video, se destacan algunas de las características más importantes de JavaScript, brindando una visión general de su funcionamiento y versatilidad. Además, se discuten las reglas gramaticales que los programadores deben seguir al escribir código, lo que ayuda a garantizar que el código sea claro y eficiente. Este enfoque proporciona una base sólida para los desarrolladores que están comenzando con el lenguaje",
-  //           url: "https://youtu.be/C5FXZ2ki13k?list=PLvq-jIkSeTUZ6QgYYO3MwG9EMqC-KoLXA",
-  //           _id: "66face3882be8d164652d90a",
-  //         },
-  //         {
-  //           descripcion:
-  //             "En el video se aborda el concepto de JavaScript como un lenguaje de programación, diferenciándolo de HTML y CSS. Se destaca su capacidad para manejar datos de entrada y salida, así como su función en la interactividad de las páginas web, permitiendo que las acciones del usuario generen respuestas. Se presentan características fundamentales de JavaScript, como su tipado dinámico, su naturaleza interpretada, su enfoque en prototipos y su versatilidad en paradigmas de programación. Estos aspectos son cruciales para entender cómo funciona el lenguaje.",
-  //           url: "https://youtu.be/Or9Dfa0zhls",
-  //           _id: "66face3882be8d164652d90b",
-  //         },
-  //         {
-  //           descripcion:
-  //             "En el video se explican tres características clave de JavaScript: primero, permite crear **variables dinámicas**, donde el tipo de dato se determina automáticamente; segundo, es **débilmente tipado**, lo que implica que no es necesario especificar el tipo al declarar variables o funciones, lo que puede ser ventajoso pero arriesgado; y tercero, es **orientado a objetos**, permitiendo la creación de objetos y clases. Además, se enfatiza que JavaScript es interpretado directamente por los navegadores.",
-  //           url: "https://youtu.be/c1IHTKDIbI0",
-  //           _id: "66face3882be8d164652d90c",
-  //         },
-  //       ],
-  //       _id: "66face3882be8d164652d909",
-  //     },
-  //   ],
-  //   nivel: "principiante",
-  //   __v: 0,
-  // };
   useEffect(() => {
     const getData = async () => {
       try {

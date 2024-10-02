@@ -1,9 +1,10 @@
 import axios from "axios";
+const apiURL = import.meta.env.VITE_API_URL;
 
 // Verificar el estado de autenticación
 export const checkAuth = async () => {
   try {
-    const response = await axios.get("http://localhost:3000/login/profile", {
+    const response = await axios.get(apiURL + "/login/profile", {
       withCredentials: true, // Asegura que las cookies de autenticación se envíen
     });
     return response; // Devuelve los datos del usuario si está autenticado
@@ -16,13 +17,9 @@ export const checkAuth = async () => {
 // Realizar el logout
 export const logoutUser = async () => {
   try {
-    const response = await axios.post(
-      "http://localhost:3000/login/logout",
-      {},
-      {
-        withCredentials: true, // Asegura que las cookies se envíen
-      }
-    );
+    const response = await axios.post(apiURL + "/login/logout", {},{
+      withCredentials: true, // Asegura que las cookies se envíen
+    });
 
     return response; // Devuelve true si el logout fue exitoso
   } catch (error) {
@@ -38,15 +35,27 @@ export const loginUser = async (email, password) => {
       email: email,
       password: password,
     };
-    const response = await axios.post(
-      "http://localhost:3000/login/signin",
-      userData,
-      {
-        withCredentials: true, // Asegura que las cookies se envíen
-      }
-    );
+    const response = await axios.post(apiURL + "/login/signin", userData, {
+      withCredentials: true, // Asegura que las cookies se envíen
+    });
     return response;
   } catch (error) {
     throw error; // Re-lanza el error para que el componente lo maneje
+  }
+};
+
+export const signUpUser = async (userData) => {
+  try {
+    const response = await axios.post(
+      apiURL + "/login/register",
+      userData,
+      {
+        withCredentials: true,
+      } // Asegura que las cookies se envíen
+    );
+
+    return response;
+  } catch (error) {
+    return null;
   }
 };

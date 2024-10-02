@@ -1,8 +1,9 @@
 import axios from "axios";
+const apiURL = import.meta.env.VITE_API_URL;
 
 export const MakeRoadmap = async (userQuestionnaire) => {
   try {
-    const res = await axios.post("http://localhost:3000/gemini", {
+    const res = await axios.post(`${apiURL}/gemini`, {
       userQuestionnaire,
     });
 
@@ -16,7 +17,7 @@ export const MakeRoadmap = async (userQuestionnaire) => {
 export const SaveRoadmap = async (roadmap) => {
   try {
     const response = await axios.post(
-      "http://localhost:3000/login/asignarRoadmap",
+      `${apiURL}/login/asignarRoadmap`,
       roadmap,
       {
         withCredentials: true,

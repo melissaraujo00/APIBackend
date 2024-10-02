@@ -1,8 +1,9 @@
 import axios from "axios";
+const apiURL = import.meta.env.VITE_API_URL;
 
 export const GetAllModules = async () => {
   try {
-    const response = await axios.get("http://localhost:3000/api/modulos/", {
+    const response = await axios.get(apiURL + "/api/modulos/", {
       withCredentials: true,
     });
 
@@ -13,7 +14,7 @@ export const GetAllModules = async () => {
 };
 export const GetOneModule = async (id) => {
   try {
-    const response = await axios.get(`http://localhost:3000/api/modulos/${id}`, {
+    const response = await axios.get(apiURL + `/api/modulos/${id}`, {
       withCredentials: true,
     });
 
@@ -24,7 +25,7 @@ export const GetOneModule = async (id) => {
 };
 export const DeleteOneModule = async (id) => {
   try {
-    const response = await axios.delete(`http://localhost:3000/api/modulos/${id}`, {
+    const response = await axios.delete(apiURL + `/api/modulos/${id}`, {
       withCredentials: true,
     });
 
@@ -35,13 +36,9 @@ export const DeleteOneModule = async (id) => {
 };
 export const SaveModule = async (moduleData) => {
   try {
-    const response = await axios.post(
-      "http://localhost:3000/api/modulos/",
-      moduleData,
-      {
-        withCredentials: true,
-      }
-    );
+    const response = await axios.post(apiURL + "/api/modulos/", moduleData, {
+      withCredentials: true,
+    });
 
     return response;
   } catch (error) {

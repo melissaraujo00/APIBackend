@@ -12,6 +12,7 @@ import { useNavigate, Link } from "react-router-dom";
 import axios from "axios";
 import { Bounce, Slide, ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import { signUpUser } from "../../auth/authService";
 
 export default function SignUpPage() {
   const [name, setName] = useState("");
@@ -83,11 +84,7 @@ export default function SignUpPage() {
         userData.roles = "profesor";
       }
 
-      const signUpResponse = await axios.post(
-        "http://localhost:3000/login/register",
-        userData,
-        { withCredentials: true } // Asegura que las cookies se envíen
-      );
+      const signUpResponse = await signUpUser(userData);
 
       if (signUpResponse.status == 200) {
         //Registro exitoso
