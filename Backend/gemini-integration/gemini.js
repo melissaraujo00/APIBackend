@@ -68,7 +68,7 @@ const generateContent = async (req, res) => {
 
   Tu tarea es diseñar un plan de estudios personalizado, o Roadmap, utilizando los datos proporcionados en un archivo JSON de módulos de aprendizaje y las respuestas de un cuestionario personalizado que el usuario completó previamente. El objetivo es guiar al usuario a través de una ruta de aprendizaje optimizada y ajustada a sus necesidades, habilidades y metas profesionales. 
 
-  Aquí están los pasos detallados para completar la tarea:
+  Aquí están los pasos detallados para completar la tarea, VITA POR COMPLETO USAR LINKS EXTERNOS A LA INFORMACION QUE SE TE A PROPORCIONADO:
 
   1. *Análisis del Usuario:*
     - Examina las respuestas del cuestionario (${JSON.stringify(userQuestionnaire)}) para determinar el nivel de habilidad del usuario, sus objetivos profesionales, y sus preferencias de aprendizaje.
@@ -81,7 +81,7 @@ const generateContent = async (req, res) => {
     - Cada lección debe incluir:
       - Un título claro y conciso.
       - Una descripción detallada y extensa que explique el contenido y los objetivos de aprendizaje de la lección.
-      - **VIDEO**: Integra los links de los videos de YouTube proporcionados en el JSON que ya contiene las lecciones.
+      - **VIDEO**: Integra los links de los videos de YouTube proporcionados en el JSON que ya contiene las lecciones. EVITA POR COMPLETO USAR LINKS EXTERNOS A LA INFORMACION QUE SE TE A PROPORCIONADO.
 
   3. *Adaptación Personalizada:*
     - Ajusta el contenido de cada módulo y lección en función del nivel de habilidad del usuario. Asegúrate de que los conceptos avanzados se expliquen de manera accesible para quienes tienen menos experiencia, pero al mismo tiempo mantén la profundidad necesaria para los usuarios más avanzados.
@@ -91,7 +91,7 @@ const generateContent = async (req, res) => {
     - Revisa el Roadmap completo y asegúrate de que cubra todos los aspectos relevantes del desarrollo de software según las necesidades del usuario.
     - Asegúrate de que el ritmo de los módulos sea adecuado para el nivel del usuario. 
 
-  Finalmente, toma una respiración profunda y trabaja en este problema paso a paso.
+  Finalmente, toma una respiración profunda y trabaja en este problema paso a paso.VITA POR COMPLETO USAR LINKS EXTERNOS A LA INFORMACION QUE SE TE A PROPORCIONADO.
 `;
 
   try {
