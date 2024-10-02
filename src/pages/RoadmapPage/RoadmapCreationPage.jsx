@@ -1,18 +1,39 @@
 import React, { useState } from "react";
+
 import {
-  ChevronRight,
-  ChevronLeft,
-  Code,
-  Globe,
-  Book,
-  Zap,
+  Coffee,
+  Droplet,
   CheckCircle,
   ChevronDown,
   ChevronUp,
+  ChevronLeft,
+  ChevronRight,
+  Code,
+  Globe,
   Server,
   Layers,
+  Zap,
+  Database,
+  Cloud,
+  Lock,
+  Users,
+  Cog,
+  Briefcase,
+  Book,
+  Cpu,
+  Smartphone,
+  Wifi,
+  Headphones,
+  Camera,
+  Pen,
+  Palette,
+  Compass,
+  Anchor,
+  Aperture,
+  Archive,
+  FileText,
 } from "lucide-react";
-import { Link } from "react-router-dom";
+
 import ReactMarkdown from "react-markdown";
 import { LoadingScreen } from "../../components/LoadingScreen";
 import { ErrorMessage } from "../../components/ErrorMessage";
@@ -20,47 +41,9 @@ import Header from "../../components/Header/Header";
 import Footer from "../../components/Footer/Footer";
 import { MakeRoadmap, SaveRoadmap } from "../../components/Api/GeminiRoutes";
 import { Bounce, Slide, ToastContainer, toast } from "react-toastify";
+import ColorsIcons from "../../components/ColorsIcons";
 import "react-toastify/dist/ReactToastify.css";
-
-const selectColor = () => {
-  const numRandon = Math.floor(Math.random() * 4);
-
-  switch (numRandon) {
-    case 0:
-      return {
-        icon: Code,
-        color: "bg-blue-100",
-        textColor: "text-blue-600",
-      };
-    case 1:
-      return {
-        icon: Code,
-        color: "bg-blue-100",
-        textColor: "text-blue-600",
-      };
-
-    case 2:
-      return {
-        icon: Globe,
-        color: "bg-purple-100",
-        textColor: "text-purple-600",
-      };
-
-    case 3:
-      return {
-        icon: Server,
-        color: "bg-green-100",
-        textColor: "text-green-600",
-      };
-
-    case 4:
-      return {
-        icon: Layers,
-        color: "bg-red-100",
-        textColor: "text-red-600",
-      };
-  }
-};
+import ConvertToEmbetURLS from "./ConvertToEmbetURLS";
 
 const questions = [
   {
@@ -247,7 +230,24 @@ const questions = [
 
 const LessonItem = ({ lesson, colorsData }) => {
   const [isOpen, setIsOpen] = useState(false);
-  const colorData = selectColor();
+  const colorData = ColorsIcons();
+
+  // function convertToEmbedURL(url) {
+  //   // Expresión regular para extraer el ID del video de diferentes tipos de enlaces
+  //   const regex =
+  //     /(?:https?:\/\/)?(?:www\.)?(?:youtube\.com\/(?:watch\?v=|embed\/|v\/|.+\?v=)|youtu\.be\/)([\w-]{11})/;
+
+  //   // Intentamos hacer match con la URL
+  //   const match = url.match(regex);
+
+  //   // Si hay coincidencia, formamos el enlace embebido; si no, retornamos null
+  //   if (match) {
+  //     const videoID = match[1];
+  //     return `https://www.youtube.com/embed/${videoID}`;
+  //   } else {
+  //     return null; // Si no es un enlace de YouTube válido
+  //   }
+  // }
 
   return (
     <div className="mb-4">
@@ -265,16 +265,12 @@ const LessonItem = ({ lesson, colorsData }) => {
       </button>
       {isOpen && (
         <div className="mt-2 ml-7 pl-3 border-l-2 border-gray-200">
-          {/* <p className="text-sm text-gray-600 mb-2">{lesson.description}</p> */}
           <p className="text-sm text-gray-600 mb-2">
             <ReactMarkdown>{lesson.description}</ReactMarkdown>
           </p>
           <iframe
-            className="w-6/12 aspect-video"
-            // src={`https://www.youtube.com/embed/CF_lbDaSo48`}
-            src={`https://www.youtube.com/embed/${
-              lesson.videoUrl.split("=")[1]
-            }`}
+            className="w-6/12 aspect-video rounded-lg"
+            src={ConvertToEmbetURLS(lesson.videoUrl)}
             title="YouTube video player"
             frameBorder="0"
             allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
@@ -288,57 +284,67 @@ const LessonItem = ({ lesson, colorsData }) => {
 };
 
 const RoadmapMenu = ({ roadmapData = [], regenerateRoadmap }) => {
+  const roadmapContent = roadmapData.roadmap;
+  const roadmapName = roadmapData.roadmapName;
+  const [isSaving, setIsSaving] = useState(false);
+
   const savingRoadmap = async () => {
-    const toastId = toast.loading("Guardando ruta de aprendizaje...");
-    try {
-      console.log({ roadmap: roadmapData });
-      const savingResponse = await SaveRoadmap({ roadmap: roadmapData });
+    if (isSaving == false) {
+      const toastId = toast.loading("Guardando ruta de aprendizaje...");
 
-      if (savingResponse.status == 200) {
-        //Roadmap guardado exitosamente
-        toast.update(toastId, {
-          render: "Ruta de aprendizaje guardada exitosamente",
-          type: "success",
-          isLoading: false,
-          icon: "🟢",
-          autoClose: 3500,
-          pauseOnHover: false,
+      try {
+        // console.log({ roadmap: roadmapData });
+        const savingResponse = await SaveRoadmap({
+          roadmapName: roadmapName,
+          roadmap: roadmapContent,
         });
-      } else {
-        //Error desconocido
-        toast.update(toastId, {
-          render: "Error desconocido",
-          type: "error",
-          isLoading: false,
-          icon: "🔴",
-          autoClose: 3500,
-          pauseOnHover: false,
-        });
-      }
-      console.log("savingResponse:", savingResponse);
-    } catch (error) {
-      console.log("Error catch", error);
 
-      if (error.response) {
-        //Mostrar el error que ocurrio
-        toast.update(toastId, {
-          render: error.response.data.message,
-          type: "error",
-          isLoading: false,
-          icon: "🔴",
-          autoClose: 4000,
-          pauseOnHover: false,
-        });
-      } else {
-        //Si no hay conexion a al server
-        toast.update(toastId, {
-          render: "Error en el servidor",
-          type: "error",
-          isLoading: false,
-          icon: "🔴",
-          autoClose: 4000,
-          pauseOnHover: false,
-        });
+        if (savingResponse.status == 200) {
+          //Roadmap guardado exitosamente
+          toast.update(toastId, {
+            render: "Ruta de aprendizaje guardada exitosamente",
+            type: "success",
+            isLoading: false,
+            icon: "🟢",
+            autoClose: 3500,
+            pauseOnHover: false,
+          });
+        } else {
+          //Error desconocido
+          toast.update(toastId, {
+            render: "Error desconocido",
+            type: "error",
+            isLoading: false,
+            icon: "🔴",
+            autoClose: 3500,
+            pauseOnHover: false,
+          });
+        }
+        console.log("savingResponse:", savingResponse);
+      } catch (error) {
+        console.log("Error catch", error);
+
+        if (error.response) {
+          //Mostrar el error que ocurrio
+          toast.update(toastId, {
+            render: error.response.data.message,
+            type: "error",
+            isLoading: false,
+            icon: "🔴",
+            autoClose: 4000,
+            pauseOnHover: false,
+          });
+        } else {
+          //Si no hay conexion a al server
+          toast.update(toastId, {
+            render: "Error en el servidor",
+            type: "error",
+            isLoading: false,
+            icon: "🔴",
+            autoClose: 4000,
+            pauseOnHover: false,
+          });
+        }
       }
     }
   };
@@ -364,16 +370,13 @@ const RoadmapMenu = ({ roadmapData = [], regenerateRoadmap }) => {
         transition={Slide}
       />
       <div className="mx-auto p-6 bg-white shadow-lg rounded-lg mb-8">
-        <h1 className="text-3xl font-bold mb-4">
-          Your Personalized Full Stack Web Development Roadmap
-        </h1>
+        <h1 className="text-3xl font-bold mb-4">{roadmapName}</h1>
         <div className="flex mb-4">
           <div className="w-full">
-            <p className="text-gray-600 mb-4 ">
-              This AI-generated roadmap is tailored to your learning style,
-              current skills, and career goals.
+            <p className="text-gray-600 mb-4 text-lg">
+              Esta ruta de aprendizaje generada por IA se adapta a su estilo de
+              aprendizaje, habilidades actuales.
             </p>
-            <h2 className="text-2xl font-semibold mb-6">Your Learning Path</h2>
           </div>
           <div className="flex flex-col w-4/12 justify-center ">
             <button
@@ -392,8 +395,8 @@ const RoadmapMenu = ({ roadmapData = [], regenerateRoadmap }) => {
         </div>
 
         <div className="space-y-6">
-          {roadmapData.map((section, index) => {
-            const colorsData = selectColor();
+          {roadmapContent.map((section, index) => {
+            const colorsData = ColorsIcons();
             return (
               <div
                 key={index}
@@ -473,15 +476,15 @@ export default function AIRoadmapCreation() {
   const generateRoadmap = async () => {
     setGenerationStatus("LOADING");
     setRoadmap([]);
-    console.log("responses", responses);
+    // console.log("responses", responses);
 
     try {
       const responseMakeRoadmap = await MakeRoadmap(responses);
 
       if (responseMakeRoadmap.status == 200) {
-        console.log("Roadmap generado", responseMakeRoadmap.data.roadmap);
+        console.log("Roadmap generado", responseMakeRoadmap.data);
 
-        setRoadmap(responseMakeRoadmap.data.roadmap);
+        setRoadmap(responseMakeRoadmap.data);
         setGenerationStatus("SUCCESSFUL");
       } else {
         setGenerationStatus("ERROR");

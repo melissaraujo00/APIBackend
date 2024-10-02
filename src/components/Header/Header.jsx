@@ -7,9 +7,6 @@ function Header() {
   const [loginButton, setLoginButton] = useState(true);
   const { userId, userName, userEmail, userRole, loading } = useAuth();
 
-  // if (userId != null) {
-  //   setLoginButton(true);
-  // }
 
   return (
     <header className="bg-white bg-opacity-90 backdrop-filter backdrop-blur-lg fixed w-full z-10 shadow-sm">

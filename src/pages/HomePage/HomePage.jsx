@@ -12,31 +12,37 @@ import { Link } from "react-router-dom";
 
 import Header from "../../components/Header/Header";
 import Footer from "../../components/Footer/Footer";
+import { useAuth } from "../../auth/useAuth";
 
 export default function HomePage() {
+  const { userId } = useAuth();
+
   return (
     <div className="min-h-screen bg-gradient-to-b from-indigo-100 to-white font-sans">
       <Header />
 
       <main>
         <section className="pt-32 pb-20 px-4 sm:px-6 lg:px-8">
-          <div className="max-w-7xl mx-auto text-center">
+          <div className="max-w-7xl mx-auto text-center my-16">
             <h1 className="text-5xl md:text-6xl font-extrabold text-gray-900 mb-6">
               Aprende con IA,
               <br />
               <span className="text-indigo-600">Domina con Práctica</span>
             </h1>
             <p className="text-xl text-gray-600 mb-10 max-w-3xl mx-auto">
-              Descubre una nueva forma de aprender JavaScript con cursos
-              personalizados por IA y contenido estándar de alta calidad.
+              Descubre una nueva manera de aprender con un plan de estudios
+              diseñado a tu medida, optimizado con IA para que avances a tu
+              propio ritmo.
             </p>
             <div className="flex flex-col sm:flex-row justify-center items-center space-y-4 sm:space-y-0 sm:space-x-4">
-              <Link
-                to="/signup"
-                className=" bg-indigo-600 text-white text-lg px-8 py-3 rounded-full font-semibold hover:bg-indigo-700 transition duration-300 flex items-center justify-center cursor-pointer"
-              >
-                Comenzar Ahora <ArrowRight className="ml-2" />
-              </Link>
+              {userId == null && (
+                <Link
+                  to="/signup"
+                  className=" bg-indigo-600 text-white text-lg px-8 py-3 rounded-full font-semibold hover:bg-indigo-700 transition duration-300 flex items-center justify-center cursor-pointer"
+                >
+                  Comenzar Ahora <ArrowRight className="ml-2" />
+                </Link>
+              )}
             </div>
           </div>
         </section>

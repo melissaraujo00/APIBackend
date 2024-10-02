@@ -11,11 +11,14 @@
   },
   "dependencies": {
     "axios": "^1.7.7",
+    "class-variance-authority": "^0.7.0",
     "lucide-react": "^0.438.0",
     "react": "^18.3.1",
+    "react-accordion": "^0.3.0",
     "react-dom": "^18.3.1",
     "react-markdown": "^9.0.1",
     "react-router-dom": "^6.26.1",
+    "react-select": "^5.8.1",
     "react-toastify": "^10.0.5"
   },
   "devDependencies": {

@@ -15,6 +15,7 @@ import "react-toastify/dist/ReactToastify.css";
 
 export default function SignUpPage() {
   const [name, setName] = useState("");
+  const [lastName, setLastName] = useState("");
   const [email, setEmail] = useState("");
 
   const [password, setPassword] = useState("");
@@ -30,7 +31,7 @@ export default function SignUpPage() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     // Validación simple
-    if (!name || !password) {
+    if (!name || !password || !lastName) {
       toast("Por favor, complete todos los campos", {
         type: "warning",
         icon: "🔴",
@@ -70,6 +71,8 @@ export default function SignUpPage() {
 
     try {
       let userData = {
+        name: name,
+        lastName: lastName,
         user: name,
         email: email,
         password: password,
@@ -193,15 +196,15 @@ export default function SignUpPage() {
           }}
           className="mt-6 text-center text-3xl font-extrabold text-gray-900"
         >
-          Create your account
+          Crea tu cuenta
         </h2>
         <p className="mt-2 text-center text-sm text-gray-600">
-          Or{" "}
+          O
           <Link
             to="/login"
             className="font-medium text-indigo-600 hover:text-indigo-500"
           >
-            sign in to your existing account
+            inicie sesión en su cuenta existente
           </Link>
         </p>
       </div>
@@ -214,7 +217,7 @@ export default function SignUpPage() {
                 htmlFor="name"
                 className="block text-sm font-medium text-gray-700"
               >
-                Full Name
+                Nombre
               </label>
               <div className="mt-1 relative rounded-md shadow-sm">
                 <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
@@ -233,13 +236,37 @@ export default function SignUpPage() {
                 />
               </div>
             </div>
+            <div>
+              <label
+                htmlFor="name"
+                className="block text-sm font-medium text-gray-700"
+              >
+                Apellido
+              </label>
+              <div className="mt-1 relative rounded-md shadow-sm">
+                <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                  <User className="h-5 w-5 text-gray-400" aria-hidden="true" />
+                </div>
+                <input
+                  id="name"
+                  name="name"
+                  type="text"
+                  autoComplete="name"
+                  required
+                  className="focus:ring-indigo-500 focus:border-indigo-500 block w-full pl-10 sm:text-sm border-gray-300 rounded-md h-10"
+                  placeholder="John Doe"
+                  value={lastName}
+                  onChange={(e) => setLastName(e.target.value)}
+                />
+              </div>
+            </div>
 
             <div>
               <label
                 htmlFor="email"
                 className="block text-sm font-medium text-gray-700"
               >
-                Email address
+                Dirección de correo electrónico
               </label>
               <div className="mt-1 relative rounded-md shadow-sm">
                 <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
@@ -252,7 +279,7 @@ export default function SignUpPage() {
                   autoComplete="email"
                   required
                   className="focus:ring-indigo-500 focus:border-indigo-500 block w-full pl-10 sm:text-sm border-gray-300 rounded-md h-10"
-                  placeholder="you@example.com"
+                  placeholder="pepito@example.com"
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
                 />
@@ -264,7 +291,7 @@ export default function SignUpPage() {
                 htmlFor="password"
                 className="block text-sm font-medium text-gray-700"
               >
-                Password
+                Contraseña
               </label>
               <div className="mt-1 relative rounded-md shadow-sm">
                 <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
@@ -302,7 +329,7 @@ export default function SignUpPage() {
                 htmlFor="confirm-password"
                 className="block text-sm font-medium text-gray-700"
               >
-                Confirm Password
+                Confirmar contraseña
               </label>
               <div className="mt-1 relative rounded-md shadow-sm">
                 <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
@@ -340,7 +367,7 @@ export default function SignUpPage() {
                 htmlFor="user-type"
                 className="block text-sm font-medium text-gray-700"
               >
-                I am a:
+                Soy un:
               </label>
               <div className="mt-2 space-y-4 sm:flex sm:items-center sm:space-y-0 sm:space-x-10">
                 <div className="flex items-center">
@@ -358,7 +385,7 @@ export default function SignUpPage() {
                   >
                     <span className="flex items-center">
                       <GraduationCap className="h-5 w-5 mr-2 text-gray-400" />
-                      Student
+                      Estudiante
                     </span>
                   </label>
                 </div>
@@ -377,7 +404,7 @@ export default function SignUpPage() {
                   >
                     <span className="flex items-center">
                       <Briefcase className="h-5 w-5 mr-2 text-gray-400" />
-                      Teacher
+                      Maestro
                     </span>
                   </label>
                 </div>

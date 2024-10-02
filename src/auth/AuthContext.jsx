@@ -18,7 +18,7 @@ export function AuthProvider({ children }) {
       switch (authData.status) {
         case 200:
           setUserId(authData.data._id);
-          setUserName(authData.data.user);
+          setUserName(`${authData.data.name} ${authData.data.lastName}`);
           setUserEmail(authData.data.email);
           setUserRole(authData.data.roles[0]);
           break;

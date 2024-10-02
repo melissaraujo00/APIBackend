@@ -65,27 +65,6 @@ export default function UserAvatar() {
     };
   }, []);
 
-  const selectColor = () => {
-    const numRandom = Math.floor(Math.random() * 10);
-
-    const avatar = ["", "", "", "", ""];
-
-    // switch (numRandon) {
-    //   case 0:
-    //     return '';
-    //   case 1:
-    //     return ''
-
-    //   case 2:
-    //     return ''
-
-    //   case 3:
-    //     return ''
-
-    //   case 4:
-    //     return ''
-    // }
-  };
 
   return (
     <div ref={dropdownRef}>

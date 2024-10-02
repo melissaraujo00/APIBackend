@@ -29,21 +29,6 @@ export default function NotFoundPage() {
       </main>
 
       <Footer />
-      {/* <footer className="bg-gray-800 text-white py-8">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex flex-wrap justify-between items-center">
-            <div className="w-full md:w-auto text-center md:text-left mb-4 md:mb-0">
-              <h3 className="text-2xl font-bold">FutureCode</h3>
-              <p className="mt-2 text-sm text-gray-400">
-                Empowering developers with AI-enhanced learning
-              </p>
-            </div>
-            <div className="w-full md:w-auto text-center md:text-right">
-              <p>&copy; 2024 FutureCode. All rights reserved.</p>
-            </div>
-          </div>
-        </div>
-      </footer> */}
     </div>
   );
 }

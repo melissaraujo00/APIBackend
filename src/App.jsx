@@ -1,13 +1,8 @@
 import "./styles/global.css";
-
-// import HeroSection from "./components/landingPage/HeroSection";
-// import FeaturesSection from "./components/landingPage/FeaturesSection";
-// import LandingPage from './components/LandingPage'
-
 import React from "react";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import HomePage from "./pages/HomePage/HomePage";
-import CoursesCatalog from "./pages/CoursesCatalog/CoursesCatalog";
+import CoursesCatalog from "./pages/Courses/CoursesCatalog";
 
 import RoadmapPage from "./pages/RoadmapPage/RoadmapPage";
 import RoadmapCreationPage from "./pages/RoadmapPage/RoadmapCreationPage";
@@ -19,11 +14,11 @@ import UserDashboard from "./pages/Dashboards/UserDashboard/UserDashboard";
 import AdminDashboard from "./pages/Dashboards/adminDashboard/AdminDashboard";
 import TeacherDashboard from "./pages/Dashboards/TeacherDashboard/TeacherDashboard";
 
-import Gemini from "./pages/Gemini";
-
 import NotFoundPage from "./pages/NotFoundPage/NotFoundPage";
 import { AuthProvider } from "./auth/AuthContext";
 import { ProtectedRoute } from "./components/ProtectedRoute";
+import CreateNewCourse from "./pages/Courses/CreateNewCourse";
+import CourseView from "./pages/Courses/CourseView";
 
 function App() {
   return (
@@ -59,7 +54,7 @@ function App() {
               }
             />
             <Route
-              path="/roadmap"
+              path="/roadmap/:id"
               element={
                 <ProtectedRoute allowedRoles={["user", "profesor", "admin"]}>
                   <RoadmapPage />
@@ -74,10 +69,7 @@ function App() {
                 </ProtectedRoute>
               }
             />
-            {/* <Route path="/create-course" element={<CourseCreationPage />} /> */}
-            {/* <Route path="/settings" element={<SettingsPage />} /> */}
             <Route path="*" element={<NotFoundPage />} />
-
             <Route
               path="/admin"
               element={
@@ -86,22 +78,40 @@ function App() {
                 </ProtectedRoute>
               }
             />
-            {/*
-            IN DEVELOPMENT
+            {/* IN DEVELOPMENT */}
             <Route
-              path="/teacher"
+              path="/dashboard"
               element={
-                <ProtectedRoute allowedRoles={["profesor"]}>
-                  <TeacherDashboard />
+                <ProtectedRoute allowedRoles={["profesor", "admin"]}>
+                  
+
+
                 </ProtectedRoute>
               }
             />
-            */}
             <Route
-              path="/gemini"
+              path="/teacher"
               element={
-                <ProtectedRoute allowedRoles={["user", "profesor", "admin"]}>
-                  <Gemini />
+                <ProtectedRoute allowedRoles={["profesor", "admin"]}>
+                  {/* <TeacherDashboard /> */}
+                  <AdminDashboard />
+                </ProtectedRoute>
+              }
+            />
+
+            <Route
+              path="/newcourse"
+              element={
+                <ProtectedRoute allowedRoles={["profesor", "admin"]}>
+                  <CreateNewCourse />
+                </ProtectedRoute>
+              }
+            />
+            <Route
+              path="/viewcourse/:id"
+              element={
+                <ProtectedRoute allowedRoles={["user","profesor", "admin"]}>
+                  <CourseView />
                 </ProtectedRoute>
               }
             />
