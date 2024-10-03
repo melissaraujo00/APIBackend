@@ -1,5 +1,5 @@
 import express from 'express';
-import { listaUsuarios, usuarioId, resgistrarUsuario, inicioSesion, cierreSesion, mantenerPerfil, actulizarUsuario, eliminarUsuario, asignarRoadmap, listaRoadmap, roadmapId, roadmapUsuario,actualizarUsuarioLogeado, eliminarUsuarioLogeado, eliminarRoadmap} from '../controllers/moduleControllerLogin.js';
+import { listaUsuarios, usuarioId, resgistrarUsuario, inicioSesion, cierreSesion, mantenerPerfil, actulizarUsuario, eliminarUsuario, asignarRoadmap, listaRoadmap, roadmapId, roadmapUsuario,actualizarUsuarioLogeado, eliminarUsuarioLogeado, eliminarRoadmap} from '../../controllers/moduleControllerLogin.js';
 
 const router = express.Router();
 

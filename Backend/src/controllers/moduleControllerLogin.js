@@ -5,7 +5,7 @@ import cookieParser from 'cookie-parser';
 import { validationResult } from 'express-validator';
 import rateLimit from 'express-rate-limit';
 import dotenv from 'dotenv';
-import validateLogin from '../validations/userValidation.js';
+import validateLogin from '../../validations/userValidation.js';
 import mongoose from 'mongoose';
 import Roadmap from '../models/modelRoadmap.js';
 
