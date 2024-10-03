@@ -1,11 +1,11 @@
 import express from "express";
 import bodyParser from "body-parser";
-import modulos from "../Backend/src/routers/modulos.js"
+import modulos from "../src/routers/modulos.js"
 import cookieParser from "cookie-parser";
-import login from "../Backend/src/routers/login.js";
+import login from "../src/routers/login.js";
 import cors from "cors";
-import generateContent from "../Backend/src/gemini-integration/gemini.js";
-import connectDB from "../Backend/src/DataBase/db.js";
+import generateContent from "../src/gemini-integration/gemini.js";
+import connectDB from "../src/DataBase/db.js";
 const app = express();
 
 const port = process.env.PORT || 3000;
