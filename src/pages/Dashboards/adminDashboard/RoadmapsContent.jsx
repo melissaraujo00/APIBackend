@@ -1,9 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { Trash2, Edit } from "lucide-react";
-import {
-  GetAllUsers,
-  getAllRoadmaps,
-} from "../../../components/Api/UserRoutes";
+import { getAllRoadmaps } from "../../../components/Api/RoadmapRoutes";
 
 export default function RoadmapContent() {
   const [roadmapsInfo, setRoadmapsInfo] = useState([]);

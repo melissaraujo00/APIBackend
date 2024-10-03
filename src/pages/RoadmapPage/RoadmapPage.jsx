@@ -3,7 +3,7 @@ import { useParams, useNavigate } from "react-router-dom";
 import { ChevronDown, ChevronUp, ChevronLeft } from "lucide-react";
 import Header from "../../components/Header/Header";
 import Footer from "../../components/Footer/Footer";
-import { getRoadmap } from "../../components/Api/UserRoutes";
+import { getRoadmap } from "../../components/Api/RoadmapRoutes";
 import { LoadingScreen } from "../../components/LoadingScreen";
 import { ErrorMessage } from "../../components/ErrorMessage";
 import ReactMarkdown from "react-markdown";

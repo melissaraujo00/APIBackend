@@ -244,10 +244,10 @@ export default function SignUpPage() {
                   <User className="h-5 w-5 text-gray-400" aria-hidden="true" />
                 </div>
                 <input
-                  id="name"
-                  name="name"
+                  id="lastName"
+                  name="lastName"
                   type="text"
-                  autoComplete="name"
+                  autoComplete="lastName"
                   required
                   className="focus:ring-indigo-500 focus:border-indigo-500 block w-full pl-10 sm:text-sm border-gray-300 rounded-md h-10"
                   placeholder="John Doe"

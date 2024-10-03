@@ -33,29 +33,25 @@ export const logoutUser = async () => {
 
 // Realizar el inicio de sesion
 export const loginUser = async (email, password) => {
-  try {
-    const userData = {
-      email: email,
-      password: password,
-    };
-    const response = await axios.post(apiURL + "/login/signin", userData, {
-      withCredentials: true, // Asegura que las cookies se envíen
-    });
-    return response;
-  } catch (error) {
-    throw error; // Re-lanza el error para que el componente lo maneje
-  }
+  const userData = {
+    email: email,
+    password: password,
+  };
+  const response = await axios.post(apiURL + "/login/signin", userData, {
+    withCredentials: true, // Asegura que las cookies se envíen
+  });
+  return response;
 };
 
-// Realizar el registro de usuaroi
+// Realizar el registro de usuario
 export const signUpUser = async (userData) => {
-  try {
-    const response = await axios.post(apiURL + "/login/register", userData, {
+  const response = await axios.post(
+    "http://localhost:3000/login/register",
+    { userData },
+    {
       withCredentials: true,
-    });
+    }
+  );
 
-    return response;
-  } catch (error) {
-    return null;
-  }
+  return response;
 };

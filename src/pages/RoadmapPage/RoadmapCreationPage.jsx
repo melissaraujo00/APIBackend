@@ -39,7 +39,7 @@ import { LoadingScreen } from "../../components/LoadingScreen";
 import { ErrorMessage } from "../../components/ErrorMessage";
 import Header from "../../components/Header/Header";
 import Footer from "../../components/Footer/Footer";
-import { MakeRoadmap, SaveRoadmap } from "../../components/Api/GeminiRoutes";
+import { MakeRoadmap, SaveRoadmap } from "../../components/Api/RoadmapRoutes";
 import { Bounce, Slide, ToastContainer, toast } from "react-toastify";
 import ColorsIcons from "../../components/ColorsIcons";
 import "react-toastify/dist/ReactToastify.css";

@@ -4,7 +4,7 @@ import { Link } from "react-router-dom";
 import Header from "../../../components/Header/Header";
 import Footer from "../../../components/Footer/Footer";
 import { useAuth } from "../../../auth/useAuth";
-import { getUserRoadmaps } from "../../../components/Api/UserRoutes";
+import { getUserRoadmaps } from "../../../components/Api/RoadmapRoutes";
 import ColorsIcons from "../../../components/ColorsIcons";
 import { LoadingScreen } from "../../../components/LoadingScreen";
 import { ErrorMessage } from "../../../components/ErrorMessage";
