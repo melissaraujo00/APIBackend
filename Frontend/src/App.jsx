@@ -26,7 +26,6 @@ function App() {
       <Router>
         <div>
           <Routes>
-            {/* Definimos las rutas correspondientes a cada página */}
             <Route path="/" element={<HomePage />} />
             <Route
               path="/login"
