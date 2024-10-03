@@ -170,7 +170,6 @@ export default function CourseView() {
       try {
         const responseModule = await GetOneModule(id);
         if (responseModule.status == 200) {
-          // console.log("responseModuleData", responseModule.data);
           setCourse(responseModule.data);
           setIsLoading("SUCCESSFUL");
         } else {

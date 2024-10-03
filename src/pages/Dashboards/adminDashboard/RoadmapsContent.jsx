@@ -10,7 +10,6 @@ export default function RoadmapContent() {
       const response = await getAllRoadmaps();
       if (response.status == 200) {
         const roadmapsData = response.data;
-        // console.log("roadmapsData", roadmapsData);
 
         setRoadmapsInfo(roadmapsData);
       }

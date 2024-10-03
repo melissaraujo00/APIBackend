@@ -21,6 +21,7 @@ import { useAuth } from "../../auth/useAuth";
 // Main Component
 function CreateNewCoursePage() {
   const { userRole } = useAuth();
+  const [isLoading, setIsLoading] = useState(false);
   const navigate = useNavigate();
   const [course, setCourse] = useState({
     imagen: "",
@@ -173,45 +174,49 @@ function CreateNewCoursePage() {
   };
 
   const SaveCourse = async () => {
-    const validate = validationData();
+    if (isLoading == false) {
+      const validate = validationData();
+      if (validate === true) {
+        setIsLoading(true);
+        toast.dismiss();
+        const toastId = toast.loading("Publicando...");
 
-    if (validate === true) {
-      toast.dismiss();
-      const toastId = toast.loading("Publicando...");
+        try {
+          const responseModule = await SaveModule(course);
+          if (responseModule.status == 201) {
+            //Curso guardado exitosamente
+            toast.update(toastId, {
+              render: "Curso publicado exitosamente!",
+              type: "success",
+              isLoading: false,
+              icon: "🟢",
+              autoClose: 3000,
+              pauseOnHover: false,
+            });
 
-      try {
-        const responseModule = await SaveModule(course);
-        if (responseModule.status == 201) {
-          //Curso guardado exitosamente
-          toast.update(toastId, {
-            render: "Curso publicado exitosamente!",
-            type: "success",
-            isLoading: false,
-            icon: "🟢",
-            autoClose: 3000,
-            pauseOnHover: false,
-          });
-
-          setTimeout(() => {
-            if (userRole == "profesor") {
-              navigate("/teacher");
-            } else {
-              navigate("/admin");
-            }
-          }, 1300);
-        } else {
-          //Si ocurre algun resultado inesperado
-          toast.update(toastId, {
-            render: "Error desconocido, intentelo de nuevo",
-            type: "error",
-            isLoading: false,
-            icon: "🔴",
-            autoClose: 4000,
-            pauseOnHover: false,
-          });
+            setTimeout(() => {
+              if (userRole == "profesor") {
+                navigate("/teacher");
+              } else {
+                navigate("/admin");
+              }
+            }, 1300);
+          } else {
+            //Si ocurre algun resultado inesperado
+            toast.update(toastId, {
+              render: "Error desconocido, intentelo de nuevo",
+              type: "error",
+              isLoading: false,
+              icon: "🔴",
+              autoClose: 4000,
+              pauseOnHover: false,
+            });
+          }
+          setIsLoading(false);
+        } catch (error) {
+          console.log("error", error);
+          setIsLoading(false);
         }
-      } catch (error) {
-        console.log("error", error);
       }
     }
   };
@@ -462,7 +467,11 @@ function CreateNewCoursePage() {
                 <button
                   type="submit"
                   onClick={() => SaveCourse()}
-                  className="mt-2 inline-flex items-center px-3 py-2 border border-transparent text-sm leading-4 font-medium rounded-md text-green-700 bg-green-100 hover:bg-green-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500"
+                  className={` ${
+                    isLoading == false
+                      ? "bg-green-100 hover:bg-green-200 focus:ring-green-500 text-green-700"
+                      : "bg-gray-400 text-gray-700 cursor-not-allowed "
+                  } mt-2 inline-flex items-center px-3 py-2 border border-transparent text-sm leading-4 font-medium rounded-md `}
                 >
                   <Save className="h-4 w-4 mr-2" />
                   Publicar curso

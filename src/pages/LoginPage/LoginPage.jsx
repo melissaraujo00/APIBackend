@@ -11,73 +11,78 @@ export default function LoginPage() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
 
   const { checkAuthentication } = useAuth();
   const navigate = useNavigate();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    if (!email || !password) {
-      alert("Por favor, complete todos los campos");
-      return;
-    }
-
-    const toastId = toast.loading("Iniciando sesion...");
-
-    try {
-      const loginPromise = await loginUser(email, password);
-
-      if (loginPromise.status == 200) {
-        //Inicio session exitoso
-        toast.update(toastId, {
-          render: `${loginPromise.data.message}, Por favor espere`,
-          type: "success",
-          isLoading: false,
-          icon: "🟢",
-          autoClose: 3500,
-          pauseOnHover: false,
-        });
-
-        setTimeout(async () => {
-          await checkAuthentication();
-        }, 1000);
-      } else {
-        //Error desconocido
-        toast.update(toastId, {
-          render: "Error desconocido",
-          type: "error",
-          isLoading: false,
-          icon: "🔴",
-          autoClose: 3500,
-          pauseOnHover: false,
-        });
+    if (isLoading == false) {
+      if (!email || !password) {
+        alert("Por favor, complete todos los campos");
+        return;
       }
-    } catch (error) {
-      if (error.response) {
-        //Mostrar el error que ocurrio
-        toast.update(toastId, {
-          render: error.response.data.message,
-          type: "error",
-          isLoading: false,
-          icon: "🔴",
-          autoClose: 4000,
-          pauseOnHover: false,
-        });
-      } else {
-        //Si no hay conexion a al server
-        toast.update(toastId, {
-          render: (
-            <span>
-              {" "}
-              {error.message} <br /> Error en el servidor, intentelo más tarde{" "}
-            </span>
-          ),
-          type: "error",
-          isLoading: false,
-          icon: "🔴",
-          autoClose: 4000,
-          pauseOnHover: false,
-        });
+      setIsLoading(true);
+      const toastId = toast.loading("Iniciando sesion...");
+
+      try {
+        const loginPromise = await loginUser(email, password);
+
+        if (loginPromise.status == 200) {
+          //Inicio session exitoso
+          toast.update(toastId, {
+            render: `${loginPromise.data.message}, Por favor espere`,
+            type: "success",
+            isLoading: false,
+            icon: "🟢",
+            autoClose: 3500,
+            pauseOnHover: false,
+          });
+
+          setTimeout(async () => {
+            await checkAuthentication();
+          }, 1000);
+        } else {
+          //Error desconocido
+          toast.update(toastId, {
+            render: "Error desconocido",
+            type: "error",
+            isLoading: false,
+            icon: "🔴",
+            autoClose: 3500,
+            pauseOnHover: false,
+          });
+          setIsLoading(false);
+        }
+      } catch (error) {
+        setIsLoading(false);
+        if (error.response) {
+          //Mostrar el error que ocurrio
+          toast.update(toastId, {
+            render: error.response.data.message,
+            type: "error",
+            isLoading: false,
+            icon: "🔴",
+            autoClose: 4000,
+            pauseOnHover: false,
+          });
+        } else {
+          //Si no hay conexion a al server
+          toast.update(toastId, {
+            render: (
+              <span>
+                {" "}
+                {error.message} <br /> Error en el servidor, intentelo más tarde{" "}
+              </span>
+            ),
+            type: "error",
+            isLoading: false,
+            icon: "🔴",
+            autoClose: 4000,
+            pauseOnHover: false,
+          });
+        }
       }
     }
   };
@@ -197,7 +202,11 @@ export default function LoginPage() {
             <div>
               <button
                 type="submit"
-                className="w-full flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+                className={` ${
+                  isLoading == false
+                    ? "bg-indigo-600 hover:bg-indigo-700 focus:ring-indigo-500"
+                    : "bg-gray-400 cursor-not-allowed "
+                } w-full flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white `}
               >
                 Iniciar sesion
               </button>

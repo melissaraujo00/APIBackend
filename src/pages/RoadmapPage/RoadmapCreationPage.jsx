@@ -249,10 +249,10 @@ const RoadmapMenu = ({ roadmapData = [], regenerateRoadmap }) => {
 
   const savingRoadmap = async () => {
     if (isSaving == false) {
+      setIsSaving(true);
       const toastId = toast.loading("Guardando ruta de aprendizaje...");
 
       try {
-        // console.log({ roadmap: roadmapData });
         const savingResponse = await SaveRoadmap({
           roadmapName: roadmapName,
           roadmap: roadmapContent,
@@ -289,9 +289,11 @@ const RoadmapMenu = ({ roadmapData = [], regenerateRoadmap }) => {
             autoClose: 3500,
             pauseOnHover: false,
           });
+
+          setIsSaving(false);
         }
-        console.log("savingResponse:", savingResponse);
       } catch (error) {
+        setIsSaving(false);
         console.log("Error catch", error);
 
         if (error.response) {
@@ -321,7 +323,6 @@ const RoadmapMenu = ({ roadmapData = [], regenerateRoadmap }) => {
 
   const RegeneratedRoadmap = async () => {
     regenerateRoadmap();
-    // console.log(regenerateRoadmap)
   };
 
   return (
@@ -351,13 +352,21 @@ const RoadmapMenu = ({ roadmapData = [], regenerateRoadmap }) => {
           <div className="flex flex-col w-4/12 justify-center ">
             <button
               onClick={() => savingRoadmap()}
-              className="flex items-center justify-center px-4 py-2 text-base font-medium rounded-md text-white bg-green-600 hover:bg-green-700 mb-2 transition-all"
+              className={` ${
+                isSaving == false
+                  ? "bg-green-600 hover:bg-green-700 "
+                  : "bg-gray-400 cursor-not-allowed "
+              } flex items-center justify-center px-4 py-2 text-base font-medium rounded-md text-white mb-2 transition-all`}
             >
               Guardar ruta de aprendizaje
             </button>
             <button
               onClick={() => RegeneratedRoadmap()}
-              className="flex items-center justify-center px-4 py-2 text-base font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 transition-all"
+              className={`${
+                isSaving == false
+                  ? "bg-indigo-600 hover:bg-indigo-700 "
+                  : "bg-gray-400 cursor-not-allowed "
+              }  flex items-center justify-center px-4 py-2 text-base font-medium rounded-md text-white  transition-all`}
             >
               Volver a generar
             </button>
@@ -446,14 +455,11 @@ export default function AIRoadmapCreation() {
   const generateRoadmap = async () => {
     setGenerationStatus("LOADING");
     setRoadmap([]);
-    // console.log("responses", responses);
 
     try {
       const responseMakeRoadmap = await MakeRoadmap(responses);
 
       if (responseMakeRoadmap.status == 200) {
-        console.log("Roadmap generado", responseMakeRoadmap.data);
-
         setRoadmap(responseMakeRoadmap.data);
         setGenerationStatus("SUCCESSFUL");
       } else {

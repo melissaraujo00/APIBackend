@@ -47,7 +47,7 @@ export const loginUser = async (email, password) => {
 export const signUpUser = async (userData) => {
   const response = await axios.post(
     "http://localhost:3000/login/register",
-    { userData },
+    userData,
     {
       withCredentials: true,
     }

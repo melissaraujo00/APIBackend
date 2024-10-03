@@ -71,7 +71,6 @@ const PersonalizedRoadmap = () => {
         setisLoading("ERROR");
       }
     } catch (error) {
-      console.log("error", error);
       setErrorMessage(error.message);
       setisLoading("ERROR");
     }

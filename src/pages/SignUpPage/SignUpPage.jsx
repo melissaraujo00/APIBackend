@@ -17,127 +17,147 @@ export default function SignUpPage() {
   const [name, setName] = useState("");
   const [lastName, setLastName] = useState("");
   const [email, setEmail] = useState("");
-
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
-
   const [userType, setUserType] = useState("student");
-
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
 
   const navigate = useNavigate();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    // Validación simple
-    if (!name || !password || !lastName) {
-      toast("Por favor, complete todos los campos", {
-        type: "warning",
-        icon: "🔴",
-        position: "top-right",
-        autoClose: 2500,
-        pauseOnHover: false,
-        hideProgressBar: false,
-        closeOnClick: true,
-        draggable: true,
-        progress: undefined,
-        theme: "light",
-        transition: Slide,
-      });
-      return;
-    }
-
-    if (password != confirmPassword) {
-      toast("Las contraseñas no son iguales", {
-        type: "warning",
-        icon: "🔴",
-        position: "top-right",
-        autoClose: 2500,
-        pauseOnHover: false,
-        hideProgressBar: false,
-        closeOnClick: true,
-        draggable: true,
-        progress: undefined,
-        theme: "light",
-        transition: Slide,
-      });
-
-      return;
-    }
-
-    toast.dismiss();
-    const toastId = toast.loading("Registrando...");
-
-    try {
-      let userData = {
-        name: name,
-        lastName: lastName,
-        user: name,
-        email: email,
-        password: password,
-        roles: "user",
-      };
-
-      if (userType == "teacher") {
-        userData.roles = "profesor";
-      }
-
-      const signUpResponse = await signUpUser(userData);
-
-      if (signUpResponse.status == 200) {
-        //Registro exitoso
-        toast.update(toastId, {
-          render: `${signUpResponse.data.msg}`,
-          type: "success",
-          isLoading: false,
-          icon: "🟢",
-          autoClose: 3000,
-          pauseOnHover: false,
-        });
-
-        setTimeout(() => {
-          navigate("/login"); // Redirigir al login
-        }, 1000);
-      } else {
-        //Si ocurre algun resultado inesperado
-        toast.update(toastId, {
-          render: "Error desconocido, intentelo de nuevo",
-          type: "error",
-          isLoading: false,
+    if (isLoading == false) {
+      // Validación simple
+      if (!name || !password || !lastName) {
+        toast("Por favor, complete todos los campos", {
+          type: "warning",
           icon: "🔴",
-          autoClose: 4000,
+          position: "top-right",
+          autoClose: 2500,
           pauseOnHover: false,
+          hideProgressBar: false,
+          closeOnClick: true,
+          draggable: true,
+          progress: undefined,
+          theme: "light",
+          transition: Slide,
         });
+        return;
       }
-    } catch (error) {
-      toast.dismiss(toastId);
 
-      //Mostrar el error que ocurrio
-      if (error.response) {
-        //Si los datos no son validos
-        if (error.status == 422) {
-          const errors = error.response.data.errors;
-          for (let i = 0; i < errors.length; i++) {
-            toast(errors[i].msg, {
+      if (password != confirmPassword) {
+        toast("Las contraseñas no son iguales", {
+          type: "warning",
+          icon: "🔴",
+          position: "top-right",
+          autoClose: 2500,
+          pauseOnHover: false,
+          hideProgressBar: false,
+          closeOnClick: true,
+          draggable: true,
+          progress: undefined,
+          theme: "light",
+          transition: Slide,
+        });
+
+        return;
+      }
+
+      toast.dismiss();
+      setIsLoading(true);
+      const toastId = toast.loading("Registrando...");
+
+      try {
+        let userData = {
+          name: name,
+          lastName: lastName,
+          user: name,
+          email: email,
+          password: password,
+          roles: "user",
+        };
+
+        if (userType == "teacher") {
+          userData.roles = "profesor";
+        }
+
+        const signUpResponse = await signUpUser(userData);
+
+        if (signUpResponse.status == 200) {
+          //Registro exitoso
+          toast.update(toastId, {
+            render: `${signUpResponse.data.msg}`,
+            type: "success",
+            isLoading: false,
+            icon: "🟢",
+            autoClose: 3000,
+            pauseOnHover: false,
+          });
+
+          setTimeout(() => {
+            navigate("/login"); // Redirigir al login
+          }, 1000);
+          setIsLoading(true);
+        } else {
+          setIsLoading(false);
+          //Si ocurre algun resultado inesperado
+          toast.update(toastId, {
+            render: "Error desconocido, intentelo de nuevo",
+            type: "error",
+            isLoading: false,
+            icon: "🔴",
+            autoClose: 4000,
+            pauseOnHover: false,
+          });
+        }
+      } catch (error) {
+        setIsLoading(false);
+        toast.dismiss(toastId);
+
+        //Mostrar el error que ocurrio
+        if (error.response) {
+          //Si los datos no son validos
+          if (error.status == 422) {
+            const errors = error.response.data.errors;
+            for (let i = 0; i < errors.length; i++) {
+              toast(errors[i].msg, {
+                type: "error",
+                isLoading: false,
+                icon: "🔴",
+                position: "top-right",
+                autoClose: false,
+                hideProgressBar: false,
+                closeOnClick: true,
+                pauseOnHover: true,
+                draggable: true,
+                progress: undefined,
+                theme: "light",
+                transition: Slide,
+              });
+            }
+          }
+          //Si el usuario ya existe
+          if (error.status == 400) {
+            toast(`Error: ${error.response.data.msg}`, {
               type: "error",
               isLoading: false,
               icon: "🔴",
               position: "top-right",
-              autoClose: false,
+              autoClose: 4000,
+              pauseOnHover: false,
               hideProgressBar: false,
               closeOnClick: true,
-              pauseOnHover: true,
               draggable: true,
               progress: undefined,
               theme: "light",
               transition: Slide,
             });
           }
-        }
-        //Si el usuario ya existe
-        if (error.status == 400) {
-          toast(`Error: ${error.response.data.msg}`, {
+        } else {
+          //Si ocurrio cualquier otro error
+          toast(`${error.message}: Error en el servidor, intentelo más tarde`, {
             type: "error",
             isLoading: false,
             icon: "🔴",
@@ -152,22 +172,6 @@ export default function SignUpPage() {
             transition: Slide,
           });
         }
-      } else {
-        //Si ocurrio cualquier otro error
-        toast(`${error.message}: Error en el servidor, intentelo más tarde`, {
-          type: "error",
-          isLoading: false,
-          icon: "🔴",
-          position: "top-right",
-          autoClose: 4000,
-          pauseOnHover: false,
-          hideProgressBar: false,
-          closeOnClick: true,
-          draggable: true,
-          progress: undefined,
-          theme: "light",
-          transition: Slide,
-        });
       }
     }
   };
@@ -410,7 +414,11 @@ export default function SignUpPage() {
             <div>
               <button
                 type="submit"
-                className="w-full flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+                className={` ${
+                  isLoading == false
+                    ? "bg-indigo-600 hover:bg-indigo-700 focus:ring-indigo-500"
+                    : "bg-gray-400 cursor-not-allowed "
+                } w-full flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white   `}
               >
                 Registrarse
               </button>
