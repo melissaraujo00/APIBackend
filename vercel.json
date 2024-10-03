@@ -11,6 +11,11 @@
         "src": "/(.*)",
         "dest": "/index.js"
       }
-    ]
+    ],
+    "functions": {
+      "routers/*/": {
+        "maxDuration": 35
+      }
+    }
   }
   
