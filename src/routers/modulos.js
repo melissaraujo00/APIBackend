@@ -23,4 +23,6 @@ router.delete('/:id', eliminarModulo);
 
 
 
+
+
 export default router;

@@ -1,6 +1,7 @@
 import Modulo from "../models/model.js";
 import authMiddleware from "../middleware/authMiddleware.js"
 
+
 /**
  * @description get all modules
  * @route GET /api/modulos
@@ -63,6 +64,10 @@ export const obtenerModulo = async (req, res) => {
         res.status(500).json({ message: err.message });
     }
 }
+
+
+
+
 
 /**
  * @description update module

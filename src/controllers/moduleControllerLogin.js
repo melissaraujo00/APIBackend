@@ -5,9 +5,10 @@ import cookieParser from 'cookie-parser';
 import { validationResult } from 'express-validator';
 import rateLimit from 'express-rate-limit';
 import dotenv from 'dotenv';
-import validateLogin from '../../validations/userValidation.js';
+import validateLogin from '../validations/userValidation.js';
 import mongoose from 'mongoose';
 import Roadmap from '../models/modelRoadmap.js';
+import Modulo from "../models/model.js";
 
 cookieParser();
 dotenv.config();
@@ -375,9 +376,11 @@ export const roadmapId = [authMiddleware, async (req, res) => {
  * @description get id Roadmap
  * @route GET /login/roadmapId
  */
+
 export const roadmapUsuario = [authMiddleware, async (req, res) => {
     try {
         const userId = req.user.id_user;
+
 
         const usuario = await Login.findById(userId).select('_id').populate('roadmaps');
 
@@ -405,11 +408,36 @@ export const eliminarRoadmap = [authMiddleware, async (req, res) => {
             return res.status(404).json({ message: 'Roadmap no encontrado' });
         }
 
-        await Login.deleteOne({ _id: id });
+        await Roadmap.deleteOne({ _id: id });
+        await Login.updateOne(
+            { roadmaps: id }, 
+            { $pull: { roadmaps: id } } 
+        );
 
         res.status(200).json({ message: 'Roadmap eliminado correctamente' });
     } catch (err) {
         console.error(err);
         res.status(500).json({ message: 'Error al Roadmap el usuario' });
+    }
+}];
+
+/**
+ * @description list module user 
+ * @route GET /login/obtenerModuloUsuario
+ */
+export const obtenerModuloUsuario = [authMiddleware, async (req, res) => {
+    try {
+        const userId = req.user.id_user;
+
+        const modulosUsuario = await Modulo.find({ author: userId }).select('titulo');
+
+        if (modulosUsuario.length === 0) {
+            return res.status(404).json({ message: 'No se encontraron módulos para este usuario' });
+        }
+
+        res.status(200).json(modulosUsuario);
+    } catch (err) {
+        console.error(err);
+        res.status(500).json({ message: 'Error al obtener los módulos del usuario' });
     }
 }];

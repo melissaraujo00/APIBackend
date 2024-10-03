@@ -18,8 +18,8 @@ const moduloSchema = new mongoose.Schema({
     temas: [temaSchema],
     nivel: { type: String, enum: ['principiante', 'intermedio', 'avanzado'] },
     author: {
-        type: String,
-        required: true,
+        type: mongoose.Schema.Types.ObjectId,  
+        ref: 'Login' 
     }
 });
 
