@@ -1,0 +1,10 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+body{
+    background-color: #E2E9FF;
+    display: flex;
+    flex-direction: column;
+    @apply font-sans; 
+}
