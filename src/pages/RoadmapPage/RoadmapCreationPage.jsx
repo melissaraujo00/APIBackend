@@ -1,39 +1,12 @@
 import React, { useState } from "react";
-
+import { useNavigate, Link } from "react-router-dom";
 import {
-  Coffee,
-  Droplet,
-  CheckCircle,
   ChevronDown,
   ChevronUp,
   ChevronLeft,
   ChevronRight,
-  Code,
-  Globe,
-  Server,
-  Layers,
-  Zap,
-  Database,
-  Cloud,
-  Lock,
-  Users,
-  Cog,
-  Briefcase,
-  Book,
-  Cpu,
-  Smartphone,
-  Wifi,
-  Headphones,
-  Camera,
-  Pen,
-  Palette,
-  Compass,
-  Anchor,
-  Aperture,
-  Archive,
-  FileText,
 } from "lucide-react";
-
+import { useAuth } from "../../auth/useAuth";
 import ReactMarkdown from "react-markdown";
 import { LoadingScreen } from "../../components/LoadingScreen";
 import { ErrorMessage } from "../../components/ErrorMessage";
@@ -271,6 +244,9 @@ const RoadmapMenu = ({ roadmapData = [], regenerateRoadmap }) => {
   const roadmapName = roadmapData.roadmapName;
   const [isSaving, setIsSaving] = useState(false);
 
+  const { userName, userEmail, userRole } = useAuth();
+  const navigate = useNavigate();
+
   const savingRoadmap = async () => {
     if (isSaving == false) {
       const toastId = toast.loading("Guardando ruta de aprendizaje...");
@@ -292,6 +268,17 @@ const RoadmapMenu = ({ roadmapData = [], regenerateRoadmap }) => {
             autoClose: 3500,
             pauseOnHover: false,
           });
+          setTimeout(() => {
+            if (userRole == "admin") {
+              navigate("/admin");
+            }
+            if (userRole == "profesor") {
+              navigate("/teacher");
+            }
+            if (userRole == "user") {
+              navigate("/dashboard");
+            }
+          }, 1000);
         } else {
           //Error desconocido
           toast.update(toastId, {

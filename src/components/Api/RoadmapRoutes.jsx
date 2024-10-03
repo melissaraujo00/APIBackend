@@ -31,20 +31,11 @@ export const SaveRoadmap = async (roadmap) => {
   }
 };
 export const DeleteRoadmap = async (id) => {
-  try {
-    const response = await axios.post(
-      `${apiURL}/login//Roadmap/${id}`,
-      roadmap,
-      {
-        withCredentials: true,
-      }
-    );
+  const response = await axios.delete(`${apiURL}/login/Roadmap/${id}`, {
+    withCredentials: true,
+  });
 
-    return response;
-  } catch (error) {
-    console.log("Error al guardar el roadmap", error);
-    return null;
-  }
+  return response;
 };
 
 export const getAllRoadmaps = async () => {
@@ -74,14 +65,14 @@ export const getRoadmap = async (id) => {
 };
 
 export const getUserRoadmaps = async () => {
-    try {
-      const response = await axios.get(apiURL + "/login/roadmapUsuario", {
-        withCredentials: true,
-      });
-  
-      return response;
-    } catch (error) {
-      console.log("Error obtener la data", error);
-      return null;
-    }
-  };
+  try {
+    const response = await axios.get(apiURL + "/login/roadmapUsuario", {
+      withCredentials: true,
+    });
+
+    return response;
+  } catch (error) {
+    console.log("Error obtener la data", error);
+    return null;
+  }
+};

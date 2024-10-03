@@ -14,6 +14,11 @@ export default function MainContent({
   const [isOpen, setIsOpen] = useState(false);
   const [courseDeleting, setCourseDeleting] = useState();
 
+  const deleteCourse = (dataCourse) => {
+    setCourseDeleting(dataCourse);
+    setIsOpen(true);
+  };
+
   useEffect(() => {
     const data = async () => {
       const newCoursesInfo = [];
@@ -32,11 +37,6 @@ export default function MainContent({
     data();
   }, []);
 
-
-  const deleteCourse = (dataCourse) => {
-    setCourseDeleting(dataCourse);
-    setIsOpen(true);
-  };
 
   return (
     <>

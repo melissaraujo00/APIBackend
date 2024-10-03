@@ -4,15 +4,24 @@ import { Link } from "react-router-dom";
 import Header from "../../../components/Header/Header";
 import Footer from "../../../components/Footer/Footer";
 import { useAuth } from "../../../auth/useAuth";
-import { getUserRoadmaps } from "../../../components/Api/RoadmapRoutes";
+import { DeleteRoadmap, getUserRoadmaps } from "../../../components/Api/RoadmapRoutes";
 import ColorsIcons from "../../../components/ColorsIcons";
 import { LoadingScreen } from "../../../components/LoadingScreen";
 import { ErrorMessage } from "../../../components/ErrorMessage";
+import ModalConfirmation from "../adminDashboard/ModalConfirmation";
 
 export default function UserDashboard() {
   const { userName } = useAuth();
   const [isLoading, setIsLoading] = useState("LOADING"); // LOADING, SUCCESSFUL, ERROR
   const [userRoadmaps, setUserRoadmaps] = useState([]);
+
+  const [isOpen, setIsOpen] = useState(false);
+  const [roadmapDeleting, setRoadmapDeleting] = useState();
+
+  const deleteRoadmap = (dataRoadmap) => {
+    setRoadmapDeleting(dataRoadmap);
+    setIsOpen(true);
+  };
 
   useEffect(() => {
     const getData = async () => {
@@ -34,6 +43,20 @@ export default function UserDashboard() {
 
   return (
     <div className="min-h-screen bg-gray-100 font-sans">
+      {isOpen == true && (
+        <ModalConfirmation
+          title={"Confimar eliminacion del roadmap"}
+          body={
+            <>
+              <p className="text-lg">id: {roadmapDeleting._id}</p>
+              <p className="text-ls">Nombre: {roadmapDeleting.roadmapName}</p>
+            </>
+          }
+          isOpen={setIsOpen}
+          execFunction={DeleteRoadmap}
+          idItem={roadmapDeleting._id}
+        />
+      )}
       <Header />
       <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-24">
         <h1 className="text-3xl font-bold text-gray-900 mb-8">
@@ -93,12 +116,20 @@ export default function UserDashboard() {
                             </h3>
                           </div>
                         </div>
-                        <Link
-                          to={`/roadmap/${roadmap._id}`}
-                          className="bg-indigo-600 text-white px-4 py-2 rounded-full hover:bg-indigo-700 transition duration-300"
-                        >
-                          Ver ruta de aprendizaje
-                        </Link>
+                        <div className="">
+                          <Link
+                            to={`/roadmap/${roadmap._id}`}
+                            className="bg-indigo-600 text-white px-4 py-2 rounded-full hover:bg-indigo-700 transition duration-300"
+                          >
+                            Ver ruta de aprendizaje
+                          </Link>
+                          <button
+                            onClick={() => deleteRoadmap(roadmap)}
+                            className="bg-red-500 text-white px-4 py-2 ml-2 rounded-full hover:bg-red-600 transition duration-300"
+                          >
+                            Eliminar
+                          </button>
+                        </div>
                       </div>
                     );
                   })}

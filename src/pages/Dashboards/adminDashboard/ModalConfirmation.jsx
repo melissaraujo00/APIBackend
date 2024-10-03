@@ -31,7 +31,7 @@ const ModalConfirmation = ({ title, body, isOpen, execFunction, idItem }) => {
         <div className="flex flex-col items-center">
           <p className="text-center text-gray-600 mb-6">{title}</p>
           <div className="w-full bg-gray-100 rounded-lg p-4 mb-6">
-            {result == null ?  body  :  result }
+            {result == null ? body : result}
           </div>
           <div className="flex w-full gap-5 ">
             {isLoading == "NOT" ? (
