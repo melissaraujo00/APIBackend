@@ -3,7 +3,10 @@ import { Users, BookOpen, LayoutDashboard, LibraryBig } from "lucide-react";
 import Header from "../../../components/Header/Header";
 import Footer from "../../../components/Footer/Footer";
 import { GetAllUsers } from "../../../components/Api/UserRoutes";
-import { GetAllModules, GetUserModules } from "../../../components/Api/ModulesRoutes";
+import {
+  GetAllModules,
+  GetUserModules,
+} from "../../../components/Api/ModulesRoutes";
 import { LoadingScreen } from "../../../components/LoadingScreen";
 import MainContent from "./MainContent";
 import UsersContent from "./UsersContent";
@@ -40,18 +43,17 @@ export default function AdminPage() {
       }
 
       if (userRole == "profesor") {
-        console.log(userRole == "profesor")
+        console.log(userRole == "profesor");
         // PARA USUARIO PROFESOR
         try {
-          const coursesUsersResponse = await GetUserModules()
+          const coursesUsersResponse = await GetUserModules();
 
           if (coursesUsersResponse.status == 200) {
             const coursesdata = coursesUsersResponse.data;
             setCourses(coursesdata.reverse());
           }
-
         } catch (error) {
-          console.log('errorGetUserModules: ', error)
+          console.log("errorGetUserModules: ", error);
         }
       } else {
         //PARA USAURIO ADMIN
@@ -75,7 +77,7 @@ export default function AdminPage() {
             ]);
           }
         } catch (error) {
-          console.log('error', error)
+          console.log("error", error);
         }
       }
 
@@ -106,10 +108,11 @@ export default function AdminPage() {
               <li>
                 <button
                   onClick={() => setActiveTab("DASHBOARD")}
-                  className={`w-full text-left px-4 py-2 rounded-md flex items-center ${activeTab === "DASHBOARD"
-                    ? "bg-indigo-100 text-indigo-700"
-                    : "text-gray-700 hover:bg-gray-100"
-                    }`}
+                  className={`w-full text-left px-4 py-2 rounded-md flex items-center ${
+                    activeTab === "DASHBOARD"
+                      ? "bg-indigo-100 text-indigo-700"
+                      : "text-gray-700 hover:bg-gray-100"
+                  }`}
                 >
                   <LayoutDashboard className="w-5 h-5 mr-2" />
                   Dashboard
@@ -118,10 +121,11 @@ export default function AdminPage() {
               <li>
                 <button
                   onClick={() => setActiveTab("USERS")}
-                  className={`w-full text-left px-4 py-2 rounded-md flex items-center ${activeTab === "USERS"
-                    ? "bg-indigo-100 text-indigo-700"
-                    : "text-gray-700 hover:bg-gray-100"
-                    }`}
+                  className={`w-full text-left px-4 py-2 rounded-md flex items-center ${
+                    activeTab === "USERS"
+                      ? "bg-indigo-100 text-indigo-700"
+                      : "text-gray-700 hover:bg-gray-100"
+                  }`}
                 >
                   <Users className="w-5 h-5 mr-2" />
                   Usuarios
@@ -130,10 +134,11 @@ export default function AdminPage() {
               <li>
                 <button
                   onClick={() => setActiveTab("ROADMAPS")}
-                  className={`w-full text-left px-4 py-2 rounded-md flex items-center ${activeTab === "ROADMAPS"
-                    ? "bg-indigo-100 text-indigo-700"
-                    : "text-gray-700 hover:bg-gray-100"
-                    }`}
+                  className={`w-full text-left px-4 py-2 rounded-md flex items-center ${
+                    activeTab === "ROADMAPS"
+                      ? "bg-indigo-100 text-indigo-700"
+                      : "text-gray-700 hover:bg-gray-100"
+                  }`}
                 >
                   <LibraryBig className="w-5 h-5 mr-2" />
                   roadmaps
@@ -161,7 +166,9 @@ export default function AdminPage() {
                   setActiveTab={setActiveTab}
                 />
               )}
-              {activeTab === "USERS" && <UsersContent usersList={users} />}
+              {activeTab === "USERS" && (
+                <UsersContent userRole={userRole} usersList={users} />
+              )}
               {activeTab === "ROADMAPS" && <RoadmapContent />}
             </>
           )}

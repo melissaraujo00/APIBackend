@@ -4,7 +4,7 @@ import { Trash2, Edit } from "lucide-react";
 import ModalConfirmation from "./ModalConfirmation";
 import { DeleteOneUser } from "../../../components/Api/UserRoutes";
 
-export default function UsersContent({ usersList }) {
+export default function UsersContent({ userRole, usersList }) {
   const [isOpen, setIsOpen] = useState(false);
   const [userDeleting, setUserDeleting] = useState();
 
@@ -78,12 +78,14 @@ export default function UsersContent({ usersList }) {
                   {/* <button className="text-indigo-600 hover:text-indigo-900 mr-2">
                     <Edit className="h-5 w-5" />
                   </button> */}
-                  <button
-                    onClick={() => deleteUser(user)}
-                    className="text-red-600 hover:text-red-900"
-                  >
-                    <Trash2 className="h-5 w-5" />
-                  </button>
+                  {userRole == "admin" && (
+                    <button
+                      onClick={() => deleteUser(user)}
+                      className="text-red-600 hover:text-red-900"
+                    >
+                      <Trash2 className="h-5 w-5" />
+                    </button>
+                  )}
                 </td>
               </tr>
             ))}
