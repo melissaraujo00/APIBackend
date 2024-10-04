@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
-import { Trash2, Edit } from "lucide-react";
+import { Trash2, Edit, SquareArrowOutUpRight } from "lucide-react";
 import { getAllRoadmaps } from "../../../components/Api/RoadmapRoutes";
+import { Link } from "react-router-dom";
 
 export default function RoadmapContent() {
   const [roadmapsInfo, setRoadmapsInfo] = useState([]);
@@ -68,10 +69,16 @@ export default function RoadmapContent() {
                 <td className="px-6 py-4 whitespace-nowrap text-sm text-center text-gray-500">
                   {getRoadmapLength(roadmap.roadmap)}
                 </td>
-                <td className="px-6 py-4 whitespace-nowrap text-sm font-medium ">
+                <td className="flex gap-4 px-6 py-4 whitespace-nowrap text-sm font-medium ">
                   <button className="text-red-600 hover:text-red-900">
                     <Trash2 className="h-5 w-5" />
                   </button>
+                  <Link
+                    to={`/roadmap/${roadmap._id}`}
+                    className="text-indigo-600 hover:text-indigo-900 "
+                  >
+                    <SquareArrowOutUpRight className="h-5 w-5" />
+                  </Link>
                 </td>
               </tr>
             ))}

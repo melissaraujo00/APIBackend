@@ -150,7 +150,7 @@ export default function AdminPage() {
 
         <main className="flex-1 pl-8 pt-24">
           <h1 className="text-3xl font-bold text-gray-900 mb-8">
-            Panel de Administración
+            Panel de {userRole == "admin" ? "Administración" : "Profesor"}
           </h1>
 
           {isLoading == "LOADING" ? (
