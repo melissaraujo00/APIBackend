@@ -22,7 +22,7 @@ export default function UsersContent({ userRole, usersList }) {
             <>
               <p className="text-lg">id: {userDeleting._id}</p>
               <p className="text-ls">
-                Nombre : {userDeleting.name} {userDeleting.lastName}
+                Nombre: {userDeleting.name} {userDeleting.lastName}
               </p>
               <p className="text-ls">Email: {userDeleting.email} </p>
               <p className="text-ls">Rol: {userDeleting.roles} </p>
