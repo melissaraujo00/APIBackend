@@ -20,6 +20,7 @@ export default function UsersContent({ userRole, usersList }) {
           title={"Confimar eliminacion del usuario"}
           body={
             <>
+            
               <p className="text-lg">id: {userDeleting._id}</p>
               <p className="text-ls">
                 Nombre: {userDeleting.name} {userDeleting.lastName}
