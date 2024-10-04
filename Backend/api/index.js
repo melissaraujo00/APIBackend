@@ -21,7 +21,7 @@ app.use("/api/modulos", modulos);
 app.use("/login", login);
 app.post("/gemini", generateContent);
 app.get('/', (req, res) => {
-  res.send('Bienvenido a la FutureCode ');
+  res.send('Bienvenido a la FutureCode Vercel');
 });
 
 connectDB();
