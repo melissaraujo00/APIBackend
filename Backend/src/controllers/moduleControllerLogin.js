@@ -132,8 +132,8 @@ export const inicioSesion = [async (req, res) => {
                 res.cookie('token', token, {
                     httpOnly: true,
                     secure: process.env.NODE_ENV === 'production',
-                    sameSite: 'None',
-                    maxAge: 3600 * 1000 // 1 hora
+                    sameSite: process.env.NODE_ENV === 'production' ? 'None' : 'Lax', // 'None' para producción, 'Lax' en local
+                    maxAge: 3600 * 5000 // 1 hora
                 });
 
                 res.json({ message: 'Signed in successfully' });
@@ -154,7 +154,8 @@ export const cierreSesion = async (req, res) => {
     try {
         res.clearCookie('token', {
             httpOnly: true,
-            secure: process.env.NODE_ENV === 'production'
+            secure: process.env.NODE_ENV === 'production',
+            sameSite: process.env.NODE_ENV === 'production' ? 'None' : 'Lax', // 'None' para producción, 'Lax' en local
         });
         res.status(200).json({ message: 'Logged out successfully' });
     } catch (err) {
@@ -430,7 +431,7 @@ export const obtenerModuloUsuario = [authMiddleware, async (req, res) => {
     try {
         const userId = req.user.id_user;
 
-        const modulosUsuario = await Modulo.find({ author: userId }).select('titulo');
+        const modulosUsuario = await Modulo.find({ author: userId });
 
         if (modulosUsuario.length === 0) {
             return res.status(404).json({ message: 'No se encontraron módulos para este usuario' });

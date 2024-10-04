@@ -2,26 +2,27 @@ import axios from "axios";
 const apiURL = import.meta.env.VITE_API_URL;
 
 export const GetAllModules = async () => {
-  try {
-    const response = await axios.get(apiURL + "/api/modulos/", {
-      withCredentials: true,
-    });
 
-    return response;
-  } catch (error) {
-    return null;
-  }
+  const response = await axios.get(apiURL + "/api/modulos/", {
+    withCredentials: true,
+  });
+
+  return response;
+
+};
+export const GetUserModules = async () => {
+  const response = await axios.get(apiURL + "/login/obtenerModuloUsuario/", {
+    withCredentials: true,
+  });
+
+  return response;
 };
 export const GetOneModule = async (id) => {
-  try {
-    const response = await axios.get(apiURL + `/api/modulos/${id}`, {
-      withCredentials: true,
-    });
+  const response = await axios.get(apiURL + `/api/modulos/${id}`, {
+    withCredentials: true,
+  });
 
-    return response;
-  } catch (error) {
-    return null;
-  }
+  return response;
 };
 export const DeleteOneModule = async (id) => {
   try {

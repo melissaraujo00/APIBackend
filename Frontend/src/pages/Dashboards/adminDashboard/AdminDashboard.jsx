@@ -3,11 +3,12 @@ import { Users, BookOpen, LayoutDashboard, LibraryBig } from "lucide-react";
 import Header from "../../../components/Header/Header";
 import Footer from "../../../components/Footer/Footer";
 import { GetAllUsers } from "../../../components/Api/UserRoutes";
-import { GetAllModules } from "../../../components/Api/ModulesRoutes";
+import { GetAllModules, GetUserModules } from "../../../components/Api/ModulesRoutes";
 import { LoadingScreen } from "../../../components/LoadingScreen";
 import MainContent from "./MainContent";
 import UsersContent from "./UsersContent";
 import RoadmapContent from "./RoadmapsContent";
+import { useAuth } from "../../../auth/useAuth";
 
 export default function AdminPage() {
   const [activeTab, setActiveTab] = useState("DASHBOARD");
@@ -15,6 +16,7 @@ export default function AdminPage() {
   const [users, setUsers] = useState([]);
   const [stats, setStats] = useState([]);
   const [courses, setCourses] = useState([]);
+  const { userRole } = useAuth();
 
   useEffect(() => {
     setStats([]);
@@ -37,23 +39,44 @@ export default function AdminPage() {
         ]);
       }
 
-      const coursesResponse = await GetAllModules();
-      if (coursesResponse.status == 200) {
-        const coursesdata = coursesResponse.data;
-        setCourses(coursesdata.reverse());
+      if (userRole == "profesor") {
+        console.log(userRole == "profesor")
+        // PARA USUARIO PROFESOR
+        try {
+          const coursesUsersResponse = await GetUserModules()
 
-        let modulesCount = 0;
-        for (let i = 0; i < coursesResponse.data.length; i++) {
-          modulesCount += coursesResponse.data[i].temas.length;
+          if (coursesUsersResponse.status == 200) {
+            const coursesdata = coursesUsersResponse.data;
+            setCourses(coursesdata.reverse());
+          }
+
+        } catch (error) {
+          console.log('errorGetUserModules: ', error)
         }
-        setStats((prev) => [
-          ...prev,
-          {
-            name: "Cursos Totales",
-            value: modulesCount,
-            icon: BookOpen,
-          },
-        ]);
+      } else {
+        //PARA USAURIO ADMIN
+        try {
+          const coursesResponse = await GetAllModules();
+          if (coursesResponse.status == 200) {
+            const coursesdata = coursesResponse.data;
+            setCourses(coursesdata.reverse());
+
+            let modulesCount = 0;
+            for (let i = 0; i < coursesResponse.data.length; i++) {
+              modulesCount += coursesResponse.data[i].temas.length;
+            }
+            setStats((prev) => [
+              ...prev,
+              {
+                name: "Cursos Totales",
+                value: modulesCount,
+                icon: BookOpen,
+              },
+            ]);
+          }
+        } catch (error) {
+          console.log('error', error)
+        }
       }
 
       setisLoading("SUCCESSFUL");
@@ -83,11 +106,10 @@ export default function AdminPage() {
               <li>
                 <button
                   onClick={() => setActiveTab("DASHBOARD")}
-                  className={`w-full text-left px-4 py-2 rounded-md flex items-center ${
-                    activeTab === "DASHBOARD"
-                      ? "bg-indigo-100 text-indigo-700"
-                      : "text-gray-700 hover:bg-gray-100"
-                  }`}
+                  className={`w-full text-left px-4 py-2 rounded-md flex items-center ${activeTab === "DASHBOARD"
+                    ? "bg-indigo-100 text-indigo-700"
+                    : "text-gray-700 hover:bg-gray-100"
+                    }`}
                 >
                   <LayoutDashboard className="w-5 h-5 mr-2" />
                   Dashboard
@@ -96,11 +118,10 @@ export default function AdminPage() {
               <li>
                 <button
                   onClick={() => setActiveTab("USERS")}
-                  className={`w-full text-left px-4 py-2 rounded-md flex items-center ${
-                    activeTab === "USERS"
-                      ? "bg-indigo-100 text-indigo-700"
-                      : "text-gray-700 hover:bg-gray-100"
-                  }`}
+                  className={`w-full text-left px-4 py-2 rounded-md flex items-center ${activeTab === "USERS"
+                    ? "bg-indigo-100 text-indigo-700"
+                    : "text-gray-700 hover:bg-gray-100"
+                    }`}
                 >
                   <Users className="w-5 h-5 mr-2" />
                   Usuarios
@@ -109,11 +130,10 @@ export default function AdminPage() {
               <li>
                 <button
                   onClick={() => setActiveTab("ROADMAPS")}
-                  className={`w-full text-left px-4 py-2 rounded-md flex items-center ${
-                    activeTab === "ROADMAPS"
-                      ? "bg-indigo-100 text-indigo-700"
-                      : "text-gray-700 hover:bg-gray-100"
-                  }`}
+                  className={`w-full text-left px-4 py-2 rounded-md flex items-center ${activeTab === "ROADMAPS"
+                    ? "bg-indigo-100 text-indigo-700"
+                    : "text-gray-700 hover:bg-gray-100"
+                    }`}
                 >
                   <LibraryBig className="w-5 h-5 mr-2" />
                   roadmaps
@@ -134,6 +154,7 @@ export default function AdminPage() {
             <>
               {activeTab === "DASHBOARD" && (
                 <MainContent
+                  userRole={userRole}
                   stats={stats}
                   routesList={routesList}
                   coursesModules={courses}

@@ -68,13 +68,13 @@ export default function UserAvatar() {
       </button>
 
       {isOpen && (
-        <div className="absolute z-10 mt-2 w-44 bg-white divide-y divide-gray-100 rounded-lg shadow ">
-          <div className="px-4 py-3 text-sm text-gray-900 ">
+        <div className="absolute z-10 mt-2 w-44 bg-white  rounded-lg shadow ">
+          <div className="px-4 py-3 text-sm text-gray-900 border-b-2">
             <div className="font-medium">{userName}</div>
             <div className="truncate">{userEmail}</div>
           </div>
-          <ul className="py-2 text-sm text-gray-700 ">
-            <li>
+          <ul className=" text-sm text-gray-700 ">
+            <li className="border-b-2">
               <Link
                 to={userDashboard}
                 className="flex items-center px-4 py-2 hover:bg-gray-100 "
@@ -83,8 +83,41 @@ export default function UserAvatar() {
                 Panel de Control
               </Link>
             </li>
+            
+            <li>
+              <Link
+                to="/courses"
+                className="flex items-center px-4 py-2 hover:bg-gray-100 "
+              >
+                {/* <User className="w-4 h-4 mr-2" /> */}
+                Cursos
+              </Link>
+            </li>
+            <li>
+              <Link
+                to="/RoadmapCreator"
+                className="flex items-center px-4 py-2 hover:bg-gray-100 "
+              >
+                {/* <User className="w-4 h-4 mr-2" /> */}
+                IA Personalizada
+              </Link>
+            </li>
+            <li>
+              <button
+                onClick={() => {
+                  window.scrollTo({
+                    top: document.documentElement.scrollHeight,
+                    behavior: "smooth",
+                  });
+                }}
+                className="flex items-center px-4 py-2 hover:bg-gray-100 "
+              >
+                {/* <User className="w-4 h-4 mr-2" /> */}
+                Sobre nosotros
+              </button>
+            </li>
           </ul>
-          <div className="py-2">
+          <div className=" border-t-2">
             <button
               onClick={() => {
                 LogOutAction();

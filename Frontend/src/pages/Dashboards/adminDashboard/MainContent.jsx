@@ -5,6 +5,7 @@ import ModalConfirmation from "./ModalConfirmation";
 import { DeleteOneModule } from "../../../components/Api/ModulesRoutes";
 
 export default function MainContent({
+  userRole,
   stats,
   routesList,
   coursesModules,
@@ -164,31 +165,34 @@ export default function MainContent({
         </div>
       </div>
       <div className="mt-8 bg-white shadow rounded-lg">
-        <div className="px-4 py-5 sm:px-6">
-          <h2 className="text-lg font-medium text-gray-900 mb-4">
-            Site routes
-          </h2>
-          <div className="overflow-x-auto">
-            <table className="min-w-full divide-y divide-gray-200">
-              <thead className="bg-gray-50">
-                <tr>
-                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                    Site routes
-                  </th>
-                </tr>
-              </thead>
-              <tbody className="bg-white divide-y divide-gray-200">
-                {routesList.map((ruta, index) => (
-                  <tr key={index}>
-                    <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">
-                      <Link to={ruta.ruta}>{ruta.ruta}</Link>
-                    </td>
+        {userRole == "admin" &&
+          <div className="px-4 py-5 sm:px-6">
+            <h2 className="text-lg font-medium text-gray-900 mb-4">
+              Site routes
+            </h2>
+            <div className="overflow-x-auto">
+              <table className="min-w-full divide-y divide-gray-200">
+                <thead className="bg-gray-50">
+                  <tr>
+                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                      Site routes
+                    </th>
                   </tr>
-                ))}
-              </tbody>
-            </table>
+                </thead>
+                <tbody className="bg-white divide-y divide-gray-200">
+                  {routesList.map((ruta, index) => (
+                    <tr key={index}>
+                      <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">
+                        <Link to={ruta.ruta}>{ruta.ruta}</Link>
+                      </td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
           </div>
-        </div>
+        }
+
       </div>
     </>
   );

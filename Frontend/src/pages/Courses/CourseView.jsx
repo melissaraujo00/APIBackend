@@ -165,22 +165,29 @@ export default function CourseView() {
   const { id } = useParams();
   const navigate = useNavigate();
 
-  useEffect(() => {
-    const getData = async () => {
-      try {
-        const responseModule = await GetOneModule(id);
-        if (responseModule.status == 200) {
-          setCourse(responseModule.data);
-          setIsLoading("SUCCESSFUL");
-        } else {
-          setErrorMessage("Error desconocido");
-        }
-      } catch (error) {
-        console.log("error", error);
+  const getData = async () => {
+    setIsLoading("LOADING");
+    try {
+      const responseModule = await GetOneModule(id);
+      if (responseModule.status == 200) {
+        setCourse(responseModule.data);
+        setIsLoading("SUCCESSFUL");
+      } else {
+        setIsLoading("ERROR");
+        setErrorMessage("Error desconocido");
+      }
+    } catch (error) {
+      if (error.status == 500) {
+        setErrorMessage("El curso no existe");
+      } else {
         setErrorMessage("Error en la conexion");
       }
-    };
-
+      console.log("error", error);
+      setCourse([])
+      setIsLoading("ERROR");
+    }
+  };
+  useEffect(() => {
     getData();
   }, []);
 
@@ -287,8 +294,9 @@ export default function CourseView() {
         ) : (
           <ErrorMessage
             className={"my-32"}
-            message={`Error al cargar el curso: ${errorMessage}`}
+            message={`${errorMessage}`}
             textButton={"Reintentar"}
+            execAction={getData}
           />
         )}
       </main>
