@@ -195,11 +195,7 @@ function CreateNewCoursePage() {
             });
 
             setTimeout(() => {
-              if (userRole == "profesor") {
-                navigate("/teacher");
-              } else {
-                navigate("/admin");
-              }
+              navigate("/dashboards");
             }, 1300);
           } else {
             //Si ocurre algun resultado inesperado

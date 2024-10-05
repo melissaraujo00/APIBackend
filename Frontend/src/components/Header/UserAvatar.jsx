@@ -6,7 +6,6 @@ import { logoutUser } from "../../auth/authService";
 
 export default function UserAvatar() {
   const [isOpen, setIsOpen] = useState(false);
-  const [userDashboard, setuserDashboard] = useState("");
   const dropdownRef = useRef(null);
   const { userName, userEmail, userRole, checkAuthentication } = useAuth();
   const navigate = useNavigate();
@@ -21,21 +20,6 @@ export default function UserAvatar() {
       alert("algo salio mal");
     }
   }
-  useEffect(() => {
-    switch (userRole) {
-      case "user":
-        setuserDashboard("/dashboard");
-        break;
-
-      case "profesor":
-        setuserDashboard("/teacher");
-        break;
-
-      case "admin":
-        setuserDashboard("/admin");
-        break;
-    }
-  }, []);
 
   useEffect(() => {
     function handleClickOutside(event) {
@@ -76,20 +60,19 @@ export default function UserAvatar() {
           <ul className=" text-sm text-gray-700 ">
             <li className="border-b-2">
               <Link
-                to={userDashboard}
+                to="/dashboards"
                 className="flex items-center px-4 py-2 hover:bg-gray-100 "
               >
                 <User className="w-4 h-4 mr-2" />
                 Panel de Control
               </Link>
             </li>
-            
+
             <li>
               <Link
                 to="/courses"
                 className="flex items-center px-4 py-2 hover:bg-gray-100 "
               >
-                {/* <User className="w-4 h-4 mr-2" /> */}
                 Cursos
               </Link>
             </li>
@@ -98,7 +81,6 @@ export default function UserAvatar() {
                 to="/RoadmapCreator"
                 className="flex items-center px-4 py-2 hover:bg-gray-100 "
               >
-                {/* <User className="w-4 h-4 mr-2" /> */}
                 IA Personalizada
               </Link>
             </li>
@@ -112,7 +94,6 @@ export default function UserAvatar() {
                 }}
                 className="flex items-center px-4 py-2 hover:bg-gray-100 "
               >
-                {/* <User className="w-4 h-4 mr-2" /> */}
                 Sobre nosotros
               </button>
             </li>

@@ -19,6 +19,7 @@ import { AuthProvider } from "./auth/AuthContext";
 import { ProtectedRoute } from "./components/ProtectedRoute";
 import CreateNewCourse from "./pages/Courses/CreateNewCourse";
 import CourseView from "./pages/Courses/CourseView";
+import Dashborads from "./pages/Dashboards/Dashborads";
 
 function App() {
   return (
@@ -44,14 +45,7 @@ function App() {
               }
             />
             <Route path="/courses" element={<CoursesCatalog />} />
-            <Route
-              path="/dashboard"
-              element={
-                <ProtectedRoute allowedRoles={["user"]}>
-                  <UserDashboard />
-                </ProtectedRoute>
-              }
-            />
+
             <Route
               path="/roadmap/:id"
               element={
@@ -69,6 +63,33 @@ function App() {
               }
             />
             <Route path="*" element={<NotFoundPage />} />
+
+            <Route
+              path="/newcourse"
+              element={
+                <ProtectedRoute allowedRoles={["profesor", "admin"]}>
+                  <CreateNewCourse />
+                </ProtectedRoute>
+              }
+            />
+            <Route
+              path="/viewcourse/:id"
+              element={
+                <ProtectedRoute allowedRoles={["user", "profesor", "admin"]}>
+                  <CourseView />
+                </ProtectedRoute>
+              }
+            />
+
+            <Route path="/dashboards" element={<Dashborads />} />
+            <Route
+              path="/dashboard"
+              element={
+                <ProtectedRoute allowedRoles={["user"]}>
+                  <UserDashboard />
+                </ProtectedRoute>
+              }
+            />
             <Route
               path="/admin"
               element={
@@ -83,23 +104,6 @@ function App() {
                 <ProtectedRoute allowedRoles={["profesor", "admin"]}>
                   {/* <TeacherDashboard /> */}
                   <AdminDashboard />
-                </ProtectedRoute>
-              }
-            />
-
-            <Route
-              path="/newcourse"
-              element={
-                <ProtectedRoute allowedRoles={["profesor", "admin"]}>
-                  <CreateNewCourse />
-                </ProtectedRoute>
-              }
-            />
-            <Route
-              path="/viewcourse/:id"
-              element={
-                <ProtectedRoute allowedRoles={["user","profesor", "admin"]}>
-                  <CourseView />
                 </ProtectedRoute>
               }
             />

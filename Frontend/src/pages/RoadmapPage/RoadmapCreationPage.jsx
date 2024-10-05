@@ -269,15 +269,7 @@ const RoadmapMenu = ({ roadmapData = [], regenerateRoadmap }) => {
             pauseOnHover: false,
           });
           setTimeout(() => {
-            if (userRole == "admin") {
-              navigate("/admin");
-            }
-            if (userRole == "profesor") {
-              navigate("/teacher");
-            }
-            if (userRole == "user") {
-              navigate("/dashboard");
-            }
+            navigate("/dashboards");
           }, 1000);
         } else {
           //Error desconocido
