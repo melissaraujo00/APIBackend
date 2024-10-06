@@ -29,9 +29,6 @@ export default function UserAvatar() {
           pauseOnHover: false,
         });
 
-        setTimeout(() => {
-          navigate("/");
-        }, 1000);
       } else {
         toast.update(toastId, {
           render: "Error desconocido, intentelo de nuevo",

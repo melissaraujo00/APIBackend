@@ -97,26 +97,28 @@ function App() {
             <Route
               path="/admin"
               element={
-                <ProtectedRoute allowedRoles={["admin"]}>
+                <ProtectedRoute allowedRoles={["profesor", "admin"]}>
                   <AdminDashboard />
                 </ProtectedRoute>
               }
             >
-              <Route path="dashboard" element={<MainContent />} />
+              <Route path="" element={<MainContent />} />
               <Route path="users" element={<UsersContent />} />
               <Route path="roadmaps" element={<RoadmapContent />} />
             </Route>
-
 
             <Route
               path="/teacher"
               element={
                 <ProtectedRoute allowedRoles={["profesor", "admin"]}>
-                  {/* <TeacherDashboard /> */}
                   <AdminDashboard />
                 </ProtectedRoute>
               }
-            />
+            >
+              <Route path="" element={<MainContent />} />
+              <Route path="users" element={<UsersContent />} />
+              <Route path="roadmaps" element={<RoadmapContent />} />
+            </Route>
           </Routes>
         </div>
       </Router>

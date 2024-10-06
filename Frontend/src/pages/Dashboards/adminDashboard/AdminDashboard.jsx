@@ -1,104 +1,13 @@
-import React, { useEffect, useState } from "react";
-import { Users, BookOpen, LayoutDashboard, LibraryBig } from "lucide-react";
+import React from "react";
+import { Users, LayoutDashboard, LibraryBig } from "lucide-react";
 import { Outlet, Link, useLocation } from "react-router-dom";
 import Header from "../../../components/Header/Header";
 import Footer from "../../../components/Footer/Footer";
-import { GetAllUsers } from "../../../components/Api/UserRoutes";
-import {
-  GetAllModules,
-  GetUserModules,
-} from "../../../components/Api/ModulesRoutes";
-import { LoadingScreen } from "../../../components/LoadingScreen";
-import MainContent from "./MainContent";
-import UsersContent from "./UsersContent";
-import RoadmapContent from "./RoadmapsContent";
 import { useAuth } from "../../../auth/useAuth";
 
 export default function AdminPage() {
-  const [activeTab, setActiveTab] = useState("DASHBOARD");
-  const [isLoading, setisLoading] = useState("LOADING");
-  const [users, setUsers] = useState([]);
-  const [stats, setStats] = useState([]);
-  const [courses, setCourses] = useState([]);
   const { userRole } = useAuth();
   const location = useLocation();
-
-  useEffect(() => {
-    setStats([]);
-
-    const GetData = async () => {
-      const usersResponse = await GetAllUsers();
-      if (usersResponse.status == 200) {
-        const usersdata = usersResponse.data;
-        setUsers(usersdata.reverse());
-
-        const usersLength = usersResponse.data.length;
-
-        setStats((prev) => [
-          ...prev,
-          {
-            name: "Usuarios Totales",
-            value: usersLength,
-            icon: Users,
-          },
-        ]);
-      }
-
-      if (userRole == "profesor") {
-        console.log(userRole == "profesor");
-        // PARA USUARIO PROFESOR
-        try {
-          const coursesUsersResponse = await GetUserModules();
-
-          if (coursesUsersResponse.status == 200) {
-            const coursesdata = coursesUsersResponse.data;
-            setCourses(coursesdata.reverse());
-          }
-        } catch (error) {
-          console.log("errorGetUserModules: ", error);
-        }
-      } else {
-        //PARA USAURIO ADMIN
-        try {
-          const coursesResponse = await GetAllModules();
-          if (coursesResponse.status == 200) {
-            const coursesdata = coursesResponse.data;
-            setCourses(coursesdata.reverse());
-
-            let modulesCount = 0;
-            for (let i = 0; i < coursesResponse.data.length; i++) {
-              modulesCount += coursesResponse.data[i].temas.length;
-            }
-            setStats((prev) => [
-              ...prev,
-              {
-                name: "Cursos Totales",
-                value: modulesCount,
-                icon: BookOpen,
-              },
-            ]);
-          }
-        } catch (error) {
-          console.log("error", error);
-        }
-      }
-
-      setisLoading("SUCCESSFUL");
-    };
-    GetData();
-  }, []);
-
-  const routesList = [
-    { ruta: "/" },
-    { ruta: "/admin" },
-    { ruta: "/login" },
-    { ruta: "/signup" },
-    { ruta: "/dashboard" },
-    { ruta: "/courses" },
-    { ruta: "/roadmap" },
-    { ruta: "/RoadmapCreator" },
-    { ruta: "/NotFoundPage" },
-  ];
 
   return (
     <div className="min-h-screen bg-gray-100">
@@ -109,9 +18,10 @@ export default function AdminPage() {
             <ul className="space-y-2">
               <li>
                 <Link
-                  to="/admin/dashboard"
+                  to="/admin"
                   className={`w-full text-left px-4 py-2 rounded-md flex items-center ${
-                    location.pathname.includes("dashboard")
+                    location.pathname == "/admin" ||
+                    location.pathname == "/admin/"
                       ? "bg-indigo-100 text-indigo-700"
                       : "text-gray-700 hover:bg-gray-100"
                   }`}
@@ -155,36 +65,7 @@ export default function AdminPage() {
             Panel de {userRole == "admin" ? "Administración" : "Profesor"}
           </h1>
 
-          {isLoading == "LOADING" ? (
-            <LoadingScreen />
-          ) : (
-            <Outlet
-              context={{
-                userRole,
-                stats,
-                routesList,
-                courses,
-                users,
-              }}
-            />
-          )}
-          {/* (
-            <>
-              {activeTab === "DASHBOARD" && (
-                <MainContent
-                  userRole={userRole}
-                  stats={stats}
-                  routesList={routesList}
-                  coursesModules={courses}
-                  setActiveTab={setActiveTab}
-                />
-              )}
-              {activeTab === "USERS" && (
-                <UsersContent userRole={userRole} usersList={users} />
-              )}
-              {activeTab === "ROADMAPS" && <RoadmapContent />}
-            </>
-          )} */}
+          <Outlet />
         </main>
       </div>
       <Footer />

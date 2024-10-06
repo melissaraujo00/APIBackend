@@ -52,9 +52,25 @@ export default function MainContent() {
           if (coursesUsersResponse.status == 200) {
             const coursesdata = coursesUsersResponse.data;
             setCourses(coursesdata.reverse());
+
+            let modulesCount = 0;
+            for (let item = 0; item < coursesdata.length; item++) {
+              modulesCount += coursesdata[item].temas.length;
+            }
+            setStats((prev) => [
+              ...prev,
+              {
+                name: "Cursos Totales",
+                value: modulesCount,
+                icon: BookOpen,
+              },
+            ]);
           }
         } catch (error) {
-          console.log("errorGetUserModules: ", error);
+          if (error.status == 404) {
+          } else {
+            console.log("errorGetUserModules: ", error);
+          }
         }
       } else {
         //TODOS LOS MODULOS
@@ -65,8 +81,8 @@ export default function MainContent() {
             setCourses(coursesdata.reverse());
 
             let modulesCount = 0;
-            for (let i = 0; i < coursesResponse.data.length; i++) {
-              modulesCount += coursesResponse.data[i].temas.length;
+            for (let i = 0; i < coursesdata.length; i++) {
+              modulesCount += coursesdata[i].temas.length;
             }
             setStats((prev) => [
               ...prev,
@@ -83,7 +99,6 @@ export default function MainContent() {
       }
 
       setisLoading("SUCCESSFUL");
-      console.log(courses);
     };
     GetData();
   }, []);
@@ -121,10 +136,10 @@ export default function MainContent() {
         />
       )}
       {isLoading == "LOADING" ? (
-        <LoadingScreen  />
+        <LoadingScreen />
       ) : isLoading == "SUCCESSFUL" ? (
         <>
-          <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-4 mb-8">
+          <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3 mb-8">
             {stats.map((item) => (
               <div
                 key={item.name}
@@ -154,7 +169,7 @@ export default function MainContent() {
             ))}
           </div>
 
-          <div className=" gap-7 ">
+          <div className=" flex gap-7 ">
             <div className="bg-white shadow rounded-lg w-full">
               <div className="px-4 py-5 sm:px-6 flex justify-between items-center">
                 <h2 className="text-lg font-medium text-gray-900">
@@ -219,15 +234,13 @@ export default function MainContent() {
                     <Plus className="mr-2 h-5 w-4" aria-hidden="true" />
                     Crear Nuevo Curso
                   </Link>
-                  <button
-                    onClick={() => {
-                      setActiveTab("USERS");
-                    }}
+                  <Link
+                    to={"/admin/users"}
                     className="w-full flex items-center justify-center px-4 py-2 border border-transparent rounded-md shadow-sm text-sm font-medium text-indigo-600 bg-indigo-100 hover:bg-indigo-200"
                   >
                     <Users className="mr-2 h-5 w-4" aria-hidden="true" />
                     Gestionar Usuarios
-                  </button>
+                  </Link>
                 </div>
               </div>
             </div>
