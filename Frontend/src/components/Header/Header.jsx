@@ -41,7 +41,7 @@ function Header() {
         {userId == null ? (
           <Link
             to="/login"
-            className="bg-indigo-600 text-white px-6 py-2 rounded-full font-semibold hover:bg-indigo-700 transition duration-300 hidden md:block"
+            className="bg-indigo-600 text-white px-6 py-2 rounded-full font-semibold hover:bg-indigo-700 transition duration-300"
           >
             Iniciar sesion
           </Link>

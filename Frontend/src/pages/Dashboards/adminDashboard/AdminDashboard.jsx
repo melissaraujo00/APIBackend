@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { Users, BookOpen, LayoutDashboard, LibraryBig } from "lucide-react";
+import { Outlet, Link, useLocation } from "react-router-dom";
 import Header from "../../../components/Header/Header";
 import Footer from "../../../components/Footer/Footer";
 import { GetAllUsers } from "../../../components/Api/UserRoutes";
@@ -20,6 +21,7 @@ export default function AdminPage() {
   const [stats, setStats] = useState([]);
   const [courses, setCourses] = useState([]);
   const { userRole } = useAuth();
+  const location = useLocation();
 
   useEffect(() => {
     setStats([]);
@@ -106,43 +108,43 @@ export default function AdminPage() {
           <div className="px-4 py-5">
             <ul className="space-y-2">
               <li>
-                <button
-                  onClick={() => setActiveTab("DASHBOARD")}
+                <Link
+                  to="/admin/dashboard"
                   className={`w-full text-left px-4 py-2 rounded-md flex items-center ${
-                    activeTab === "DASHBOARD"
+                    location.pathname.includes("dashboard")
                       ? "bg-indigo-100 text-indigo-700"
                       : "text-gray-700 hover:bg-gray-100"
                   }`}
                 >
                   <LayoutDashboard className="w-5 h-5 mr-2" />
                   Dashboard
-                </button>
+                </Link>
               </li>
               <li>
-                <button
-                  onClick={() => setActiveTab("USERS")}
+                <Link
+                  to="/admin/users"
                   className={`w-full text-left px-4 py-2 rounded-md flex items-center ${
-                    activeTab === "USERS"
+                    location.pathname.includes("users")
                       ? "bg-indigo-100 text-indigo-700"
                       : "text-gray-700 hover:bg-gray-100"
                   }`}
                 >
                   <Users className="w-5 h-5 mr-2" />
                   Usuarios
-                </button>
+                </Link>
               </li>
               <li>
-                <button
-                  onClick={() => setActiveTab("ROADMAPS")}
+                <Link
+                  to="/admin/roadmaps"
                   className={`w-full text-left px-4 py-2 rounded-md flex items-center ${
-                    activeTab === "ROADMAPS"
+                    location.pathname.includes("roadmaps")
                       ? "bg-indigo-100 text-indigo-700"
                       : "text-gray-700 hover:bg-gray-100"
                   }`}
                 >
                   <LibraryBig className="w-5 h-5 mr-2" />
-                  roadmaps
-                </button>
+                  Roadmaps
+                </Link>
               </li>
             </ul>
           </div>
@@ -156,6 +158,17 @@ export default function AdminPage() {
           {isLoading == "LOADING" ? (
             <LoadingScreen />
           ) : (
+            <Outlet
+              context={{
+                userRole,
+                stats,
+                routesList,
+                courses,
+                users,
+              }}
+            />
+          )}
+          {/* (
             <>
               {activeTab === "DASHBOARD" && (
                 <MainContent
@@ -171,7 +184,7 @@ export default function AdminPage() {
               )}
               {activeTab === "ROADMAPS" && <RoadmapContent />}
             </>
-          )}
+          )} */}
         </main>
       </div>
       <Footer />

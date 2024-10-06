@@ -242,7 +242,6 @@ export const actualizarUsuarioLogeado = [authMiddleware, async (req, res) => {
         }
 
         const { name, lastName, user, email, password } = req.body;
-        console.log('name, lastName, user, email, password', name, lastName, user, email, password)
 
         if (name) usuario.name = name;
         if (lastName) usuario.lastName = lastName;
@@ -413,8 +412,8 @@ export const eliminarRoadmap = [authMiddleware, async (req, res) => {
 
         await Roadmap.deleteOne({ _id: id });
         await Login.updateOne(
-            { roadmaps: id }, 
-            { $pull: { roadmaps: id } } 
+            { roadmaps: id },
+            { $pull: { roadmaps: id } }
         );
 
         res.status(200).json({ message: 'Roadmap eliminado correctamente' });

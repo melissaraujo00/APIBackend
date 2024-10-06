@@ -12,6 +12,10 @@ import SignUpPage from "./pages/SignUpPage/SignUpPage";
 
 import UserDashboard from "./pages/Dashboards/UserDashboard/UserDashboard";
 import AdminDashboard from "./pages/Dashboards/adminDashboard/AdminDashboard";
+import MainContent from "./pages/Dashboards/adminDashboard/MainContent";
+import UsersContent from "./pages/Dashboards/adminDashboard/UsersContent";
+import RoadmapContent from "./pages/Dashboards/adminDashboard/RoadmapsContent";
+
 import TeacherDashboard from "./pages/Dashboards/TeacherDashboard/TeacherDashboard";
 
 import NotFoundPage from "./pages/NotFoundPage/NotFoundPage";
@@ -97,7 +101,13 @@ function App() {
                   <AdminDashboard />
                 </ProtectedRoute>
               }
-            />
+            >
+              <Route path="dashboard" element={<MainContent />} />
+              <Route path="users" element={<UsersContent />} />
+              <Route path="roadmaps" element={<RoadmapContent />} />
+            </Route>
+
+
             <Route
               path="/teacher"
               element={

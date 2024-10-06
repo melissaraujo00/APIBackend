@@ -1,16 +1,45 @@
 import React, { useEffect, useState } from "react";
-import { Trash2, Edit } from "lucide-react";
+import { Trash2, Edit, Users } from "lucide-react";
 
 import ModalConfirmation from "./ModalConfirmation";
-import { DeleteOneUser } from "../../../components/Api/UserRoutes";
+import { DeleteOneUser, GetAllUsers } from "../../../components/Api/UserRoutes";
 import EditUser from "../../../components/EditUser";
+import { useAuth } from "../../../auth/useAuth";
+import { LoadingScreen } from "../../../components/LoadingScreen";
+import { ErrorMessage } from "../../../components/ErrorMessage";
 
-export default function UsersContent({ userRole, usersList }) {
-  const [isOpen, setIsOpen] = useState(false);
-
+export default function UsersContent() {
+  // { userRole, usersList }
+  // const { userRole, users } = useOutletContext();
+  const { userRole } = useAuth();
+  const [users, setUsers] = useState([]);
   const [userDeleting, setUserDeleting] = useState();
   const [userEditing, setUserEditing] = useState();
+
+  const [isLoading, setisLoading] = useState("LOADING"); // LOADING SUCCESSFUL ERROR
+  const [isOpen, setIsOpen] = useState(false);
   const [isEditModalOpen, setIsEditModalOpen] = useState(false);
+
+  useEffect(() => {
+    setisLoading("LOADING");
+    const GetData = async () => {
+      try {
+        const usersResponse = await GetAllUsers();
+        if (usersResponse.status == 200) {
+          const usersdata = usersResponse.data;
+          setUsers(usersdata.reverse());
+          setisLoading("SUCCESSFUL");
+        } else {
+          setisLoading("ERROR");
+        }
+      } catch (error) {
+        console.log("error", error);
+        setisLoading("ERROR");
+      }
+    };
+
+    GetData();
+  }, []);
 
   const openEditModal = (dataUser) => {
     setUserEditing(dataUser);
@@ -54,63 +83,69 @@ export default function UsersContent({ userRole, usersList }) {
         </h2>
       </div>
       <div className="overflow-x-auto">
-        <table className="min-w-full divide-y divide-gray-200">
-          <thead className="bg-gray-50">
-            <tr>
-              <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                Nombres
-              </th>
-              <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                Apellidos
-              </th>
-              <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                Email
-              </th>
-              <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                Rol
-              </th>
-              <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                Acciones
-              </th>
-            </tr>
-          </thead>
-          <tbody className="bg-white divide-y divide-gray-200">
-            {usersList.map((user) => (
-              <tr key={user._id}>
-                <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">
-                  {user.name}
-                </td>
-                <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">
-                  {user.lastName}
-                </td>
-                <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-                  {user.email}
-                </td>
-                <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-                  {user.roles[0]}
-                </td>
-                <td className="px-6 py-4 whitespace-nowrap text-sm font-medium">
-                  {userRole == "admin" && (
-                    <>
-                      <button
-                        onClick={() => deleteUser(user)}
-                        className="text-red-600 hover:text-red-900  mr-7"
-                      >
-                        <Trash2 className="h-5 w-5" />
-                      </button>
-                      <button
-                        onClick={() => openEditModal(user)}
-                        className="text-indigo-600 hover:text-indigo-900"
-                      >
-                        <Edit className="h-5 w-5" />
-                      </button>
-                    </>
-                  )}
-                </td>
+        {isLoading == "LOADING" ? (
+          <LoadingScreen />
+        ) : isLoading == "SUCCESSFUL" ? (
+          <table className="min-w-full divide-y divide-gray-200 overflow-hidden">
+            <thead className="bg-gray-50">
+              <tr>
+                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                  Nombres
+                </th>
+                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                  Apellidos
+                </th>
+                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                  Email
+                </th>
+                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                  Rol
+                </th>
+                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                  Acciones
+                </th>
               </tr>
-            ))}
-          </tbody>
-        </table>
+            </thead>
+            <tbody className="bg-white divide-y divide-gray-200">
+              {users.map((user) => (
+                <tr key={user._id}>
+                  <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">
+                    {user.name}
+                  </td>
+                  <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">
+                    {user.lastName}
+                  </td>
+                  <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                    {user.email}
+                  </td>
+                  <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                    {user.roles[0]}
+                  </td>
+                  <td className="px-6 py-4 whitespace-nowrap text-sm font-medium">
+                    {userRole == "admin" && (
+                      <>
+                        <button
+                          onClick={() => deleteUser(user)}
+                          className="text-red-600 hover:text-red-900  mr-7"
+                        >
+                          <Trash2 className="h-5 w-5" />
+                        </button>
+                        <button
+                          onClick={() => openEditModal(user)}
+                          className="text-indigo-600 hover:text-indigo-900"
+                        >
+                          <Edit className="h-5 w-5" />
+                        </button>
+                      </>
+                    )}
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        ) : (
+          <ErrorMessage />
+        )}
       </div>
     </div>
   );
