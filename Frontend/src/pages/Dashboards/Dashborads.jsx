@@ -3,10 +3,9 @@ import { useAuth } from "../../auth/useAuth";
 import { Navigate } from "react-router-dom";
 
 export default function Dashborads() {
-  const { userId, userName, userRole, loading } = useAuth();    
+  const { userId, userName, userRole, loading } = useAuth();
 
   if (!loading) {
-    console.log("userRole", userId, userName, userRole);
     switch (userRole) {
       case "admin":
         return <Navigate to="/admin" />;

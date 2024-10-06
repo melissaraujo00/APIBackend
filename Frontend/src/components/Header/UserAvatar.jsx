@@ -7,7 +7,8 @@ import { logoutUser } from "../../auth/authService";
 export default function UserAvatar() {
   const [isOpen, setIsOpen] = useState(false);
   const dropdownRef = useRef(null);
-  const { userName, userEmail, userRole, checkAuthentication } = useAuth();
+  const { userName, userLastName, userEmail, userRole, checkAuthentication } =
+    useAuth();
   const navigate = useNavigate();
 
   async function LogOutAction() {
@@ -35,10 +36,10 @@ export default function UserAvatar() {
   }, []);
 
   return (
-    <div ref={dropdownRef}>
+    <div ref={dropdownRef} className="max-w-48 items-center">
       <button
         onClick={() => setIsOpen(!isOpen)}
-        className="flex items-center text-sm w-44 pe-1 font-medium text-gray-900 rounded-full hover:text-indigo-600 focus:ring-4 focus:ring-gray-100 hover:ring-gray-100 hover:ring-2 h-9"
+        className="flex items-center text-sm min-w-44 pe-1 font-medium text-gray-900 rounded-full hover:text-indigo-600 focus:ring-4 focus:ring-gray-100 hover:ring-gray-100 hover:ring-2 h-9"
         type="button"
       >
         <span className="sr-only">Abrir menu de usuario</span>
@@ -54,7 +55,9 @@ export default function UserAvatar() {
       {isOpen && (
         <div className="absolute z-10 mt-2 w-44 bg-white  rounded-lg shadow ">
           <div className="px-4 py-3 text-sm text-gray-900 border-b-2">
-            <div className="font-medium">{userName}</div>
+            <div className="font-medium">
+              {userName} {userLastName}
+            </div>
             <div className="truncate">{userEmail}</div>
           </div>
           <ul className=" text-sm text-gray-700 ">

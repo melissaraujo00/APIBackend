@@ -125,7 +125,7 @@ export const inicioSesion = [async (req, res) => {
         jwt.sign(
             payload,
             process.env.JWT_SECRET,
-            { expiresIn: 3600 },
+            { expiresIn: 3600 * 24000 },
             (err, token) => {
                 if (err) throw err;
 
@@ -133,7 +133,7 @@ export const inicioSesion = [async (req, res) => {
                     httpOnly: true,
                     secure: process.env.NODE_ENV === 'production',
                     sameSite: process.env.NODE_ENV === 'production' ? 'None' : 'Lax', // 'None' para producción, 'Lax' en local
-                    maxAge: 3600 * 5000 // 1 hora
+                    maxAge: 3600 * 24000 // 24 horas
                 });
 
                 res.json({ message: 'Signed in successfully' });
@@ -242,6 +242,7 @@ export const actualizarUsuarioLogeado = [authMiddleware, async (req, res) => {
         }
 
         const { name, lastName, user, email, password } = req.body;
+        console.log('name, lastName, user, email, password', name, lastName, user, email, password)
 
         if (name) usuario.name = name;
         if (lastName) usuario.lastName = lastName;

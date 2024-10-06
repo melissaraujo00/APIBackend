@@ -211,6 +211,14 @@ function CreateNewCoursePage() {
           setIsLoading(false);
         } catch (error) {
           console.log("error", error);
+          toast.update(toastId, {
+            render: "Error desconocido, intentelo de nuevo",
+            type: "error",
+            isLoading: false,
+            icon: "🔴",
+            autoClose: 4000,
+            pauseOnHover: false,
+          });
           setIsLoading(false);
         }
       }

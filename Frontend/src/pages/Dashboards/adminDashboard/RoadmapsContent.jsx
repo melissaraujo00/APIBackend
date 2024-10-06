@@ -69,7 +69,7 @@ export default function RoadmapContent() {
                 <td className="px-6 py-4 whitespace-nowrap text-sm text-center text-gray-500">
                   {getRoadmapLength(roadmap.roadmap)}
                 </td>
-                <td className="flex gap-4 px-6 py-4 whitespace-nowrap text-sm font-medium ">
+                <td className="flex gap-7 px-6 py-4 whitespace-nowrap text-sm font-medium ">
                   <button className="text-red-600 hover:text-red-900">
                     <Trash2 className="h-5 w-5" />
                   </button>

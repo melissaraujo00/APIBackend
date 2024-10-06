@@ -3,10 +3,19 @@ import { Trash2, Edit } from "lucide-react";
 
 import ModalConfirmation from "./ModalConfirmation";
 import { DeleteOneUser } from "../../../components/Api/UserRoutes";
+import EditUser from "../../../components/EditUser";
 
 export default function UsersContent({ userRole, usersList }) {
   const [isOpen, setIsOpen] = useState(false);
+
   const [userDeleting, setUserDeleting] = useState();
+  const [userEditing, setUserEditing] = useState();
+  const [isEditModalOpen, setIsEditModalOpen] = useState(false);
+
+  const openEditModal = (dataUser) => {
+    setUserEditing(dataUser);
+    setIsEditModalOpen(true);
+  };
 
   const deleteUser = (dataUser) => {
     setUserDeleting(dataUser);
@@ -20,7 +29,6 @@ export default function UsersContent({ userRole, usersList }) {
           title={"Confimar eliminacion del usuario"}
           body={
             <>
-            
               <p className="text-lg">id: {userDeleting._id}</p>
               <p className="text-ls">
                 Nombre: {userDeleting.name} {userDeleting.lastName}
@@ -32,6 +40,12 @@ export default function UsersContent({ userRole, usersList }) {
           isOpen={setIsOpen}
           execFunction={DeleteOneUser}
           idItem={userDeleting._id}
+        />
+      )}
+      {isEditModalOpen == true && (
+        <EditUser
+          userData={userEditing}
+          setIsEditModalOpen={setIsEditModalOpen}
         />
       )}
       <div className="px-4 py-5 sm:px-6 flex justify-between items-center">
@@ -76,16 +90,21 @@ export default function UsersContent({ userRole, usersList }) {
                   {user.roles[0]}
                 </td>
                 <td className="px-6 py-4 whitespace-nowrap text-sm font-medium">
-                  {/* <button className="text-indigo-600 hover:text-indigo-900 mr-2">
-                    <Edit className="h-5 w-5" />
-                  </button> */}
                   {userRole == "admin" && (
-                    <button
-                      onClick={() => deleteUser(user)}
-                      className="text-red-600 hover:text-red-900"
-                    >
-                      <Trash2 className="h-5 w-5" />
-                    </button>
+                    <>
+                      <button
+                        onClick={() => deleteUser(user)}
+                        className="text-red-600 hover:text-red-900  mr-7"
+                      >
+                        <Trash2 className="h-5 w-5" />
+                      </button>
+                      <button
+                        onClick={() => openEditModal(user)}
+                        className="text-indigo-600 hover:text-indigo-900"
+                      >
+                        <Edit className="h-5 w-5" />
+                      </button>
+                    </>
                   )}
                 </td>
               </tr>
