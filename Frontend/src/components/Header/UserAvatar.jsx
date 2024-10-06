@@ -3,6 +3,7 @@ import { ChevronDown, User, LogOut } from "lucide-react";
 import { Link, useNavigate } from "react-router-dom";
 import { useAuth } from "../../auth/useAuth";
 import { logoutUser } from "../../auth/authService";
+import { Slide, toast, ToastContainer } from "react-toastify";
 
 export default function UserAvatar() {
   const [isOpen, setIsOpen] = useState(false);
@@ -12,13 +13,44 @@ export default function UserAvatar() {
   const navigate = useNavigate();
 
   async function LogOutAction() {
-    const response = await logoutUser();
+    toast.dismiss();
+    const toastId = toast.loading("Cerrando sesion...");
+    try {
+      const response = await logoutUser();
 
-    if (response.status == 200) {
-      await checkAuthentication();
-      navigate("/");
-    } else {
-      alert("algo salio mal");
+      if (response.status == 200) {
+        await checkAuthentication();
+        toast.update(toastId, {
+          render: "Sesion cerrada exitosamente!",
+          type: "success",
+          isLoading: false,
+          icon: "🟢",
+          autoClose: 3000,
+          pauseOnHover: false,
+        });
+
+        setTimeout(() => {
+          navigate("/");
+        }, 1000);
+      } else {
+        toast.update(toastId, {
+          render: "Error desconocido, intentelo de nuevo",
+          type: "error",
+          isLoading: false,
+          icon: "🔴",
+          autoClose: 4000,
+          pauseOnHover: false,
+        });
+      }
+    } catch (error) {
+      toast.update(toastId, {
+        render: "Error desconocido, intentelo de nuevo",
+        type: "error",
+        isLoading: false,
+        icon: "🔴",
+        autoClose: 4000,
+        pauseOnHover: false,
+      });
     }
   }
 
@@ -37,6 +69,11 @@ export default function UserAvatar() {
 
   return (
     <div ref={dropdownRef} className="max-w-48 items-center">
+      <ToastContainer
+        closeOnClick={true}
+        position="top-center"
+        transition={Slide}
+      />
       <button
         onClick={() => setIsOpen(!isOpen)}
         className="flex items-center text-sm min-w-44 pe-1 font-medium text-gray-900 rounded-full hover:text-indigo-600 focus:ring-4 focus:ring-gray-100 hover:ring-gray-100 hover:ring-2 h-9"
@@ -95,7 +132,7 @@ export default function UserAvatar() {
                     behavior: "smooth",
                   });
                 }}
-                className="flex items-center px-4 py-2 hover:bg-gray-100 "
+                className="flex items-center w-full px-4 py-2 hover:bg-gray-100 "
               >
                 Sobre nosotros
               </button>
